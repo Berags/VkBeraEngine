@@ -4,15 +4,26 @@
 
 
 #include <exception>
+#include <iostream>
 #include "../../include/engine/Window.h"
 #include "../../include/engine/exception/window/UnableToStartWindowException.h"
+#include "../../include/engine/exception/window/UnableToInitGLFWException.h"
 
 namespace Engine {
     Window::Window() {
-        if(!glfwInit())
-            throw "GLFW Library not found!";
+        initWindow();
+    }
 
-        this->window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
+    Window::~Window() {
+        std::cout << "Closing the window...\n";
+        glfwTerminate();
+    }
+
+    void Window::initWindow() {
+        if(!glfwInit())
+            throw Engine::UnableToInitGLFWException();
+
+        this->window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
         /* Create a windowed mode window and its OpenGL context */
         if (!window)
         {
@@ -23,7 +34,7 @@ namespace Engine {
         glfwMakeContextCurrent(window);
     }
 
-    Window::~Window() {
-
+    GLFWwindow *Window::getWindow() const {
+        return window;
     }
 }
