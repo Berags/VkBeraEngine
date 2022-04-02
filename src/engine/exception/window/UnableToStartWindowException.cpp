@@ -2,7 +2,7 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
-#include "UnableToStartWindowException.h"
+#include "../../../../include/engine/exception/window/UnableToStartWindowException.h"
 
 namespace Engine {
     const char *UnableToStartWindowException::what() const noexcept {

@@ -12,10 +12,14 @@ namespace Engine {
     public:
         Window();
 
-        virtual ~Window();
+        ~Window();
+
+        GLFWwindow *getWindow() const;
 
     private:
         GLFWwindow *window;
+
+        void initWindow();
     };
 }
 
