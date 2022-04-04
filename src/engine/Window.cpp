@@ -23,13 +23,13 @@ namespace Engine {
 
     void Window::initWindow() {
         if (!glfwInit())
-            throw Engine::UnableToInitGLFWException();
+            throw Engine::Exceptions::UnableToInitGLFWException();
 
         this->glfwWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
         /* Create a windowed mode glfwWindow and its OpenGL context */
         if (!glfwWindow) {
             glfwTerminate();
-            throw Engine::UnableToStartWindowException();
+            throw Engine::Exceptions::UnableToStartWindowException();
         }
         /* Make the glfwWindow's context current */
         glfwMakeContextCurrent(glfwWindow);
