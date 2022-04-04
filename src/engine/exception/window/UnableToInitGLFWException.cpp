@@ -4,6 +4,11 @@
 
 #include "../../../../include/engine/exception/window/UnableToInitGLFWException.h"
 
-const char *Engine::UnableToInitGLFWException::what() const noexcept {
-    return "Unable to init GLFW OpenGL library!";
+namespace Engine {
+    namespace Exceptions {
+        const char *UnableToInitGLFWException::what() const noexcept {
+            return "Unable to init GLFW OpenGL library!";
+        }
+    }
 }
+

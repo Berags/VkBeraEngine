@@ -11,9 +11,17 @@ namespace Engine {
     class MainLoop {
     public:
         explicit MainLoop(Window *window);
-        void updateGame();
+
+        void start();
+
     private:
         Engine::Window *window;
+
+        static void render();
+
+        void update() const;
+
+        void stop();
     };
 }
 
