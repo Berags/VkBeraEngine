@@ -5,36 +5,38 @@
 
 #include <exception>
 #include <iostream>
+#include <OpenGL/glu.h>
 #include "../../include/engine/Window.h"
 #include "../../include/engine/exception/window/UnableToStartWindowException.h"
 #include "../../include/engine/exception/window/UnableToInitGLFWException.h"
 
 namespace Engine {
-    Window::Window() {
+    Window::Window(std::string &name) : name(name), width(800), height(640) {
+        std::cout << "Starting the glfwWindow\n";
         initWindow();
     }
 
     Window::~Window() {
-        std::cout << "Closing the window...\n";
+        std::cout << "Closing the glfwWindow...\n";
         glfwTerminate();
     }
 
     void Window::initWindow() {
-        if(!glfwInit())
+        if (!glfwInit())
             throw Engine::UnableToInitGLFWException();
 
-        this->window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
-        /* Create a windowed mode window and its OpenGL context */
-        if (!window)
-        {
+        this->glfwWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
+        /* Create a windowed mode glfwWindow and its OpenGL context */
+        if (!glfwWindow) {
             glfwTerminate();
             throw Engine::UnableToStartWindowException();
         }
-        /* Make the window's context current */
-        glfwMakeContextCurrent(window);
+        /* Make the glfwWindow's context current */
+        glfwMakeContextCurrent(glfwWindow);
+
     }
 
-    GLFWwindow *Window::getWindow() const {
-        return window;
+    GLFWwindow *Window::getGlfwWindow() const {
+        return glfwWindow;
     }
 }

@@ -8,10 +8,12 @@
 #include <exception>
 
 namespace Engine {
-    class Exception : public std::exception {
-    public:
-        //virtual void sendErrorMessage() const;
-    };
+    namespace Exceptions {
+        class Exception : public std::exception {
+        public:
+            //virtual void sendErrorMessage() const;
+        };
+    }
 }
 
 #endif //MINIMINIMOTORWAYS_EXCEPTION_H

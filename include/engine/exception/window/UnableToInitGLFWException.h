@@ -8,10 +8,12 @@
 #include "../Exception.h"
 
 namespace Engine {
-    class UnableToInitGLFWException : public Engine::Exception {
-    public:
-        const char *what() const _NOEXCEPT override;
-    };
+    namespace Exceptions {
+        class UnableToInitGLFWException : public Engine::Exceptions::Exception {
+        public:
+            const char *what() const _NOEXCEPT override;
+        };
+    }
 }
 
 

@@ -8,10 +8,12 @@
 #include "../Exception.h"
 
 namespace Engine {
-    class UnableToStartWindowException : public Engine::Exception {
-    public:
-        const char *what() const _NOEXCEPT override;
-    };
+    namespace Exceptions {
+        class UnableToStartWindowException : public Engine::Exceptions::Exception {
+        public:
+            const char *what() const _NOEXCEPT override;
+        };
+    }
 }
 
 #endif //MINIMINIMOTORWAYS_UNABLETOSTARTWINDOWEXCEPTION_H

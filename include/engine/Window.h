@@ -6,18 +6,23 @@
 #define MINIMINIMOTORWAYS_WINDOW_H
 
 #include <GLFW/glfw3.h>
+#include <string>
 
 namespace Engine {
     class Window {
     public:
-        Window();
+        explicit Window(std::string &name);
 
         ~Window();
 
-        GLFWwindow *getWindow() const;
+        GLFWwindow *getGlfwWindow() const;
 
     private:
-        GLFWwindow *window;
+        GLFWwindow *glfwWindow{};
+
+        std::string name;
+        GLsizei height;
+        GLsizei width;
 
         void initWindow();
     };
