@@ -3,7 +3,7 @@ project(MiniminiMotorways)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(MiniminiMotorways main.cpp src/engine/Window.cpp include/engine/Window.h src/engine/exception/Exception.cpp include/engine/exception/Exception.h src/engine/exception/window/UnableToStartWindowException.cpp include/engine/exception/window/UnableToStartWindowException.h src/engine/exception/window/UnableToInitGLFWException.cpp include/engine/exception/window/UnableToInitGLFWException.h src/engine/MainLoop.cpp include/engine/MainLoop.h)
+add_executable(MiniminiMotorways main.cpp src/engine/Window.cpp include/engine/Window.h src/engine/exception/Exception.cpp include/engine/exception/Exception.h src/engine/exception/window/UnableToStartWindowException.cpp include/engine/exception/window/UnableToStartWindowException.h src/engine/exception/window/UnableToInitGLFWException.cpp include/engine/exception/window/UnableToInitGLFWException.h src/engine/MainLoop.cpp include/engine/MainLoop.h src/engine/Pipeline.cpp include/engine/Pipeline.h src/engine/exception/file/UnableToOpenFile.cpp include/engine/exception/file/UnableToOpenFile.h)
 
 find_package(Vulkan REQUIRED)
 target_include_directories(${PROJECT_NAME} PUBLIC ${Vulkan_INCLUDE_DIRS})

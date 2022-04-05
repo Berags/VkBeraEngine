@@ -9,6 +9,7 @@ namespace Engine {
     MainLoop::MainLoop(Engine::Window *window) : window(window) {}
 
     void MainLoop::start() {
+
         // call to the update method that will draw graphics to the screen
         update();
 
@@ -21,12 +22,12 @@ namespace Engine {
     }
 
     void MainLoop::update() const {
-        while (!glfwWindowShouldClose(window->getGlfwWindow())) {
+        while (!window->shouldClose()) {
             // Calling the main render function
             render();
 
             // Swap front and back buffers
-            glfwSwapBuffers(window->getGlfwWindow());
+            window->swapBuffers();
 
             // Poll for and process events
             glfwPollEvents();

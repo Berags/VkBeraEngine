@@ -42,7 +42,11 @@ namespace Engine {
         std::cout << "\nVulkan_extensions_supported: " << extensionCount << " extensions supported\n";;
     }
 
-    GLFWwindow *Window::getGlfwWindow() const {
-        return glfwWindow;
+    bool Window::shouldClose() const {
+        return glfwWindowShouldClose(this->glfwWindow);
+    }
+
+    void Window::swapBuffers() const {
+        glfwSwapBuffers(this->glfwWindow);
     }
 }

@@ -15,7 +15,13 @@ namespace Engine {
 
         ~Window();
 
-        GLFWwindow *getGlfwWindow() const;
+        Window(const Window &) = delete;
+
+        Window &operator=(const Window &) = delete;
+
+        bool shouldClose() const;
+
+        void swapBuffers() const;
 
     private:
         GLFWwindow *glfwWindow;
