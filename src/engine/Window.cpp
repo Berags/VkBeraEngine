@@ -7,8 +7,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include "../../include/engine/Window.h"
-#include "../../include/engine/exception/window/UnableToStartWindowException.h"
-#include "../../include/engine/exception/window/UnableToInitGLFWException.h"
+#include "../../include/engine/exceptions/window/UnableToStartWindowException.h"
+#include "../../include/engine/exceptions/window/UnableToInitGLFWException.h"
 
 namespace Engine {
     Window::Window(std::string &name, int width, int height) : name(name), width(width), height(height) {

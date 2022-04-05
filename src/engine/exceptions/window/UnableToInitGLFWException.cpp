@@ -2,7 +2,7 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
-#include "../../../../include/engine/exception/window/UnableToInitGLFWException.h"
+#include "../../../../include/engine/exceptions/window/UnableToInitGLFWException.h"
 
 namespace Engine {
     namespace Exceptions {
