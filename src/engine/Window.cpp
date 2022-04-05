@@ -2,10 +2,12 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
+#define GLFW_INCLUDE_VULKAN
 
-#include <exception>
+#include <GLFW/glfw3.h>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 #include <iostream>
-#include <OpenGL/glu.h>
 #include "../../include/engine/Window.h"
 #include "../../include/engine/exception/window/UnableToStartWindowException.h"
 #include "../../include/engine/exception/window/UnableToInitGLFWException.h"
@@ -18,12 +20,15 @@ namespace Engine {
 
     Window::~Window() {
         std::cout << "Closing the glfwWindow...\n";
+        glfwDestroyWindow(glfwWindow);
         glfwTerminate();
     }
 
     void Window::initWindow() {
         if (!glfwInit())
             throw Engine::Exceptions::UnableToInitGLFWException();
+        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
         this->glfwWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
         /* Create a windowed mode glfwWindow and its OpenGL context */
@@ -31,9 +36,10 @@ namespace Engine {
             glfwTerminate();
             throw Engine::Exceptions::UnableToStartWindowException();
         }
-        /* Make the glfwWindow's context current */
-        glfwMakeContextCurrent(glfwWindow);
+        uint32_t extensionCount = 0;
+        vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
+        std::cout << extensionCount << " extensions supported\n";
     }
 
     GLFWwindow *Window::getGlfwWindow() const {
