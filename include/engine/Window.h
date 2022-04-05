@@ -21,8 +21,8 @@ namespace Engine {
         GLFWwindow *glfwWindow{};
 
         std::string name;
-        GLsizei height;
-        GLsizei width;
+        int height;
+        int width;
 
         void initWindow();
     };

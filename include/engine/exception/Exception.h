@@ -11,6 +11,7 @@ namespace Engine {
     namespace Exceptions {
         class Exception : public std::exception {
         public:
+            const char *what() const noexcept override;
             //virtual void sendErrorMessage() const;
         };
     }

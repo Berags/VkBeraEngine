@@ -20,8 +20,6 @@ namespace Engine {
 
     void MainLoop::update() const {
         while (!glfwWindowShouldClose(window->getGlfwWindow())) {
-            glClear(GL_COLOR_BUFFER_BIT);
-
             // Calling the main render function
             render();
 
@@ -34,7 +32,6 @@ namespace Engine {
     }
 
     void MainLoop::render() {
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        glEnd();
+
     }
 }
