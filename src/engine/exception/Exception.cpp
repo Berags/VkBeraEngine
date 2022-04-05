@@ -4,6 +4,11 @@
 
 #include "../../../include/engine/exception/Exception.h"
 
-const char *Engine::Exceptions::Exception::what() const noexcept {
-    return exception::what();
+namespace Engine {
+    namespace Exceptions {
+        const char *Exception::what() const noexcept {
+            return exception::what();
+        }
+    }
 }
+

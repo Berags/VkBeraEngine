@@ -4,13 +4,15 @@
 
 #include "../../include/engine/MainLoop.h"
 #include <string>
-#include <iostream>
 
 namespace Engine {
     MainLoop::MainLoop(Engine::Window *window) : window(window) {}
 
     void MainLoop::start() {
+        // call to the update method that will draw graphics to the screen
         update();
+
+        // when update is done we call the stop function that deletes the window
         stop();
     }
 

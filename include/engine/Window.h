@@ -11,14 +11,14 @@
 namespace Engine {
     class Window {
     public:
-        explicit Window(std::string &name);
+        explicit Window(std::string &name, int width, int height);
 
         ~Window();
 
         GLFWwindow *getGlfwWindow() const;
 
     private:
-        GLFWwindow *glfwWindow{};
+        GLFWwindow *glfwWindow;
 
         std::string name;
         int height;
