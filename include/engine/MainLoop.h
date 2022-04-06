@@ -17,8 +17,10 @@ namespace Engine {
 
     private:
         Engine::Window *window;
+        Engine::Device device{*window};
 
-        Pipeline pipeline{"../shaders/simple_shader.vert.spv", "../shaders/simple_shader.frag.spv"};
+        Pipeline pipeline{device, "../shaders/simple_shader.vert.spv", "../shaders/simple_shader.frag.spv",
+                          Pipeline::defaultConfigInfo(window->getWidth(), window->getHeight())};
 
         static void render();
 
