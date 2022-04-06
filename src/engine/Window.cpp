@@ -9,6 +9,7 @@
 #include "../../include/engine/Window.h"
 #include "../../include/engine/exceptions/window/UnableToStartWindowException.h"
 #include "../../include/engine/exceptions/window/UnableToInitGLFWException.h"
+#include "../../include/engine/exceptions/window/FailedToCreateWindowSurfaceException.h"
 
 namespace Engine {
     Window::Window(std::string &name, int width, int height) : name(name), width(width), height(height) {
@@ -48,5 +49,18 @@ namespace Engine {
 
     void Window::swapBuffers() const {
         glfwSwapBuffers(this->glfwWindow);
+    }
+
+    void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
+        if (glfwCreateWindowSurface(instance, glfwWindow, nullptr, surface) != VK_SUCCESS)
+            throw Engine::Exceptions::FailedToCreateWindowSurfaceException();
+    }
+
+    int Window::getHeight() const {
+        return height;
+    }
+
+    int Window::getWidth() const {
+        return width;
     }
 }

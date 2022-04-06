@@ -6,6 +6,7 @@
 #define MINIMINIMOTORWAYS_WINDOW_H
 
 #include <GLFW/glfw3.h>
+#include <vulkan/vulkan_core.h>
 #include <string>
 
 namespace Engine {
@@ -22,6 +23,12 @@ namespace Engine {
         bool shouldClose() const;
 
         void swapBuffers() const;
+
+        void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+
+        int getHeight() const;
+
+        int getWidth() const;
 
     private:
         GLFWwindow *glfwWindow;
