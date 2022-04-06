@@ -260,7 +260,7 @@ namespace Engine {
         return true;
     }
 
-    std::vector<const char *> Device::getRequiredExtensions() {
+    std::vector<const char *> Device::getRequiredExtensions() const {
         uint32_t glfwExtensionCount = 0;
         const char **glfwExtensions;
         glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
