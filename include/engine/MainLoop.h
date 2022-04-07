@@ -7,20 +7,37 @@
 
 #include "Window.h"
 #include "Pipeline.h"
+#include "SwapChain.h"
+#include <vector>
+#include <memory>
 
 namespace Engine {
     class MainLoop {
     public:
         explicit MainLoop(Window *window);
 
+        virtual ~MainLoop();
+
+        MainLoop(const MainLoop &) = delete;
+
+        MainLoop &operator=(const MainLoop &) = delete;
+
         void start();
 
     private:
         Engine::Window *window;
         Engine::Device device{*window};
+        SwapChain swapChain{device, window->getExtent()};
+        std::unique_ptr<Pipeline> pipeline;
+        VkPipelineLayout pipelineLayout;
+        std::vector<VkCommandBuffer> commandBuffers;
 
-        Pipeline pipeline{device, "../shaders/simple_shader.vert.spv", "../shaders/simple_shader.frag.spv",
-                          Pipeline::defaultConfigInfo(window->getWidth(), window->getHeight())};
+        void createPipelineLayout();
+
+        void createPipeline();
+
+        void createCommandBuffers();
+        void drawFrame();
 
         static void render();
 

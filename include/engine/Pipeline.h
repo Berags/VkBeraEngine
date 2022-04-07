@@ -13,15 +13,14 @@ namespace Engine {
     struct PipelineConfigInfo {
         VkViewport viewport;
         VkRect2D scissor;
-        VkPipelineViewportStateCreateInfo viewportInfo;
         VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
         VkPipelineRasterizationStateCreateInfo rasterizationInfo;
         VkPipelineMultisampleStateCreateInfo multisampleInfo;
         VkPipelineColorBlendAttachmentState colorBlendAttachment;
         VkPipelineColorBlendStateCreateInfo colorBlendInfo;
         VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
-        VkPipelineLayout pipelineLayout = nullptr;
-        VkRenderPass renderPass = nullptr;
+        VkPipelineLayout pipelineLayout = pipelineLayout;
+        VkRenderPass renderPass = renderPass;
         uint32_t subpass = 0;
     };
 
@@ -43,9 +42,9 @@ namespace Engine {
         static std::vector<char> readFile(const std::string &filePath);
 
         Engine::Device &device;
-        VkPipeline graphicsPipeline{};
-        VkShaderModule vertShaderModule{};
-        VkShaderModule fragShaderModule{};
+        VkPipeline graphicsPipeline;
+        VkShaderModule vertShaderModule;
+        VkShaderModule fragShaderModule;
 
         void createGraphicsPipeline(const std::string &vertFilePath, const std::string &fragFilePath,
                                     const PipelineConfigInfo &configInfo);
