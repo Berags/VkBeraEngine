@@ -40,7 +40,7 @@ namespace Engine {
         uint32_t extensionCount = 0;
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
 
-        std::cout << "\nVulkan_extensions_supported: " << extensionCount << " extensions supported\n";;
+        std::cout << "\nVulkan_extensions_supported: " << extensionCount << " extensions supported\n";
     }
 
     bool Window::shouldClose() const {

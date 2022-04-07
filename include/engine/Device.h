@@ -24,7 +24,7 @@ namespace Engine {
         bool graphicsFamilyHasValue = false;
         bool presentFamilyHasValue = false;
 
-        bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
+        bool isComplete() const { return graphicsFamilyHasValue && presentFamilyHasValue; }
     };
 
     class Device {
@@ -35,7 +35,7 @@ namespace Engine {
         const bool enableValidationLayers = true;
 #endif
 
-        Device(Engine::Window &window);
+        explicit Device(Engine::Window &window);
 
         ~Device();
 
@@ -91,7 +91,7 @@ namespace Engine {
                 VkImage &image,
                 VkDeviceMemory &imageMemory);
 
-        VkPhysicalDeviceProperties properties;
+        VkPhysicalDeviceProperties properties{};
 
     private:
         void createInstance();
@@ -123,16 +123,16 @@ namespace Engine {
 
         SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 
-        VkInstance instance;
-        VkDebugUtilsMessengerEXT debugMessenger;
+        VkInstance instance{};
+        VkDebugUtilsMessengerEXT debugMessenger{};
         VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
         Engine::Window &window;
-        VkCommandPool commandPool;
+        VkCommandPool commandPool{};
 
-        VkDevice device_;
-        VkSurfaceKHR surface_;
-        VkQueue graphicsQueue_;
-        VkQueue presentQueue_;
+        VkDevice device_{};
+        VkSurfaceKHR surface_{};
+        VkQueue graphicsQueue_{};
+        VkQueue presentQueue_{};
 
         const std::vector<const char *> validationLayers = {"VK_LAYER_KHRONOS_validation"};
         const std::vector<const char *> deviceExtensions = {VK_KHR_SWAPCHAIN_EXTENSION_NAME};
