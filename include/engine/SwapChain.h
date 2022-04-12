@@ -45,7 +45,7 @@ namespace Engine {
 
         VkResult acquireNextImage(uint32_t *imageIndex);
 
-        VkResult submitCommandBuffers(const VkCommandBuffer *buffers, uint32_t *imageIndex);
+        VkResult submitCommandBuffers(const VkCommandBuffer *buffers, const uint32_t *imageIndex);
 
     private:
         void createSwapChain();

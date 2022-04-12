@@ -11,16 +11,23 @@
 
 namespace Engine {
     struct PipelineConfigInfo {
-        VkViewport viewport;
-        VkRect2D scissor;
-        VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo;
-        VkPipelineRasterizationStateCreateInfo rasterizationInfo;
-        VkPipelineMultisampleStateCreateInfo multisampleInfo;
-        VkPipelineColorBlendAttachmentState colorBlendAttachment;
-        VkPipelineColorBlendStateCreateInfo colorBlendInfo;
-        VkPipelineDepthStencilStateCreateInfo depthStencilInfo;
-        VkPipelineLayout pipelineLayout = pipelineLayout;
-        VkRenderPass renderPass = renderPass;
+        PipelineConfigInfo() = default;
+
+        PipelineConfigInfo(const PipelineConfigInfo &) = delete;
+
+        PipelineConfigInfo &operator=(const PipelineConfigInfo &) = delete;
+
+        VkViewport viewport{};
+        VkRect2D scissor{};
+        VkPipelineViewportStateCreateInfo viewportInfo{};
+        VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
+        VkPipelineRasterizationStateCreateInfo rasterizationInfo{};
+        VkPipelineMultisampleStateCreateInfo multisampleInfo{};
+        VkPipelineColorBlendAttachmentState colorBlendAttachment{};
+        VkPipelineColorBlendStateCreateInfo colorBlendInfo{};
+        VkPipelineDepthStencilStateCreateInfo depthStencilInfo{};
+        VkPipelineLayout pipelineLayout = nullptr;
+        VkRenderPass renderPass = nullptr;
         uint32_t subpass = 0;
     };
 
@@ -36,7 +43,9 @@ namespace Engine {
 
         void operator=(const Pipeline &) = delete;
 
-        static PipelineConfigInfo defaultConfigInfo(uint32_t width, uint32_t height);
+        static void defaultConfigInfo(PipelineConfigInfo &configInfo, uint32_t width, uint32_t height);
+
+        void bind(VkCommandBuffer commandBuffer);
 
     private:
         static std::vector<char> readFile(const std::string &filePath);
