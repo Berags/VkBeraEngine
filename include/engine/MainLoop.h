@@ -37,11 +37,12 @@ namespace Engine {
         void createPipeline();
 
         void createCommandBuffers();
+
         void drawFrame();
 
         static void render();
 
-        void update() const;
+        void update();
 
         void stop();
     };
