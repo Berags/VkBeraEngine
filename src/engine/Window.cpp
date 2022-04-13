@@ -28,9 +28,14 @@ namespace Engine {
             throw Engine::Exceptions::UnableToInitGLFWException();
 
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
         this->glfwWindow = glfwCreateWindow(width, height, name.c_str(), nullptr, nullptr);
+
+        /* Window resize */
+        glfwSetWindowUserPointer(glfwWindow, this);
+        glfwSetFramebufferSizeCallback(glfwWindow, frameBufferResizedCallback);
+
         /* Create a windowed mode glfwWindow and its Vulkan context */
         if (!glfwWindow) {
             glfwTerminate();
@@ -62,5 +67,20 @@ namespace Engine {
 
     int Window::getWidth() const {
         return width;
+    }
+
+    bool Window::wasWindowResized() const {
+        return frameBufferResized;
+    }
+
+    void Window::resetWindowResizedFlag() {
+        frameBufferResized = false;
+    }
+
+    void Window::frameBufferResizedCallback(GLFWwindow *glfWwindow, int width, int height) {
+        auto window = reinterpret_cast<Engine::Window *>(glfwGetWindowUserPointer(glfWwindow));
+        window->frameBufferResized = true;
+        window->width = width;
+        window->height = height;
     }
 }

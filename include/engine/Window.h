@@ -22,6 +22,9 @@ namespace Engine {
 
         bool shouldClose() const;
 
+        bool wasWindowResized() const;
+        void resetWindowResizedFlag();
+
         void swapBuffers() const;
 
         void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
@@ -40,8 +43,10 @@ namespace Engine {
         std::string name;
         int height;
         int width;
+        bool frameBufferResized = false;
 
         void initWindow();
+        static void frameBufferResizedCallback(GLFWwindow *glfWwindow, int width, int height);
     };
 }
 

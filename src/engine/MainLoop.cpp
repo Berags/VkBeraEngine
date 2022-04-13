@@ -68,9 +68,7 @@ namespace Engine {
     void MainLoop::createPipeline() {
         PipelineConfigInfo pipelineConfig{};
         Pipeline::defaultConfigInfo(
-                pipelineConfig,
-                swapChain.width(),
-                swapChain.height());
+                pipelineConfig);
         pipelineConfig.renderPass = swapChain.getRenderPass();
         pipelineConfig.pipelineLayout = pipelineLayout;
         pipeline = std::make_unique<Pipeline>(
