@@ -3,6 +3,7 @@
 //
 
 #include "../../include/engine/Pipeline.h"
+#include "../../include/engine/Model.h"
 #include "../../include/engine/exceptions/file/UnableToOpenFile.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModule.h"
 #include <fstream>
@@ -68,12 +69,15 @@ namespace Engine {
         shaderStages[1].pNext = nullptr;
         shaderStages[1].pSpecializationInfo = nullptr;
 
+        auto bindingDescriptions = Engine::Model::Vertex::getBindingDescriptions();
+        auto attributeDescriptions = Engine::Model::Vertex::getAttributeDescriptions();
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-        vertexInputInfo.vertexAttributeDescriptionCount = 0;
-        vertexInputInfo.vertexBindingDescriptionCount = 0;
-        vertexInputInfo.pVertexAttributeDescriptions = nullptr;
-        vertexInputInfo.pVertexBindingDescriptions = nullptr;
+        vertexInputInfo.vertexAttributeDescriptionCount =
+                static_cast<uint32_t>(attributeDescriptions.size());
+        vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescriptions.size());
+        vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data();
+        vertexInputInfo.pVertexBindingDescriptions = bindingDescriptions.data();
 
         VkGraphicsPipelineCreateInfo pipelineInfo{};
         pipelineInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
@@ -112,7 +116,7 @@ namespace Engine {
             throw Engine::Exceptions::FailedToCreateShaderModule();
     }
 
-    void Pipeline::defaultConfigInfo(PipelineConfigInfo& configInfo, uint32_t width, uint32_t height) {
+    void Pipeline::defaultConfigInfo(PipelineConfigInfo &configInfo, uint32_t width, uint32_t height) {
         configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
         configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
         configInfo.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;

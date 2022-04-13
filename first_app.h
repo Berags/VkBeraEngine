@@ -11,6 +11,7 @@
 #include "include/engine/Device.h"
 #include "include/engine/SwapChain.h"
 #include "include/engine/Pipeline.h"
+#include "include/engine/Model.h"
 
 class FirstApp {
 public:
@@ -28,6 +29,7 @@ public:
     void run();
 
 private:
+    void loadModels();
     void createPipelineLayout();
 
     void createPipeline();
@@ -42,6 +44,7 @@ private:
     std::unique_ptr<Engine::Pipeline> lvePipeline;
     VkPipelineLayout pipelineLayout;
     std::vector<VkCommandBuffer> commandBuffers;
+    std::unique_ptr<Engine::Model> model;
 };
 
 

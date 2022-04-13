@@ -4,7 +4,9 @@
 
 #include <array>
 #include "first_app.h"
+
 FirstApp::FirstApp() {
+    loadModels();
     createPipelineLayout();
     createPipeline();
     createCommandBuffers();
@@ -88,7 +90,8 @@ void FirstApp::createCommandBuffers() {
         vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
         lvePipeline->bind(commandBuffers[i]);
-        vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+        model->bind(commandBuffers[i]);
+        model->draw(commandBuffers[i]);
 
         vkCmdEndRenderPass(commandBuffers[i]);
         if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {
@@ -96,6 +99,7 @@ void FirstApp::createCommandBuffers() {
         }
     }
 }
+
 void FirstApp::drawFrame() {
     uint32_t imageIndex;
     auto result = lveSwapChain.acquireNextImage(&imageIndex);
@@ -107,4 +111,14 @@ void FirstApp::drawFrame() {
     if (result != VK_SUCCESS) {
         throw std::runtime_error("failed to present swap chain image!");
     }
+}
+
+void FirstApp::loadModels() {
+    std::vector<Engine::Model::Vertex> vertices{
+            {{.0f,  -.5f}},
+            {{.5f,  .5f}},
+            {{-.5f, .5f}}
+    };
+
+    model = std::make_unique<Engine::Model>(lveDevice, vertices);
 }
