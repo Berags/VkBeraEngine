@@ -6,6 +6,11 @@
 #include <iostream>
 #include <utility>
 #include "../../include/engine/SwapChain.h"
+#include "../../include/engine/exceptions/vulkan/FailedToSubmitDrawCommandBufferException.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateSwapChainException.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateTextureImageViewException.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateSynchronizationObjectException.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateRenderPassException.h"
 
 namespace Engine {
 
@@ -96,7 +101,7 @@ namespace Engine {
         vkResetFences(device.device(), 1, &inFlightFences[currentFrame]);
         if (vkQueueSubmit(device.graphicsQueue(), 1, &submitInfo, inFlightFences[currentFrame]) !=
             VK_SUCCESS) {
-            throw std::runtime_error("failed to submit draw command buffer!");
+            throw Engine::Exceptions::FailedToSubmitDrawCommandBufferException();
         }
 
         VkPresentInfoKHR presentInfo = {};
@@ -164,7 +169,7 @@ namespace Engine {
         createInfo.oldSwapchain = oldSwapChain == nullptr ? VK_NULL_HANDLE : oldSwapChain->swapChain;
 
         if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create swap chain!");
+            throw Engine::Exceptions::FailedToCreateSwapChainException();
         }
 
         // we only specified a minimum number of images in the swap chain, so the implementation is
@@ -195,7 +200,7 @@ namespace Engine {
 
             if (vkCreateImageView(device.device(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
                 VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
+                throw Engine::Exceptions::FailedToCreateTextureImageViewException();
             }
         }
     }
@@ -255,7 +260,7 @@ namespace Engine {
         renderPassInfo.pDependencies = &dependency;
 
         if (vkCreateRenderPass(device.device(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create render pass!");
+            throw Engine::Exceptions::FailedToCreateRenderPassException();
         }
     }
 
@@ -327,7 +332,7 @@ namespace Engine {
             viewInfo.subresourceRange.layerCount = 1;
 
             if (vkCreateImageView(device.device(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create texture image view!");
+                throw Engine::Exceptions::FailedToCreateTextureImageViewException();
             }
         }
     }
@@ -351,7 +356,7 @@ namespace Engine {
                 vkCreateSemaphore(device.device(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
                 VK_SUCCESS ||
                 vkCreateFence(device.device(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create synchronization objects for a frame!");
+                throw Engine::Exceptions::FailedToCreateSynchronizationObjectException();
             }
         }
     }
