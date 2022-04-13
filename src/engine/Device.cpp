@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_set>
 #include "../../include/engine/Device.h"
-#include "../../include/engine/exceptions/vulkan/FailedToFindVulkanSupportedGPU.h"
+#include "../../include/engine/exceptions/vulkan/FailedToFindVulkanSupportedGPUException.h"
 // local callback functions
 namespace Engine {
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -112,7 +112,7 @@ namespace Engine {
         uint32_t deviceCount = 0;
         vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
         if (deviceCount == 0) {
-            throw Engine::Exceptions::FailedToFindVulkanSupportedGPU();
+            throw Engine::Exceptions::FailedToFindVulkanSupportedGPUException();
         }
         std::cout << "Device count: " << deviceCount << std::endl;
         std::vector<VkPhysicalDevice> devices(deviceCount);

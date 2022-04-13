@@ -12,6 +12,7 @@
 #include "include/engine/SwapChain.h"
 #include "include/engine/Pipeline.h"
 #include "include/engine/Model.h"
+#include "include/engine/GameObject.h"
 
 class FirstApp {
 public:
@@ -29,7 +30,7 @@ public:
     void run();
 
 private:
-    void loadModels();
+    void loadGameObjects();
     void createPipelineLayout();
 
     void createPipeline();
@@ -38,6 +39,7 @@ private:
     void freeCommandBuffers();
 
     void drawFrame();
+    void renderGameObjects(VkCommandBuffer commandBuffer);
     void recreateSwapChain();
     void recordCommandBuffer(int imageIndex);
 
@@ -47,7 +49,7 @@ private:
     std::unique_ptr<Engine::Pipeline> lvePipeline;
     VkPipelineLayout pipelineLayout;
     std::vector<VkCommandBuffer> commandBuffers;
-    std::unique_ptr<Engine::Model> model;
+    std::vector<Engine::GameObject> gameObjects;
 };
 
 

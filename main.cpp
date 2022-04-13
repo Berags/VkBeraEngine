@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include "include/engine/Window.h"
-#include "include/engine/MainLoop.h"
 #include "first_app.h"
 
 int main() {
