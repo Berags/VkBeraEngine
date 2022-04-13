@@ -5,7 +5,7 @@
 #include "../../include/engine/Pipeline.h"
 #include "../../include/engine/Model.h"
 #include "../../include/engine/exceptions/file/UnableToOpenFile.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModule.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModuleException.h"
 #include <fstream>
 #include <iostream>
 #include <cassert>
@@ -113,7 +113,7 @@ namespace Engine {
         createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
 
         if (vkCreateShaderModule(device.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
-            throw Engine::Exceptions::FailedToCreateShaderModule();
+            throw Engine::Exceptions::FailedToCreateShaderModuleException();
     }
 
     void Pipeline::defaultConfigInfo(PipelineConfigInfo &configInfo) {
