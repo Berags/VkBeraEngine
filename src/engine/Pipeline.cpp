@@ -4,7 +4,7 @@
 
 #include "../../include/engine/Pipeline.h"
 #include "../../include/engine/Model.h"
-#include "../../include/engine/exceptions/file/UnableToOpenFile.h"
+#include "../../include/engine/exceptions/file/UnableToOpenFileException.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModuleException.h"
 #include <fstream>
 #include <iostream>
@@ -21,7 +21,7 @@ namespace Engine {
         std::ifstream file{filePath, std::ios::ate | std::ios::binary};
 
         if (!file.is_open()) {
-            throw Engine::Exceptions::UnableToOpenFile(filePath);
+            throw Engine::Exceptions::UnableToOpenFileException(filePath);
         }
 
         long fileSize = static_cast<long>(file.tellg());
