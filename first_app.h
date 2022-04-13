@@ -35,12 +35,15 @@ private:
     void createPipeline();
 
     void createCommandBuffers();
+    void freeCommandBuffers();
 
     void drawFrame();
+    void recreateSwapChain();
+    void recordCommandBuffer(int imageIndex);
 
-    Engine::Window lveWindow{(std::string &) "Ciao", WIDTH, HEIGHT};
+    Engine::Window lveWindow{(std::string &) "Minimini Motorways", WIDTH, HEIGHT};
     Engine::Device lveDevice{lveWindow};
-    Engine::SwapChain lveSwapChain{lveDevice, lveWindow.getExtent()};
+    std::unique_ptr<Engine::SwapChain> lveSwapChain;
     std::unique_ptr<Engine::Pipeline> lvePipeline;
     VkPipelineLayout pipelineLayout;
     std::vector<VkCommandBuffer> commandBuffers;
