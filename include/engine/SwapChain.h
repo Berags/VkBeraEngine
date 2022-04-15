@@ -12,7 +12,7 @@
 namespace Engine {
     class SwapChain {
     public:
-        static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
+        static constexpr int MAX_FRAMES_IN_FLIGHT = 3;
 
         SwapChain(Device &deviceRef, VkExtent2D windowExtent);
 
@@ -50,6 +50,8 @@ namespace Engine {
 
         VkResult submitCommandBuffers(const VkCommandBuffer *buffers, const uint32_t *imageIndex);
 
+        bool compareSwapFormats(const Engine::SwapChain &swapChain) const;
+
     private:
         void init();
 
@@ -61,7 +63,7 @@ namespace Engine {
 
         void createRenderPass();
 
-        void createFramebuffers();
+        void createFrameBuffers();
 
         void createSyncObjects();
 
@@ -75,6 +77,7 @@ namespace Engine {
         VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
 
         VkFormat swapChainImageFormat;
+        VkFormat swapChainDepthFormat;
         VkExtent2D swapChainExtent;
 
         std::vector<VkFramebuffer> swapChainFramebuffers;

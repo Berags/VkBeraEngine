@@ -10,9 +10,9 @@
 #include "include/engine/Window.h"
 #include "include/engine/Device.h"
 #include "include/engine/SwapChain.h"
-#include "include/engine/Pipeline.h"
 #include "include/engine/Model.h"
 #include "include/engine/GameObject.h"
+#include "include/engine/Renderer.h"
 
 class FirstApp {
 public:
@@ -31,24 +31,10 @@ public:
 
 private:
     void loadGameObjects();
-    void createPipelineLayout();
 
-    void createPipeline();
-
-    void createCommandBuffers();
-    void freeCommandBuffers();
-
-    void drawFrame();
-    void renderGameObjects(VkCommandBuffer commandBuffer);
-    void recreateSwapChain();
-    void recordCommandBuffer(int imageIndex);
-
-    Engine::Window lveWindow{(std::string &) "Minimini Motorways", WIDTH, HEIGHT};
-    Engine::Device lveDevice{lveWindow};
-    std::unique_ptr<Engine::SwapChain> lveSwapChain;
-    std::unique_ptr<Engine::Pipeline> lvePipeline;
-    VkPipelineLayout pipelineLayout;
-    std::vector<VkCommandBuffer> commandBuffers;
+    Engine::Window window{(std::string &) "Minimini Motorways", WIDTH, HEIGHT};
+    Engine::Device device{window};
+    Engine::Renderer renderer{window, device};
     std::vector<Engine::GameObject> gameObjects;
 };
 
