@@ -37,6 +37,8 @@ namespace Engine {
 
         int getWidth() const;
 
+        GLFWwindow *getGlfwWindow() const;
+
     private:
         GLFWwindow *glfwWindow;
 

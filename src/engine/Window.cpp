@@ -83,4 +83,8 @@ namespace Engine {
         window->width = width;
         window->height = height;
     }
+
+    GLFWwindow *Window::getGlfwWindow() const {
+        return glfwWindow;
+    }
 }
