@@ -28,7 +28,8 @@ namespace Engine {
 
         RenderSystem &operator=(const RenderSystem &) = delete;
 
-        void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<Engine::GameObject> &gameObjects, const Engine::Camera &camera);
+        void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<Engine::GameObject> &gameObjects,
+                               const Engine::Camera &camera);
 
 
     private:
@@ -40,7 +41,7 @@ namespace Engine {
 
         Engine::Device &device;
         std::unique_ptr<Engine::Pipeline> pipeline;
-        VkPipelineLayout pipelineLayout;
+        VkPipelineLayout pipelineLayout{};
     };
 }
 

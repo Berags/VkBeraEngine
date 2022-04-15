@@ -11,4 +11,5 @@ const char *Engine::Exceptions::UnableToOpenFileException::what() const noexcept
     return error.c_str();
 }
 
-Engine::Exceptions::UnableToOpenFileException::UnableToOpenFileException(std::string fileName) : fileName(std::move(fileName)) {}
+Engine::Exceptions::UnableToOpenFileException::UnableToOpenFileException(const std::string &fileName) : fileName(
+        std::move(fileName)) {}

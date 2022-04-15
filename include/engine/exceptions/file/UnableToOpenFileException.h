@@ -12,7 +12,7 @@ namespace Engine {
     namespace Exceptions {
         class UnableToOpenFileException : public Engine::Exceptions::Exception {
         public:
-            UnableToOpenFileException(std::string fileName);
+            explicit UnableToOpenFileException(const std::string &fileName);
 
             const char *what() const noexcept override;
 
