@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include "../../include/engine/Device.h"
 #include "../../include/engine/exceptions/vulkan/FailedToFindVulkanSupportedGPUException.h"
-// local callback functions
+
 namespace Engine {
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
             VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
