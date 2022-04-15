@@ -8,7 +8,7 @@
 
 namespace Engine {
 
-    void KeyboardMovementController::moveInPlaneXZ(GLFWwindow *glfWwindow, float dt, GameObject &gameObject) {
+    void KeyboardMovementController::moveInPlaneXZ(GLFWwindow *glfWwindow, float dt, GameObject &gameObject) const {
         glm::vec3 rotate{0};
 
         if (glfwGetKey(glfWwindow, keys.lookRight) == GLFW_PRESS) rotate.y += 1.f;

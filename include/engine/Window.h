@@ -23,6 +23,7 @@ namespace Engine {
         bool shouldClose() const;
 
         bool wasWindowResized() const;
+
         void resetWindowResizedFlag();
 
         void swapBuffers() const;
@@ -48,6 +49,7 @@ namespace Engine {
         bool frameBufferResized = false;
 
         void initWindow();
+
         static void frameBufferResizedCallback(GLFWwindow *glfWwindow, int width, int height);
     };
 }

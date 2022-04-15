@@ -20,7 +20,7 @@ namespace Engine {
     std::vector<char> Pipeline::readFile(const std::string &filePath) {
         std::ifstream file{filePath, std::ios::ate | std::ios::binary};
 
-        if (!file.is_open()) {
+        if (!file.is_open() || file.fail()) {
             throw Engine::Exceptions::UnableToOpenFileException(filePath);
         }
 

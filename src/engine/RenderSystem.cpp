@@ -2,18 +2,17 @@
 // Created by Jacopo Beragnoli on 13/04/22.
 //
 
-#include "../../include/engine/RenderSystem.h"
-
+// libs
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
 #include <glm/glm.hpp>
-#include <glm/gtc/constants.hpp>
-
-// std
 #include <array>
 #include <cassert>
-#include <stdexcept>
+
+// headers
+#include "../../include/engine/RenderSystem.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreatePipeLineLayoutException.h"
 
 namespace Engine {
 
@@ -46,7 +45,7 @@ namespace Engine {
         pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
         if (vkCreatePipelineLayout(device.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
             VK_SUCCESS) {
-            throw std::runtime_error("failed to create pipeline layout!");
+            throw Engine::Exceptions::FailedToCreatePipeLineLayoutException();
         }
     }
 

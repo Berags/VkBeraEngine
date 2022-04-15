@@ -2,10 +2,13 @@
 // Created by Jacopo Beragnoli on 13/04/22.
 //
 
-#include "../../include/engine/Renderer.h"
+// libs
 #include <array>
 #include <cassert>
 #include <stdexcept>
+
+// headers
+#include "../../include/engine/Renderer.h"
 
 namespace Engine {
 

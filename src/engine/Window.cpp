@@ -2,10 +2,12 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
+// libs
 #define GLFW_INCLUDE_VULKAN
-
 #include <GLFW/glfw3.h>
 #include <iostream>
+
+// headers
 #include "../../include/engine/Window.h"
 #include "../../include/engine/exceptions/window/UnableToStartWindowException.h"
 #include "../../include/engine/exceptions/window/UnableToInitGLFWException.h"
