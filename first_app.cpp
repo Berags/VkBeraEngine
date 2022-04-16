@@ -57,13 +57,13 @@ void FirstApp::run() {
 }
 
 void FirstApp::loadGameObjects() {
-    std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, "../models/free_car_001.obj");
+    std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, "../models/viking_room.obj");
 
     auto cube = Engine::GameObject::createGameObject();
     cube.model = model;
     cube.transform.translation = {.0f, .0f, 2.5f};
-    cube.transform.rotation = {0.f, glm::two_pi<float>(), glm::pi<float>()};
-    cube.transform.scale = {.4f, .4f, .4f};
+    cube.transform.rotation = {glm::half_pi<float>(), glm::half_pi<float>(), .0f};
+    cube.transform.scale = {.8f, .8f, .8f};
 
     gameObjects.push_back(std::move(cube));
 }
