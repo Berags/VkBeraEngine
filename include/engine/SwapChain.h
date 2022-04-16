@@ -24,23 +24,23 @@ namespace Engine {
 
         void operator=(const SwapChain &) = delete;
 
-        VkFramebuffer getFrameBuffer(int index) const { return swapChainFramebuffers[index]; }
+        [[nodiscard]] VkFramebuffer getFrameBuffer(int index) const { return swapChainFramebuffers[index]; }
 
-        VkRenderPass getRenderPass() const { return renderPass; }
+        [[nodiscard]] VkRenderPass getRenderPass() const { return renderPass; }
 
-        VkImageView getImageView(int index) const { return swapChainImageViews[index]; }
+        [[nodiscard]] VkImageView getImageView(int index) const { return swapChainImageViews[index]; }
 
-        size_t imageCount() const { return swapChainImages.size(); }
+        [[nodiscard]] size_t imageCount() const { return swapChainImages.size(); }
 
-        VkFormat getSwapChainImageFormat() const { return swapChainImageFormat; }
+        [[nodiscard]] VkFormat getSwapChainImageFormat() const { return swapChainImageFormat; }
 
-        VkExtent2D getSwapChainExtent() const { return swapChainExtent; }
+        [[nodiscard]] VkExtent2D getSwapChainExtent() const { return swapChainExtent; }
 
-        uint32_t width() const { return swapChainExtent.width; }
+        [[nodiscard]] uint32_t width() const { return swapChainExtent.width; }
 
-        uint32_t height() const { return swapChainExtent.height; }
+        [[nodiscard]] uint32_t height() const { return swapChainExtent.height; }
 
-        float extentAspectRatio() const {
+        [[nodiscard]] float extentAspectRatio() const {
             return static_cast<float>(swapChainExtent.width) / static_cast<float>(swapChainExtent.height);
         }
 
@@ -50,7 +50,7 @@ namespace Engine {
 
         VkResult submitCommandBuffers(const VkCommandBuffer *buffers, const uint32_t *imageIndex);
 
-        bool compareSwapFormats(const Engine::SwapChain &that) const;
+        [[nodiscard]] bool compareSwapFormats(const Engine::SwapChain &that) const;
 
     private:
         void init();

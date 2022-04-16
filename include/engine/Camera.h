@@ -23,9 +23,9 @@ namespace Engine {
 
         void setViewYXZ(glm::vec3 position, glm::vec3 rotation);
 
-        const glm::mat4 &getProjection() const;
+        [[nodiscard]] const glm::mat4 &getProjection() const;
 
-        const glm::mat4 &getView() const;
+        [[nodiscard]] const glm::mat4 &getView() const;
 
     private:
         glm::mat4 projectionMatrix{1.f};

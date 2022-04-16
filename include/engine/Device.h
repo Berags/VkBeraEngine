@@ -110,7 +110,7 @@ namespace Engine {
         // helper functions
         bool isDeviceSuitable(VkPhysicalDevice device);
 
-        std::vector<const char *> getRequiredExtensions() const;
+        [[nodiscard]] std::vector<const char *> getRequiredExtensions() const;
 
         bool checkValidationLayerSupport();
 

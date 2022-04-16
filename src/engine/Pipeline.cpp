@@ -14,7 +14,6 @@ namespace Engine {
     Pipeline::Pipeline(Engine::Device &device, const std::string &vertFilePath, const std::string &fragFilePath,
                        const PipelineConfigInfo &configInfo) : device{device} {
         createGraphicsPipeline(vertFilePath, fragFilePath, configInfo);
-
     }
 
     std::vector<char> Pipeline::readFile(const std::string &filePath) {

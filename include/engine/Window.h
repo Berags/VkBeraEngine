@@ -20,9 +20,9 @@ namespace Engine {
 
         Window &operator=(const Window &) = delete;
 
-        bool shouldClose() const;
+        [[nodiscard]] bool shouldClose() const;
 
-        bool wasWindowResized() const;
+        [[nodiscard]] bool wasWindowResized() const;
 
         void resetWindowResizedFlag();
 
