@@ -20,21 +20,24 @@ namespace Engine {
     };
 
     struct QueueFamilyIndices {
-        uint32_t graphicsFamily;
-        uint32_t presentFamily;
+        uint32_t graphicsFamily{};
+        uint32_t presentFamily{};
         bool graphicsFamilyHasValue = false;
         bool presentFamilyHasValue = false;
 
-        bool isComplete() const { return graphicsFamilyHasValue && presentFamilyHasValue; }
+        [[nodiscard]] bool isComplete() const { return graphicsFamilyHasValue && presentFamilyHasValue; }
     };
 
     class Device {
     public:
+
+        /* VALIDATION LAYER */
 #ifdef NDEBUG
         const bool enableValidationLayers = false;
 #else
-        const bool enableValidationLayers = true;
-#endif
+        const bool enableValidationLayers = true; // Enables the validation layer to print all operations
+#endif                                            // to the standard output, including Thread safety checks
+        /* VALIDATION LAYER */                    // and Resource Leaks Management
 
         explicit Device(Engine::Window &window);
 
@@ -43,7 +46,7 @@ namespace Engine {
         // Not copyable or movable
         Device(const Device &) = delete;
 
-        void operator=(const Device &) = delete;
+        Device operator=(const Device &) = delete;
 
         Device(Device
                &&) = delete;

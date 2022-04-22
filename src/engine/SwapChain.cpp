@@ -3,6 +3,8 @@
 //
 
 // libs
+#define STB_IMAGE_IMPLEMENTATION
+#include "../../include/libs/stb_image.h"
 #include <array>
 #include <iostream>
 #include <utility>
@@ -432,6 +434,5 @@ namespace Engine {
                that.swapChainImageFormat == this->swapChainImageFormat;
 
     }
-
 
 }

@@ -27,8 +27,8 @@ namespace Engine {
         void moveInPlaneXZ(GLFWwindow *glfWwindow, float dt, Engine::GameObject &gameObject) const;
 
         KeyMappings keys{};
-        float moveSpeed{3.f};
-        float lookSpeed{1.5f};
+        const float moveSpeed{3.f};
+        const float lookSpeed{1.5f};
     private:
     };
 }

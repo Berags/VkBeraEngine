@@ -40,7 +40,7 @@ namespace Engine {
 
         GameObject &operator=(GameObject &&) = default;
 
-        id_t getId() const {
+        [[nodiscard]] id_t getId() const {
             return id;
         }
 

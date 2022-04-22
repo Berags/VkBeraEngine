@@ -15,6 +15,7 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "Camera.h"
+#include "FrameInfo.h"
 
 namespace Engine {
     class RenderSystem {
@@ -28,8 +29,7 @@ namespace Engine {
 
         RenderSystem &operator=(const RenderSystem &) = delete;
 
-        void renderGameObjects(VkCommandBuffer commandBuffer, std::vector<Engine::GameObject> &gameObjects,
-                               const Engine::Camera &camera);
+        void renderGameObjects(Engine::FrameInfo &frameInfo, std::vector<Engine::GameObject> &gameObjects);
 
 
     private:

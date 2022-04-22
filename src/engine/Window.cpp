@@ -54,21 +54,9 @@ namespace Engine {
         return glfwWindowShouldClose(this->glfwWindow);
     }
 
-    void Window::swapBuffers() const {
-        glfwSwapBuffers(this->glfwWindow);
-    }
-
     void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
         if (glfwCreateWindowSurface(instance, glfwWindow, nullptr, surface) != VK_SUCCESS)
             throw Engine::Exceptions::FailedToCreateWindowSurfaceException();
-    }
-
-    int Window::getHeight() const {
-        return height;
-    }
-
-    int Window::getWidth() const {
-        return width;
     }
 
     bool Window::wasWindowResized() const {
