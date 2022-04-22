@@ -14,6 +14,7 @@
 
 #include "Device.h"
 #include "Utils.h"
+#include "Buffer.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -60,12 +61,10 @@ namespace Engine {
     private:
         Engine::Device &device;
 
-        VkBuffer vertexBuffer;
-        VkDeviceMemory vertexBufferMemory;
+        std::unique_ptr<Engine::Buffer> vertexBuffer;
         uint32_t vertexCount;
 
-        VkBuffer indexBuffer;
-        VkDeviceMemory indexBufferMemory;
+        std::unique_ptr<Engine::Buffer> indexBuffer;
         uint32_t indexCount;
         bool hasIndexBuffer{false};
 

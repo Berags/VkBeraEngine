@@ -26,19 +26,25 @@ namespace Engine {
 
         void resetWindowResizedFlag();
 
-        void swapBuffers() const;
+        void swapBuffers() const {
+            glfwSwapBuffers(this->glfwWindow);
+        }
 
         void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
 
-        VkExtent2D getExtent() {
+        [[nodiscard]] VkExtent2D getExtent() const {
             return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
         }
 
-        int getHeight() const;
+        [[nodiscard]] int getHeight() const {
+            return height;
+        }
 
-        int getWidth() const;
+        [[nodiscard]] int getWidth() const {
+            return width;
+        }
 
-        GLFWwindow *getGlfwWindow() const;
+        [[nodiscard]] GLFWwindow *getGlfwWindow() const;
 
     private:
         GLFWwindow *glfwWindow;
