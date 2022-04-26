@@ -13,6 +13,7 @@
 #include "include/engine/Model.h"
 #include "include/engine/GameObject.h"
 #include "include/engine/Renderer.h"
+#include "include/engine/Descriptors.h"
 
 class FirstApp {
 public:
@@ -32,9 +33,11 @@ public:
 private:
     void loadGameObjects();
 
-    Engine::Window window{(std::string &) "Minimini Motorways", WIDTH, HEIGHT};
+    Engine::Window window{(std::string &) "VkBeraEngine", WIDTH, HEIGHT};
     Engine::Device device{window};
     Engine::Renderer renderer{window, device};
+
+    std::unique_ptr<Engine::DescriptorPool> globalPool{};
     std::vector<Engine::GameObject> gameObjects;
 };
 

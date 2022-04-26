@@ -1,10 +1,13 @@
 //
-// Created by Jacopo Beragnoli on 17/04/22.
+// Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#include "../../include/engine/DescriptorSetLayout.h"
+#include "../../include/engine/Descriptors.h"
+#include <cassert>
+#include <stdexcept>
 
 namespace Engine {
+    // *************** Descriptor Set Layout Builder *********************
 
     DescriptorSetLayout::Builder &DescriptorSetLayout::Builder::addBinding(
             uint32_t binding,
@@ -28,10 +31,10 @@ namespace Engine {
 // *************** Descriptor Set Layout *********************
 
     DescriptorSetLayout::DescriptorSetLayout(
-            Device &Device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
+            Engine::Device &device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
             : device{device}, bindings{bindings} {
         std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings{};
-        for (auto kv: bindings) {
+        for (auto kv : bindings) {
             setLayoutBindings.push_back(kv.second);
         }
 
@@ -41,7 +44,7 @@ namespace Engine {
         descriptorSetLayoutInfo.pBindings = setLayoutBindings.data();
 
         if (vkCreateDescriptorSetLayout(
-                Device.device(),
+                device.device(),
                 &descriptorSetLayoutInfo,
                 nullptr,
                 &descriptorSetLayout) != VK_SUCCESS) {
@@ -66,7 +69,6 @@ namespace Engine {
         poolFlags = flags;
         return *this;
     }
-
     DescriptorPool::Builder &DescriptorPool::Builder::setMaxSets(uint32_t count) {
         maxSets = count;
         return *this;
@@ -79,7 +81,7 @@ namespace Engine {
 // *************** Descriptor Pool *********************
 
     DescriptorPool::DescriptorPool(
-            Device &Device,
+            Engine::Device &device,
             uint32_t maxSets,
             VkDescriptorPoolCreateFlags poolFlags,
             const std::vector<VkDescriptorPoolSize> &poolSizes)
@@ -91,7 +93,7 @@ namespace Engine {
         descriptorPoolInfo.maxSets = maxSets;
         descriptorPoolInfo.flags = poolFlags;
 
-        if (vkCreateDescriptorPool(Device.device(), &descriptorPoolInfo, nullptr, &descriptorPool) !=
+        if (vkCreateDescriptorPool(device.device(), &descriptorPoolInfo, nullptr, &descriptorPool) !=
             VK_SUCCESS) {
             throw std::runtime_error("failed to create descriptor pool!");
         }
@@ -102,7 +104,7 @@ namespace Engine {
     }
 
     bool DescriptorPool::allocateDescriptor(
-            VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const {
+            const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const {
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
         allocInfo.descriptorPool = descriptorPool;
@@ -131,7 +133,7 @@ namespace Engine {
 
 // *************** Descriptor Writer *********************
 
-    DescriptorWriter::DescriptorWriter(Engine::DescriptorSetLayout &setLayout, Engine::DescriptorPool &pool)
+    DescriptorWriter::DescriptorWriter(DescriptorSetLayout &setLayout, DescriptorPool &pool)
             : setLayout{setLayout}, pool{pool} {}
 
     DescriptorWriter &DescriptorWriter::writeBuffer(
@@ -186,10 +188,9 @@ namespace Engine {
     }
 
     void DescriptorWriter::overwrite(VkDescriptorSet &set) {
-        for (auto &write: writes) {
+        for (auto &write : writes) {
             write.dstSet = set;
         }
         vkUpdateDescriptorSets(pool.device.device(), writes.size(), writes.data(), 0, nullptr);
     }
-
 }
