@@ -14,6 +14,7 @@ namespace Engine {
         float frameTime;
         VkCommandBuffer commandBuffer;
         Engine::Camera &camera;
+        VkDescriptorSet globalDescriptorSet;
     };
 }
 

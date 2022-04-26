@@ -31,7 +31,7 @@ namespace Engine {
         };
 
         DescriptorSetLayout(
-                Engine::Device &device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
+                Engine::Device &device, const std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding>& bindings);
 
         ~DescriptorSetLayout();
 
@@ -83,7 +83,7 @@ namespace Engine {
         DescriptorPool &operator=(const DescriptorPool &) = delete;
 
         bool allocateDescriptor(
-                const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const;
+                VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const;
 
         void freeDescriptors(std::vector<VkDescriptorSet> &descriptors) const;
 
