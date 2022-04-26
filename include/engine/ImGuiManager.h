@@ -9,12 +9,14 @@
 #include <cstdio>
 #include <cstdlib>
 #include <stdexcept>
+#include <string>
 #include "Window.h"
 #include "Device.h"
 
 #include "../libs/imgui/imgui.h"
 #include "../libs/imgui/imgui_impl_glfw.h"
 #include "../libs/imgui/imgui_impl_vulkan.h"
+#include "GameObject.h"
 
 namespace Engine {
     static void check_vk_result(VkResult err) {
@@ -39,19 +41,15 @@ namespace Engine {
         void render(VkCommandBuffer commandBuffer);
 
         // Example state
-        bool show_demo_window = true;
-        bool show_another_window = false;
+        bool show_demo_window = false;
+        bool showGameObjectsWindow = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-        void runExample();
+        void run(std::vector<Engine::GameObject> &gameObjects);
 
     private:
         Engine::Device &device;
 
-        // We haven't yet covered descriptor pools in the tutorial series
-        // so I'm just going to create one for just imgui and store it here for now.
-        // maybe its preferred to have a separate descriptor pool for imgui anyway,
-        // I haven't looked into imgui best practices at all.
         VkDescriptorPool descriptorPool;
     };
 };
