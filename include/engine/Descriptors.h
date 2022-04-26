@@ -1,9 +1,9 @@
 //
-// Created by Jacopo Beragnoli on 17/04/22.
+// Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_DESCRIPTORSETLAYOUT_H
-#define MINIMINIMOTORWAYS_DESCRIPTORSETLAYOUT_H
+#ifndef MINIMINIMOTORWAYS_DESCRIPTORS_H
+#define MINIMINIMOTORWAYS_DESCRIPTORS_H
 
 #include <memory>
 #include <unordered_map>
@@ -31,10 +31,7 @@ namespace Engine {
         };
 
         DescriptorSetLayout(
-                Engine::Device
-                &device,
-                std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings
-        );
+                Engine::Device &device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
 
         ~DescriptorSetLayout();
 
@@ -42,14 +39,14 @@ namespace Engine {
 
         DescriptorSetLayout &operator=(const DescriptorSetLayout &) = delete;
 
-        [[nodiscard]] VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
+        VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
-        std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings;
     private:
         Engine::Device &device;
         VkDescriptorSetLayout descriptorSetLayout;
+        std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings;
 
-        friend class LveDescriptorWriter;
+        friend class DescriptorWriter;
     };
 
     class DescriptorPool {
@@ -64,7 +61,7 @@ namespace Engine {
 
             Builder &setMaxSets(uint32_t count);
 
-            [[nodiscard]] std::unique_ptr<DescriptorPool> build() const;
+            std::unique_ptr<DescriptorPool> build() const;
 
         private:
             Engine::Device &device;
@@ -86,17 +83,17 @@ namespace Engine {
         DescriptorPool &operator=(const DescriptorPool &) = delete;
 
         bool allocateDescriptor(
-                VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const;
+                const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const;
 
         void freeDescriptors(std::vector<VkDescriptorSet> &descriptors) const;
 
         void resetPool();
 
-        Engine::Device &device;
     private:
+        Engine::Device &device;
         VkDescriptorPool descriptorPool;
 
-        friend class LveDescriptorWriter;
+        friend class DescriptorWriter;
     };
 
     class DescriptorWriter {
@@ -117,4 +114,6 @@ namespace Engine {
         std::vector<VkWriteDescriptorSet> writes;
     };
 }
-#endif //MINIMINIMOTORWAYS_DESCRIPTORSETLAYOUT_H
+
+
+#endif //MINIMINIMOTORWAYS_DESCRIPTORS_H

@@ -20,6 +20,10 @@ struct GlobalUbo {
 };
 
 FirstApp::FirstApp() {
+    globalPool = Engine::DescriptorPool::Builder(device)
+            .setMaxSets(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
+            .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
+            .build();
     loadGameObjects();
 }
 
@@ -35,6 +39,18 @@ void FirstApp::run() {
                 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
         uboBuffer->map();
+    }
+
+    auto globalSetLayout = Engine::DescriptorSetLayout::Builder(device)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .build();
+
+    std::vector<VkDescriptorSet> globalDescriptorSets(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
+    for (int i = 0; i < globalDescriptorSets.size(); i++) {
+        auto bufferInfo = uboBuffers[i]->descriptorInfo();
+        Engine::DescriptorWriter(*globalSetLayout, *globalPool)
+                .writeBuffer(0, &bufferInfo)
+                .build(globalDescriptorSets[i]);
     }
 
     Engine::RenderSystem renderSystem{device, renderer.getSwapChainRenderPass()};
@@ -91,7 +107,7 @@ void FirstApp::loadGameObjects() {
     std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, "../models/viking_room.obj");
     std::shared_ptr<Engine::Model> modelCar = Engine::Model::createModelFromFile(device, "../models/free_car_001.obj");
     std::shared_ptr<Engine::Model> hellknight = Engine::Model::createModelFromFile(device,
-                                                                                  "../models/Hellknight_LATEST.obj");
+                                                                                   "../models/Hellknight_LATEST.obj");
 
     auto cube = Engine::GameObject::createGameObject();
     cube.model = model;
