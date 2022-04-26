@@ -62,7 +62,7 @@ void FirstApp::run() {
     //camera.setViewDirection(glm::vec3(0.f), glm::vec3(.5f, .0f, 1.f));
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 6.f), glm::vec3(.0f, .0f, 2.5f));
 
-    auto viewerObject = Engine::GameObject::createGameObject();
+    auto viewerObject = Engine::GameObject::createGameObject((std::string &) "Camera");
     Engine::KeyboardMovementController cameraController{};
 
     auto currentTime = std::chrono::high_resolution_clock::now();
@@ -104,7 +104,7 @@ void FirstApp::run() {
             renderSystem.renderGameObjects(frameInfo, gameObjects);
 
             // ImGui rendering
-            imGui.runExample();
+            imGui.run(gameObjects);
             imGui.render(commandBuffer);
 
             renderer.endSwapChainRenderPass(commandBuffer);
@@ -121,13 +121,13 @@ void FirstApp::loadGameObjects() {
     std::shared_ptr<Engine::Model> hellknight = Engine::Model::createModelFromFile(device,
                                                                                    "../models/Hellknight_LATEST.obj");
 
-    auto cube = Engine::GameObject::createGameObject();
+    auto cube = Engine::GameObject::createGameObject((std::string &) "Viking Room");
     cube.model = model;
     cube.transform.translation = {.0f, .0f, 2.5f};
     cube.transform.rotation = {glm::half_pi<float>(), glm::half_pi<float>(), .0f};
     cube.transform.scale = {.8f, .8f, .8f};
 
-    auto obj = Engine::GameObject::createGameObject();
+    auto obj = Engine::GameObject::createGameObject((std::string &) "Hell Knight");
     obj.model = hellknight;
     obj.transform.translation = {1.4f, .0f, 2.5f};
     obj.transform.rotation = {.0f, glm::pi<float>(), glm::pi<float>()};

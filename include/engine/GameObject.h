@@ -17,6 +17,7 @@ namespace Engine {
         glm::vec3 rotation{};
 
         [[nodiscard]] glm::mat4 mat4() const;
+
         [[nodiscard]] glm::mat3 normalMatrix() const;
     };
 
@@ -27,9 +28,9 @@ namespace Engine {
         glm::vec3 color{};
         TransformComponent transform{};
 
-        static GameObject createGameObject() {
+        static GameObject createGameObject(std::string &name) {
             static id_t currentId = 0;
-            return GameObject{currentId++};
+            return GameObject{currentId++, name};
         }
 
         GameObject(const GameObject &) = delete;
@@ -44,10 +45,16 @@ namespace Engine {
             return id;
         }
 
+        [[nodiscard]] const std::string &getName() const {
+            return name;
+        }
+
     private:
         id_t id;
 
-        explicit GameObject(id_t objectId) : id(objectId) {}
+        std::string name;
+
+        explicit GameObject(id_t objectId, std::string &name) : id(objectId), name(name) {}
     };
 }
 
