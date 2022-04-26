@@ -89,6 +89,12 @@ namespace Engine {
         void copyBufferToImage(
                 VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
 
+        VkInstance getInstance() { return instance; }
+
+        VkPhysicalDevice getPhysicalDevice() { return physicalDevice; }
+
+        uint32_t getGraphicsQueueFamily() { return findPhysicalQueueFamilies().graphicsFamily; }
+
         void createImageWithInfo(
                 const VkImageCreateInfo &imageInfo,
                 VkMemoryPropertyFlags properties,

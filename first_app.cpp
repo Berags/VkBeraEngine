@@ -13,6 +13,7 @@
 #include "first_app.h"
 #include "include/engine/RenderSystem.h"
 #include "include/engine/KeyboardMovementController.h"
+#include "include/engine/ImGuiManager.h"
 
 struct GlobalUbo {
     glm::mat4 projectionView{1.f};
@@ -30,6 +31,8 @@ FirstApp::FirstApp() {
 FirstApp::~FirstApp() = default;
 
 void FirstApp::run() {
+    Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
+
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
     for (auto &uboBuffer: uboBuffers) {
         uboBuffer = std::make_unique<Engine::Buffer>(
@@ -80,6 +83,8 @@ void FirstApp::run() {
         camera.setProspectiveProjection(glm::radians(50.f), aspectRatio, .1f, 10.f);
 
         if (auto commandBuffer = renderer.beginFrame()) {
+            imGui.newFrame();
+
             int frameIndex = renderer.getFrameIndex();
             Engine::FrameInfo frameInfo{
                     frameIndex,
@@ -97,6 +102,11 @@ void FirstApp::run() {
             // Render
             renderer.beginSwapChainRenderPass(commandBuffer);
             renderSystem.renderGameObjects(frameInfo, gameObjects);
+
+            // ImGui rendering
+            imGui.runExample();
+            imGui.render(commandBuffer);
+
             renderer.endSwapChainRenderPass(commandBuffer);
             renderer.endFrame();
         }
