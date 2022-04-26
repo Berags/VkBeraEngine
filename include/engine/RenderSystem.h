@@ -21,7 +21,7 @@ namespace Engine {
     class RenderSystem {
     public:
 
-        RenderSystem(Engine::Device &device, VkRenderPass renderPass);
+        RenderSystem(Engine::Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
         ~RenderSystem();
 
@@ -34,7 +34,7 @@ namespace Engine {
 
     private:
 
-        void createPipelineLayout();
+        void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
 
         void createPipeline(VkRenderPass renderPass);
 

@@ -31,10 +31,11 @@ namespace Engine {
 // *************** Descriptor Set Layout *********************
 
     DescriptorSetLayout::DescriptorSetLayout(
-            Engine::Device &device, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
+            Engine::Device &device, const std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> &bindings)
             : device{device}, bindings{bindings} {
         std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings{};
-        for (auto kv : bindings) {
+        setLayoutBindings.reserve(bindings.size());
+        for (auto kv: bindings) {
             setLayoutBindings.push_back(kv.second);
         }
 
@@ -69,6 +70,7 @@ namespace Engine {
         poolFlags = flags;
         return *this;
     }
+
     DescriptorPool::Builder &DescriptorPool::Builder::setMaxSets(uint32_t count) {
         maxSets = count;
         return *this;
@@ -104,7 +106,7 @@ namespace Engine {
     }
 
     bool DescriptorPool::allocateDescriptor(
-            const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const {
+            VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const {
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
         allocInfo.descriptorPool = descriptorPool;
@@ -188,7 +190,7 @@ namespace Engine {
     }
 
     void DescriptorWriter::overwrite(VkDescriptorSet &set) {
-        for (auto &write : writes) {
+        for (auto &write: writes) {
             write.dstSet = set;
         }
         vkUpdateDescriptorSets(pool.device.device(), writes.size(), writes.data(), 0, nullptr);
