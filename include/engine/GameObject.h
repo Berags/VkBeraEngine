@@ -6,6 +6,7 @@
 #define MINIMINIMOTORWAYS_GAMEOBJECT_H
 
 #include <memory>
+#include <unordered_map>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Model.h"
@@ -24,6 +25,8 @@ namespace Engine {
     class GameObject {
     public:
         using id_t = unsigned int;
+        using Map = std::unordered_map<id_t, GameObject>;
+
         std::shared_ptr<Engine::Model> model{};
         glm::vec3 color{};
         TransformComponent transform{};

@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include "../../include/engine/Window.h"
 #include "../../include/engine/Device.h"
+#include "../../include/engine/FrameInfo.h"
 
 namespace Engine {
     ImGuiManager::ImGuiManager(
@@ -99,7 +100,7 @@ namespace Engine {
         ImGui_ImplVulkan_RenderDrawData(drawdata, commandBuffer);
     }
 
-    void ImGuiManager::run(std::vector<Engine::GameObject> &gameObjects) {
+    void ImGuiManager::run(Engine::FrameInfo &frameInfo) {
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can
         // browse its code to learn more about Dear ImGui!).
         if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
@@ -141,7 +142,8 @@ namespace Engine {
             ImGui::Begin("Game Objects");
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
             if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {
-                for (auto &gameObj: gameObjects) {
+                for (auto &kv: frameInfo.gameObjects) {
+                    auto &gameObj = kv.second;
                     float scale = 1.f;
                     ImGui::PushID(static_cast<int>(gameObj.getId()));
 

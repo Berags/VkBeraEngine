@@ -38,7 +38,7 @@ private:
     Engine::Renderer renderer{window, device};
 
     std::unique_ptr<Engine::DescriptorPool> globalPool{};
-    std::vector<Engine::GameObject> gameObjects;
+    Engine::GameObject::Map gameObjects;
 };
 
 

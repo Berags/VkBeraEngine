@@ -29,7 +29,7 @@ namespace Engine {
 
         RenderSystem &operator=(const RenderSystem &) = delete;
 
-        void renderGameObjects(Engine::FrameInfo &frameInfo, std::vector<Engine::GameObject> &gameObjects);
+        void renderGameObjects(Engine::FrameInfo &frameInfo);
 
 
     private:

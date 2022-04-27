@@ -17,6 +17,7 @@
 #include "../libs/imgui/imgui_impl_glfw.h"
 #include "../libs/imgui/imgui_impl_vulkan.h"
 #include "GameObject.h"
+#include "FrameInfo.h"
 
 namespace Engine {
     static void check_vk_result(VkResult err) {
@@ -45,7 +46,7 @@ namespace Engine {
         bool showGameObjectsWindow = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-        void run(std::vector<Engine::GameObject> &gameObjects);
+        void run(Engine::FrameInfo &frameInfo);
 
     private:
         Engine::Device &device;
