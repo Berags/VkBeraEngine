@@ -66,7 +66,7 @@ namespace Engine {
     }
 
     void RenderSystem::renderGameObjects(
-            Engine::FrameInfo &frameInfo, std::vector<Engine::GameObject> &gameObjects) {
+            Engine::FrameInfo &frameInfo) {
         pipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(
@@ -77,7 +77,9 @@ namespace Engine {
                 &frameInfo.globalDescriptorSet,
                 0, nullptr);
 
-        for (auto &obj: gameObjects) {
+        for (auto &kv: frameInfo.gameObjects) {
+            auto &obj = kv.second;
+            if (obj.model == nullptr) continue;
             SimplePushConstantData push{};
             push.modelMatrix = obj.transform.mat4();
             push.normalMatrix = obj.transform.normalMatrix();

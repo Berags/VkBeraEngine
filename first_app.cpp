@@ -93,7 +93,8 @@ void FirstApp::run() {
                     frameTime,
                     commandBuffer,
                     camera,
-                    globalDescriptorSets[frameIndex]
+                    globalDescriptorSets[frameIndex],
+                    gameObjects
             };
             // Update
             GlobalUbo ubo{};
@@ -103,10 +104,10 @@ void FirstApp::run() {
 
             // Render
             renderer.beginSwapChainRenderPass(commandBuffer);
-            renderSystem.renderGameObjects(frameInfo, gameObjects);
+            renderSystem.renderGameObjects(frameInfo);
 
             // ImGui rendering
-            imGui.run(gameObjects);
+            imGui.run(frameInfo);
             imGui.render(commandBuffer);
 
             renderer.endSwapChainRenderPass(commandBuffer);
@@ -140,7 +141,7 @@ void FirstApp::loadGameObjects() {
     floor.transform.translation = {6.0f, .5f, .0f};
     floor.transform.scale = {50.f, 1.f, 50.f};
 
-    gameObjects.push_back(std::move(cube));
-    gameObjects.push_back(std::move(obj));
-    gameObjects.push_back(std::move(floor));
+    gameObjects.emplace(cube.getId(), std::move(cube));
+    gameObjects.emplace(obj.getId(), std::move(obj));
+    gameObjects.emplace(floor.getId(), std::move(floor));
 }

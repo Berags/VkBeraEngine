@@ -7,6 +7,7 @@
 
 #include <vulkan/vulkan_core.h>
 #include "Camera.h"
+#include "GameObject.h"
 
 namespace Engine {
     struct FrameInfo {
@@ -15,6 +16,7 @@ namespace Engine {
         VkCommandBuffer commandBuffer;
         Engine::Camera &camera;
         VkDescriptorSet globalDescriptorSet;
+        Engine::GameObject::Map &gameObjects;
     };
 }
 
