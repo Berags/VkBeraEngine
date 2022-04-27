@@ -119,7 +119,14 @@ namespace Engine {
         vkEnumeratePhysicalDevices(instance, &deviceCount, devices.data());
 
         for (const auto &device: devices) {
-            if (isDeviceSuitable(device)) {
+            if (isPreferredDevice(device)) {
+                physicalDevice = device;
+                return;
+            }
+        }
+
+        for (const auto &device: devices) {
+            if (isSuitableDevice(device)) {
                 physicalDevice = device;
                 break;
             }
@@ -195,7 +202,7 @@ namespace Engine {
 
     void Device::createSurface() { window.createWindowSurface(instance, &surface_); }
 
-    bool Device::isDeviceSuitable(VkPhysicalDevice device) {
+    bool Device::isSuitableDevice(VkPhysicalDevice device) {
         QueueFamilyIndices indices = findQueueFamilies(device);
 
         bool extensionsSupported = checkDeviceExtensionSupport(device);
@@ -529,5 +536,16 @@ namespace Engine {
         if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS) {
             throw std::runtime_error("failed to bind image memory!");
         }
+    }
+
+    bool Device::isPreferredDevice(VkPhysicalDevice device) {
+        if (!isSuitableDevice(device)) {
+            return false;
+        }
+
+        auto props = VkPhysicalDeviceProperties{};
+        vkGetPhysicalDeviceProperties(device, &props);
+
+        return props.deviceType == VkPhysicalDeviceType::VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU;
     }
 }

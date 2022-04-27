@@ -4,6 +4,7 @@
 
 // libs
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "../../include/libs/stb_image.h"
 #include <array>
 #include <iostream>
@@ -16,6 +17,7 @@
 #include "../../include/engine/exceptions/vulkan/FailedToCreateTextureImageViewException.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateSynchronizationObjectException.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateRenderPassException.h"
+#include "../../include/engine/Buffer.h"
 
 namespace Engine {
 
