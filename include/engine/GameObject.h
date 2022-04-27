@@ -22,12 +22,19 @@ namespace Engine {
         [[nodiscard]] glm::mat3 normalMatrix() const;
     };
 
+    struct PointLightComponent {
+        float lightIntensity = 1.f;
+    };
+
     class GameObject {
     public:
         using id_t = unsigned int;
         using Map = std::unordered_map<id_t, GameObject>;
 
+        // Optional pointers
         std::shared_ptr<Engine::Model> model{};
+        std::unique_ptr<PointLightComponent> pointLightComponent = nullptr;
+
         glm::vec3 color{};
         TransformComponent transform{};
 
@@ -35,6 +42,8 @@ namespace Engine {
             static id_t currentId = 0;
             return GameObject{currentId++, name};
         }
+
+        static GameObject createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
 
         GameObject(const GameObject &) = delete;
 

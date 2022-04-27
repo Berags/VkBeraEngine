@@ -16,13 +16,6 @@
 #include "include/engine/ImGuiManager.h"
 #include "include/engine/systems/PointLightSystem.h"
 
-struct GlobalUbo {
-    glm::mat4 projection{1.f};
-    glm::mat4 view{1.f};
-    glm::vec4 ambientColor{1.f, 1.f, 1.f, .02f}; // w is light intensity
-    glm::vec3 lightPosition{-1.f};
-    alignas(16) glm::vec4 lightColor{1.f}; // w is light intensity
-};
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -41,7 +34,7 @@ void FirstApp::run() {
     for (auto &uboBuffer: uboBuffers) {
         uboBuffer = std::make_unique<Engine::Buffer>(
                 device,
-                sizeof(GlobalUbo),
+                sizeof(Engine::GlobalUbo),
                 1,
                 VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT);
@@ -101,9 +94,10 @@ void FirstApp::run() {
                     gameObjects
             };
             // Update
-            GlobalUbo ubo{};
+            Engine::GlobalUbo ubo{};
             ubo.projection = camera.getProjection();
             ubo.view = camera.getView();
+            pointLightSystem.update(frameInfo, ubo);
             uboBuffers[frameIndex]->writeToBuffer(&ubo);
             uboBuffers[frameIndex]->flush();
 
@@ -161,9 +155,31 @@ void FirstApp::loadGameObjects() {
     man.transform.scale = {.007f, .007f, .007f};
     man.transform.rotation = {glm::pi<float>(), glm::pi<float>(), .0f};
 
+    {
+        std::vector<glm::vec3> lightColors{
+                {1.f, .1f, .1f},
+                {.1f, .1f, 1.f},
+                {.1f, 1.f, .1f},
+                {1.f, 1.f, .1f},
+                {.1f, 1.f, 1.f},
+                {1.f, 1.f, 1.f}  //
+        };
+
+        for (int i = 0; i < lightColors.size(); i++) {
+            auto pointLight = Engine::GameObject::createPointLight(1.f);
+            pointLight.color = lightColors[i];
+            auto rotateLight = glm::rotate(glm::mat4(1.f), (i * glm::two_pi<float>()) / lightColors.size(),
+                                           {.0f, -1.f, .0f});
+            pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+        }
+
+    }
+
     gameObjects.emplace(cube.getId(), std::move(cube));
     gameObjects.emplace(obj.getId(), std::move(obj));
     gameObjects.emplace(floor.getId(), std::move(floor));
     gameObjects.emplace(coloredCube.getId(), std::move(coloredCube));
     gameObjects.emplace(man.getId(), std::move(man));
+
 }
