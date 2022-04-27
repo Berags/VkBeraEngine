@@ -18,6 +18,13 @@ namespace Engine {
         projectionMatrix[3][2] = -near / (far - near);
     }
 
+    /**
+     *
+     * @param fovY
+     * @param aspect
+     * @param near
+     * @param far The distance that the camera will render
+     */
     void Camera::setProspectiveProjection(float fovY, float aspect, float near, float far) {
         assert(glm::abs(aspect - std::numeric_limits<float>::epsilon()) > 0.0f);
         const float tanHalfFovY = tan(fovY / 2.f);

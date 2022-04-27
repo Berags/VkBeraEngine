@@ -17,7 +17,9 @@
 
 struct GlobalUbo {
     glm::mat4 projectionView{1.f};
-    glm::vec3 lightDirection = glm::normalize(glm::vec3(1.f, -3.f, -1.f));
+    glm::vec4 ambientColor{1.f, 1.f, 1.f, .02f}; // w is light intensity
+    glm::vec3 lightPosition{-1.f};
+    alignas(16) glm::vec4 lightColor{1.f}; // w is light intensity
 };
 
 FirstApp::FirstApp() {
@@ -59,10 +61,10 @@ void FirstApp::run() {
     Engine::RenderSystem renderSystem{device, renderer.getSwapChainRenderPass(),
                                       globalSetLayout->getDescriptorSetLayout()};
     Engine::Camera camera{};
-    //camera.setViewDirection(glm::vec3(0.f), glm::vec3(.5f, .0f, 1.f));
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 6.f), glm::vec3(.0f, .0f, 2.5f));
 
     auto viewerObject = Engine::GameObject::createGameObject((std::string &) "Camera");
+    viewerObject.transform.translation.z = -2.5f;
     Engine::KeyboardMovementController cameraController{};
 
     auto currentTime = std::chrono::high_resolution_clock::now();
@@ -80,7 +82,7 @@ void FirstApp::run() {
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspectRatio = renderer.getAspectRatio();
-        camera.setProspectiveProjection(glm::radians(50.f), aspectRatio, .1f, 10.f);
+        camera.setProspectiveProjection(glm::radians(50.f), aspectRatio, .1f, 100.f);
 
         if (auto commandBuffer = renderer.beginFrame()) {
             imGui.newFrame();
@@ -117,22 +119,28 @@ void FirstApp::run() {
 
 void FirstApp::loadGameObjects() {
     std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, "../models/viking_room.obj");
-    std::shared_ptr<Engine::Model> modelCar = Engine::Model::createModelFromFile(device, "../models/free_car_001.obj");
     std::shared_ptr<Engine::Model> hellknight = Engine::Model::createModelFromFile(device,
                                                                                    "../models/Hellknight_LATEST.obj");
+    std::shared_ptr<Engine::Model> quadModel = Engine::Model::createModelFromFile(device, "../models/quad.obj");
 
     auto cube = Engine::GameObject::createGameObject((std::string &) "Viking Room");
     cube.model = model;
-    cube.transform.translation = {.0f, .0f, 2.5f};
+    cube.transform.translation = {.0f, .0f, .0f};
     cube.transform.rotation = {glm::half_pi<float>(), glm::half_pi<float>(), .0f};
     cube.transform.scale = {.8f, .8f, .8f};
 
     auto obj = Engine::GameObject::createGameObject((std::string &) "Hell Knight");
     obj.model = hellknight;
-    obj.transform.translation = {1.4f, .0f, 2.5f};
+    obj.transform.translation = {1.4f, .0f, .0f};
     obj.transform.rotation = {.0f, glm::pi<float>(), glm::pi<float>()};
     obj.transform.scale = {.4f, .4f, .4f};
 
+    auto floor = Engine::GameObject::createGameObject((std::string &) "Floor");
+    floor.model = quadModel;
+    floor.transform.translation = {6.0f, .5f, .0f};
+    floor.transform.scale = {50.f, 1.f, 50.f};
+
     gameObjects.push_back(std::move(cube));
     gameObjects.push_back(std::move(obj));
+    gameObjects.push_back(std::move(floor));
 }

@@ -110,7 +110,7 @@ namespace Engine {
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Hello, world!");  // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("VkBeraEngine - Debug");  // Create a window called "Hello, world!" and append into it.
 
             ImGui::Text(
                     "This is some useful text.");  // Display some text (you can use a format strings too)
@@ -238,6 +238,21 @@ namespace Engine {
                         ImGui::NextColumn();
                         ImGui::PopID();
 
+                        ImGui::PushID("Color Component");
+                        ImGui::TableNextRow();
+                        ImGui::TableSetColumnIndex(0);
+                        ImGui::AlignTextToFramePadding();
+                        ImGui::TreeNodeEx("Color", flags, "Color");
+                        ImGui::TableSetColumnIndex(1);
+                        ImGui::SetNextItemWidth(-FLT_MIN);
+                        ImGui::ColorEdit3("clear color",
+                                          (float *) &clear_color);  // Edit 3 floats representing a color
+                        gameObj.color.x = clear_color.x;
+                        gameObj.color.y = clear_color.y;
+                        gameObj.color.z = clear_color.z;
+                        ImGui::NextColumn();
+                        ImGui::PopID();
+
                         ImGui::TreePop();
                     }
                     ImGui::PopID();
@@ -247,10 +262,5 @@ namespace Engine {
             ImGui::PopStyleVar();
             ImGui::End();
         }
-    }
-
-    void showObject(const std::string &prefix, int uid) {
-        // Use object uid as identifier. Most commonly you could also use the object pointer as a base ID.
-
     }
 }
