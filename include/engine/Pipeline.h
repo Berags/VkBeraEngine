@@ -17,6 +17,8 @@ namespace Engine {
 
         PipelineConfigInfo &operator=(const PipelineConfigInfo &) = delete;
 
+        std::vector<VkVertexInputBindingDescription> bindingDescription{};
+        std::vector<VkVertexInputAttributeDescription> attributeDescription{};
         VkPipelineViewportStateCreateInfo viewportInfo{};
         VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
         VkPipelineRasterizationStateCreateInfo rasterizationInfo{};

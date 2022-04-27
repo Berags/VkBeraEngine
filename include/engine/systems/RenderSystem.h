@@ -7,15 +7,15 @@
 
 #include <memory>
 #include <vector>
-#include "Window.h"
-#include "Device.h"
-#include "SwapChain.h"
-#include "Pipeline.h"
-#include "Model.h"
-#include "GameObject.h"
-#include "Renderer.h"
-#include "Camera.h"
-#include "FrameInfo.h"
+#include "../Window.h"
+#include "../Device.h"
+#include "../SwapChain.h"
+#include "../Pipeline.h"
+#include "../Model.h"
+#include "../GameObject.h"
+#include "../Renderer.h"
+#include "../Camera.h"
+#include "../FrameInfo.h"
 
 namespace Engine {
     class RenderSystem {
