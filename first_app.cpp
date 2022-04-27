@@ -129,16 +129,19 @@ void FirstApp::loadGameObjects() {
     std::shared_ptr<Engine::Model> hellknight = Engine::Model::createModelFromFile(device,
                                                                                    "../models/Hellknight_LATEST.obj");
     std::shared_ptr<Engine::Model> quadModel = Engine::Model::createModelFromFile(device, "../models/quad.obj");
-
+    std::shared_ptr<Engine::Model> coloredCubeModel = Engine::Model::createModelFromFile(device,
+                                                                                         "../models/colored_cube.obj");
+    std::shared_ptr<Engine::Model> manModel = Engine::Model::createModelFromFile(device,
+                                                                                 "../models/man3.obj");
     auto cube = Engine::GameObject::createGameObject((std::string &) "Viking Room");
     cube.model = model;
-    cube.transform.translation = {.0f, .0f, .0f};
+    cube.transform.translation = {.0f, .505f, .0f};
     cube.transform.rotation = {glm::half_pi<float>(), glm::half_pi<float>(), .0f};
-    cube.transform.scale = {.8f, .8f, .8f};
+    cube.transform.scale = {2.f, 2.f, 2.f};
 
     auto obj = Engine::GameObject::createGameObject((std::string &) "Hell Knight");
     obj.model = hellknight;
-    obj.transform.translation = {1.4f, .0f, .0f};
+    obj.transform.translation = {1.4f, -.05f, .0f};
     obj.transform.rotation = {.0f, glm::pi<float>(), glm::pi<float>()};
     obj.transform.scale = {.4f, .4f, .4f};
 
@@ -147,7 +150,20 @@ void FirstApp::loadGameObjects() {
     floor.transform.translation = {6.0f, .5f, .0f};
     floor.transform.scale = {50.f, 1.f, 50.f};
 
+    auto coloredCube = Engine::GameObject::createGameObject((std::string &) "Colored Cube");
+    coloredCube.model = coloredCubeModel;
+    coloredCube.transform.translation = {1.6f, .0f, -2.0f};
+    coloredCube.transform.scale = {.26f, .26f, .26f};
+
+    auto man = Engine::GameObject::createGameObject((std::string &) "Man");
+    man.model = manModel;
+    man.transform.translation = {-1.3f, .5f, -2.0f};
+    man.transform.scale = {.007f, .007f, .007f};
+    man.transform.rotation = {glm::pi<float>(), glm::pi<float>(), .0f};
+
     gameObjects.emplace(cube.getId(), std::move(cube));
     gameObjects.emplace(obj.getId(), std::move(obj));
     gameObjects.emplace(floor.getId(), std::move(floor));
+    gameObjects.emplace(coloredCube.getId(), std::move(coloredCube));
+    gameObjects.emplace(man.getId(), std::move(man));
 }
