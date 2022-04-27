@@ -117,7 +117,8 @@ namespace Engine {
         void createCommandPool();
 
         // helper functions
-        bool isDeviceSuitable(VkPhysicalDevice device);
+        bool isSuitableDevice(VkPhysicalDevice device);
+        bool isPreferredDevice(VkPhysicalDevice device);
 
         [[nodiscard]] std::vector<const char *> getRequiredExtensions() const;
 
