@@ -144,120 +144,235 @@ namespace Engine {
             if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {
                 for (auto &kv: frameInfo.gameObjects) {
                     auto &gameObj = kv.second;
-                    float scale = 1.f;
-                    ImGui::PushID(static_cast<int>(gameObj.getId()));
+                    if (gameObj.pointLightComponent == nullptr) {
+                        ImGui::PushID(static_cast<int>(gameObj.getId()));
 
-                    // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
-                    ImGui::TableNextRow();
-                    ImGui::TableSetColumnIndex(0);
-                    ImGui::AlignTextToFramePadding();
-                    bool node_open = ImGui::TreeNode("Object", "%s-%u", gameObj.getName().c_str(),
-                                                     static_cast<int>(gameObj.getId()));
-                    ImGui::TableSetColumnIndex(1);
-                    ImGui::Text("Game Object");
-
-                    if (node_open) {
-                        ImGuiTreeNodeFlags flags =
-                                ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
-                                ImGuiTreeNodeFlags_Bullet;
-
-                        ImGui::PushID("Scale Component");
+                        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
                         ImGui::TableNextRow();
                         ImGui::TableSetColumnIndex(0);
                         ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
+                        bool node_open = ImGui::TreeNode("Object", "%s-%u", gameObj.getName().c_str(),
+                                                         static_cast<int>(gameObj.getId()));
                         ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
-                        gameObj.transform.scale.y = gameObj.transform.scale.x;
-                        gameObj.transform.scale.z = gameObj.transform.scale.x;
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                        ImGui::Text("Game Object");
 
-                        ImGui::PushID("Transform Component X");
+                        if (node_open) {
+                            ImGuiTreeNodeFlags flags =
+                                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
+                                    ImGuiTreeNodeFlags_Bullet;
+
+                            ImGui::PushID("Scale Component");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
+                            gameObj.transform.scale.y = gameObj.transform.scale.x;
+                            gameObj.transform.scale.z = gameObj.transform.scale.x;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component X");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Y");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Z");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Rotation X");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Rotation Y");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Rotation Z");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Color Component");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("Color", flags, "Color");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::ColorEdit3("clear color",
+                                              (float *) &clear_color);  // Edit 3 floats representing a color
+                            gameObj.color.x = clear_color.x;
+                            gameObj.color.y = clear_color.y;
+                            gameObj.color.z = clear_color.z;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::TreePop();
+                        }
+                        ImGui::PopID();
+                    }else {
+                        ImGui::PushID(static_cast<int>(gameObj.getId()));
+
+                        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
                         ImGui::TableNextRow();
                         ImGui::TableSetColumnIndex(0);
                         ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
+                        bool node_open = ImGui::TreeNode("Object", "%s-%u", gameObj.getName().c_str(),
+                                                         static_cast<int>(gameObj.getId()));
                         ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                        ImGui::Text("Point Light");
 
-                        ImGui::PushID("Transform Component Y");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                        if (node_open) {
+                            ImGuiTreeNodeFlags flags =
+                                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
+                                    ImGuiTreeNodeFlags_Bullet;
 
-                        ImGui::PushID("Transform Component Z");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                            ImGui::PushID("Scale Component");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
+                            gameObj.transform.scale.y = gameObj.transform.scale.x;
+                            gameObj.transform.scale.z = gameObj.transform.scale.x;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
-                        ImGui::PushID("Transform Component Rotation X");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                            ImGui::PushID("Transform Component X");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
-                        ImGui::PushID("Transform Component Rotation Y");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                            ImGui::PushID("Transform Component Y");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
-                        ImGui::PushID("Transform Component Rotation Z");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                            ImGui::PushID("Transform Component Z");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
-                        ImGui::PushID("Color Component");
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        ImGui::TreeNodeEx("Color", flags, "Color");
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::SetNextItemWidth(-FLT_MIN);
-                        ImGui::ColorEdit3("clear color",
-                                          (float *) &clear_color);  // Edit 3 floats representing a color
-                        gameObj.color.x = clear_color.x;
-                        gameObj.color.y = clear_color.y;
-                        gameObj.color.z = clear_color.z;
-                        ImGui::NextColumn();
-                        ImGui::PopID();
+                            ImGui::PushID("Transform Component Rotation X");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
-                        ImGui::TreePop();
+                            ImGui::PushID("Transform Component Rotation Y");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Transform Component Rotation Z");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::PushID("Color Component");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("Color", flags, "Color");
+                            ImGui::TableSetColumnIndex(1);
+                            ImGui::SetNextItemWidth(-FLT_MIN);
+                            ImGui::ColorEdit3("clear color",
+                                              (float *) &clear_color);  // Edit 3 floats representing a color
+                            gameObj.color.x = clear_color.x;
+                            gameObj.color.y = clear_color.y;
+                            gameObj.color.z = clear_color.z;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
+
+                            ImGui::TreePop();
+                        }
+                        ImGui::PopID();
                     }
-                    ImGui::PopID();
                 }
                 ImGui::EndTable();
             }

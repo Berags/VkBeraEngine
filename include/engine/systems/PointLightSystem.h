@@ -31,6 +31,8 @@ namespace Engine {
 
         void render(Engine::FrameInfo &frameInfo);
 
+        void update(Engine::FrameInfo &frameInfo, GlobalUbo &ubo);
+
     private:
 
         void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
