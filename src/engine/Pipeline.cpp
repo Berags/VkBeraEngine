@@ -68,8 +68,8 @@ namespace Engine {
         shaderStages[1].pNext = nullptr;
         shaderStages[1].pSpecializationInfo = nullptr;
 
-        auto bindingDescriptions = Engine::Model::Vertex::getBindingDescriptions();
-        auto attributeDescriptions = Engine::Model::Vertex::getAttributeDescriptions();
+        auto &bindingDescriptions = configInfo.bindingDescription;
+        auto &attributeDescriptions = configInfo.attributeDescription;
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
         vertexInputInfo.vertexAttributeDescriptionCount =
@@ -184,6 +184,9 @@ namespace Engine {
         configInfo.dynamicStateCreateInfo.dynamicStateCount =
                 static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
         configInfo.dynamicStateCreateInfo.flags = 0;
+
+        configInfo.bindingDescription = Engine::Model::Vertex::getBindingDescriptions();
+        configInfo.attributeDescription = Engine::Model::Vertex::getAttributeDescriptions();
     }
 
     void Pipeline::bind(VkCommandBuffer commandBuffer) {
