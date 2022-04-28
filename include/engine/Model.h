@@ -44,7 +44,7 @@ namespace Engine {
             void loadModel(const std::string &filePath);
         };
 
-        Model(Device &device, const Engine::Model::Data &data);
+        Model(Device &device, const Engine::Model::Data &data, std::string &filePath);
 
         virtual ~Model();
 
@@ -52,14 +52,18 @@ namespace Engine {
 
         Model &operator=(const Model &) = delete;
 
-        static std::unique_ptr<Engine::Model> createModelFromFile(Engine::Device &device, const std::string &filePath);
+        static std::unique_ptr<Engine::Model> createModelFromFile(Engine::Device &device, const char *filePath);
 
         void bind(VkCommandBuffer commandBuffer);
 
         void draw(VkCommandBuffer commandBuffer) const;
 
+        [[nodiscard]] const std::string &getFilePath() const;
+
     private:
         Engine::Device &device;
+
+        std::string file;
 
         std::unique_ptr<Engine::Buffer> vertexBuffer;
         uint32_t vertexCount;

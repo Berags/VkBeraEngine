@@ -14,45 +14,37 @@
 namespace Engine {
     class Texture {
     public:
-        struct TextureInfo {
-            VkSampler sampler;
-            VkImage image;
-            VkImageLayout image_layout;
-            VkDeviceMemory device_memory;
-            VkImageView view;
-            uint32_t width, height;
-            uint32_t mip_levels;
-        } texture;
-
-        Texture(const std::shared_ptr<Engine::Model> &model, Pipeline &pipeline);
+        Texture(std::shared_ptr<Engine::Model> model, Pipeline &pipeline, Engine::Device &device);
 
         virtual ~Texture();
 
         void load();
 
-        void destroy(TextureInfo texture);
+        void
+        createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer,
+                     VkDeviceMemory &bufferMemory);
 
-        void build_command_buffers();
+        uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
-        void draw();
+        void
+        createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage,
+                    VkMemoryPropertyFlags properties, VkImage &image, VkDeviceMemory &imageMemory);
 
-        void generate_quad();
+        void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
 
-        void setup_descriptor_pool();
+        void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
 
-        void setup_descriptor_set_layout();
+        VkCommandBuffer beginSingleTimeCommands();
 
-        void setup_descriptor_set();
-
-        void prepare_pipelines();
-
-        void prepare_uniform_buffers();
-
-        void update_uniform_buffers();
+        void endSingleTimeCommands(VkCommandBuffer commandBuffer);
 
     private:
         std::shared_ptr<Engine::Model> model;
         Engine::Pipeline &pipeline;
+        Engine::Device &device;
+
+        VkImage image;
+        VkDeviceMemory device_memory;
     };
 }
 
