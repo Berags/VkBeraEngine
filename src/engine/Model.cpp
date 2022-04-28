@@ -26,13 +26,13 @@ namespace std {
 
 namespace Engine {
 
-    Model::Model(Device &device, const Engine::Model::Data &data) : device(device) {
+    Model::Model(Device &device, const Engine::Model::Data &data, std::string &filePath) : device(device),
+                                                                                           file(filePath) {
         createVertexBuffers(data.vertices);
         createIndexBuffers(data.indices);
     }
 
-    Model::~Model() {
-    }
+    Model::~Model() = default;
 
     void Model::createVertexBuffers(const std::vector<Vertex> &vertices) {
         vertexCount = static_cast<uint32_t>(vertices.size());
@@ -113,13 +113,18 @@ namespace Engine {
         }
     }
 
-    std::unique_ptr<Engine::Model> Model::createModelFromFile(Engine::Device &device, const std::string &filePath) {
+    std::unique_ptr<Engine::Model> Model::createModelFromFile(Engine::Device &device, const char *filePath) {
         Engine::Model::Data data{};
         data.loadModel(filePath);
 
         std::cout << "Vertex count: " << data.vertices.size() << "\n";
+        std::string fileName{filePath};
 
-        return std::make_unique<Engine::Model>(device, data);
+        return std::make_unique<Engine::Model>(device, data, fileName);
+    }
+
+    [[nodiscard]] const std::string &Model::getFilePath() const {
+        return file;
     }
 
     std::vector<VkVertexInputBindingDescription> Model::Vertex::getBindingDescriptions() {

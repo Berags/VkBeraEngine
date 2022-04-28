@@ -100,13 +100,10 @@ namespace Engine {
     }
 
     void PointLightSystem::update(FrameInfo &frameInfo, GlobalUbo &ubo) {
-        auto rotateLight = glm::rotate(glm::mat4(1.f), frameInfo.frameTime, {.0f, -1.f, .0f});
         int lightIndex = 0;
         for (auto &kv: frameInfo.gameObjects) {
             auto &gameObj = kv.second;
             if (gameObj.pointLightComponent == nullptr) continue;
-
-            gameObj.transform.translation = glm::vec3(rotateLight * glm::vec4(gameObj.transform.translation, 1.f));
 
             // Copy light to UBO
             ubo.pointLight[lightIndex].position = glm::vec4(gameObj.transform.translation, 1.f);

@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <future>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Model.h"
@@ -26,6 +27,7 @@ namespace Engine {
         float lightIntensity = 1.f;
     };
 
+
     class GameObject {
     public:
         using id_t = unsigned int;
@@ -43,7 +45,8 @@ namespace Engine {
             return GameObject{currentId++, name};
         }
 
-        static GameObject createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
+        static GameObject
+        createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
 
         GameObject(const GameObject &) = delete;
 
@@ -65,6 +68,8 @@ namespace Engine {
         id_t id;
 
         std::string name;
+
+        void save(json &j);
 
         explicit GameObject(id_t objectId, std::string &name) : id(objectId), name(name) {}
     };

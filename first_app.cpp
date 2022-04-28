@@ -119,67 +119,46 @@ void FirstApp::run() {
 }
 
 void FirstApp::loadGameObjects() {
-    std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, "../models/viking_room.obj");
-    std::shared_ptr<Engine::Model> hellknight = Engine::Model::createModelFromFile(device,
-                                                                                   "../models/Hellknight_LATEST.obj");
-    std::shared_ptr<Engine::Model> quadModel = Engine::Model::createModelFromFile(device, "../models/quad.obj");
-    std::shared_ptr<Engine::Model> coloredCubeModel = Engine::Model::createModelFromFile(device,
-                                                                                         "../models/colored_cube.obj");
-    std::shared_ptr<Engine::Model> manModel = Engine::Model::createModelFromFile(device,
-                                                                                 "../models/man3.obj");
-    auto cube = Engine::GameObject::createGameObject((std::string &) "Viking Room");
-    cube.model = model;
-    cube.transform.translation = {.0f, .505f, .0f};
-    cube.transform.rotation = {glm::half_pi<float>(), glm::half_pi<float>(), .0f};
-    cube.transform.scale = {2.f, 2.f, 2.f};
-
-    auto obj = Engine::GameObject::createGameObject((std::string &) "Hell Knight");
-    obj.model = hellknight;
-    obj.transform.translation = {1.4f, -.05f, .0f};
-    obj.transform.rotation = {.0f, glm::pi<float>(), glm::pi<float>()};
-    obj.transform.scale = {.4f, .4f, .4f};
-
-    auto floor = Engine::GameObject::createGameObject((std::string &) "Floor");
-    floor.model = quadModel;
-    floor.transform.translation = {6.0f, .5f, .0f};
-    floor.transform.scale = {50.f, 1.f, 50.f};
-
-    auto coloredCube = Engine::GameObject::createGameObject((std::string &) "Colored Cube");
-    coloredCube.model = coloredCubeModel;
-    coloredCube.transform.translation = {1.6f, .0f, -2.0f};
-    coloredCube.transform.scale = {.26f, .26f, .26f};
-
-    auto man = Engine::GameObject::createGameObject((std::string &) "Man");
-    man.model = manModel;
-    man.transform.translation = {-1.3f, .5f, -2.0f};
-    man.transform.scale = {.007f, .007f, .007f};
-    man.transform.rotation = {glm::pi<float>(), glm::pi<float>(), .0f};
-
-    {
-        std::vector<glm::vec3> lightColors{
-                {1.f, .1f, .1f},
-                {.1f, .1f, 1.f},
-                {.1f, 1.f, .1f},
-                {1.f, 1.f, .1f},
-                {.1f, 1.f, 1.f},
-                {1.f, 1.f, 1.f}  //
-        };
-
-        for (int i = 0; i < lightColors.size(); i++) {
+    std::ifstream i("../json/game_state.json");
+    json j;
+    i >> j;
+    for (auto &it: j) {
+        std::cout << "Loading model: ";
+        if (it["model"]["file_name"].is_null()) {
+            // Light
+            std::cout << "light\n";
             auto pointLight = Engine::GameObject::createPointLight(1.f);
-            pointLight.color = lightColors[i];
-            auto rotateLight = glm::rotate(glm::mat4(1.f), (i * glm::two_pi<float>()) / lightColors.size(),
-                                           {.0f, -1.f, .0f});
-            pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            pointLight.color = glm::vec3(it["transform"]["color"]["x"].get<float>(),
+                                         it["transform"]["color"]["y"].get<float>(),
+                                         it["transform"]["color"]["z"].get<float>());
+            pointLight.transform.translation = glm::vec3(it["transform"]["translation"]["x"].get<float>(),
+                                                         it["transform"]["translation"]["y"].get<float>(),
+                                                         it["transform"]["translation"]["z"].get<float>());
+            pointLight.transform.scale = glm::vec3(it["transform"]["scale"]["x"].get<float>(),
+                                                   it["transform"]["scale"]["y"].get<float>(),
+                                                   it["transform"]["scale"]["z"].get<float>());
             gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+        } else {
+            // Object
+            std::cout << "Object\n";
+            std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device,
+                                                                                      it["model"]["file_name"].get<std::string>().c_str());
+            std::string name = it["model"]["file_name"].get<std::string>().substr(10);
+            auto obj = Engine::GameObject::createGameObject(name);
+            obj.model = model;
+            obj.color = glm::vec3(it["transform"]["color"]["x"].get<float>(),
+                                  it["transform"]["color"]["y"].get<float>(),
+                                  it["transform"]["color"]["z"].get<float>());
+            obj.transform.translation = glm::vec3(it["transform"]["translation"]["x"].get<float>(),
+                                                  it["transform"]["translation"]["y"].get<float>(),
+                                                  it["transform"]["translation"]["z"].get<float>());
+            obj.transform.scale = glm::vec3(it["transform"]["scale"]["x"].get<float>(),
+                                            it["transform"]["scale"]["y"].get<float>(),
+                                            it["transform"]["scale"]["z"].get<float>());
+            obj.transform.rotation = glm::vec3(it["transform"]["rotation"]["x"].get<float>(),
+                                               it["transform"]["rotation"]["y"].get<float>(),
+                                               it["transform"]["rotation"]["z"].get<float>());
+            gameObjects.emplace(obj.getId(), std::move(obj));
         }
-
     }
-
-    gameObjects.emplace(cube.getId(), std::move(cube));
-    gameObjects.emplace(obj.getId(), std::move(obj));
-    gameObjects.emplace(floor.getId(), std::move(floor));
-    gameObjects.emplace(coloredCube.getId(), std::move(coloredCube));
-    gameObjects.emplace(man.getId(), std::move(man));
-
 }
