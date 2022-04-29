@@ -41,7 +41,6 @@ namespace Engine {
     const glm::mat4 &Camera::getView() const { return viewMatrix; }
 
     void Camera::setViewDirection(glm::vec3 position, glm::vec3 direction, glm::vec3 up) {
-
         // Constructing and orthonormal basis
         const glm::vec3 i{glm::normalize(direction)};
         const glm::vec3 j{glm::normalize(glm::cross(i, up))};
@@ -67,7 +66,6 @@ namespace Engine {
     }
 
     void Camera::setViewYXZ(glm::vec3 position, glm::vec3 rotation) {
-
         // Constructing the inverse of rotation matrix
         // R^-1 = R^T
         // The inverse of rotation matrix is just its transpose

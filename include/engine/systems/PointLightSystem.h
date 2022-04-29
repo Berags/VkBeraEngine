@@ -20,7 +20,6 @@
 namespace Engine {
     class PointLightSystem {
     public:
-
         PointLightSystem(Engine::Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
         ~PointLightSystem();
@@ -34,7 +33,6 @@ namespace Engine {
         void update(Engine::FrameInfo &frameInfo, GlobalUbo &ubo);
 
     private:
-
         void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
 
         void createPipeline(VkRenderPass renderPass);

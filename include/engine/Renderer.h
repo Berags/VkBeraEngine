@@ -51,7 +51,6 @@ namespace Engine {
         }
 
     private:
-
         void createCommandBuffers();
 
         void freeCommandBuffers();

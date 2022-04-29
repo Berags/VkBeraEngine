@@ -386,7 +386,6 @@ namespace Engine {
 
     VkPresentModeKHR SwapChain::chooseSwapPresentMode(
             const std::vector<VkPresentModeKHR> &availablePresentModes) {
-
         // If GPU does not support MAILBOX switch to FIFO!
         for (const auto &availablePresentMode: availablePresentModes) {
             if (availablePresentMode == VK_PRESENT_MODE_MAILBOX_KHR) {
@@ -434,7 +433,5 @@ namespace Engine {
     bool SwapChain::compareSwapFormats(const Engine::SwapChain &that) const {
         return that.swapChainDepthFormat == this->swapChainDepthFormat &&
                that.swapChainImageFormat == this->swapChainImageFormat;
-
     }
-
 }

@@ -71,8 +71,4 @@ namespace Engine {
         gameObject.pointLightComponent->lightIntensity = intensity;
         return gameObject;
     }
-
-    void GameObject::save(json &j) {
-
-    }
 }
