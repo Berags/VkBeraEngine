@@ -69,8 +69,6 @@ namespace Engine {
 
         std::string name;
 
-        void save(json &j);
-
         explicit GameObject(id_t objectId, std::string &name) : id(objectId), name(name) {}
     };
 }

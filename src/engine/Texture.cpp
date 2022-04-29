@@ -2,24 +2,18 @@
 // Created by Jacopo Beragnoli on 27/04/22.
 //
 
-#include "Texture.h"
+#include "../../include/engine/Texture.h"
 
 #include <utility>
-#include "../libs/stb_image.h"
+#include "../../include/libs/stb_image.h"
 
 namespace Engine {
 
     Texture::Texture(std::shared_ptr<Engine::Model> model, Pipeline &pipeline, Engine::Device &device) : model(
-            std::move(
-                    model)),
-                                                                                                         pipeline(
-                                                                                                                 pipeline),
-                                                                                                         device(device) {
-
+            std::move(model)), pipeline(pipeline), device(device) {
     }
 
-    Texture::~Texture() {
-    }
+    Texture::~Texture() = default;
 
     void Texture::load() {
         const char *fileName = "../textures/texture.jpg";
@@ -57,7 +51,6 @@ namespace Engine {
 
         vkDestroyBuffer(device.device(), stagingBuffer, nullptr);
         vkFreeMemory(device.device(), stagingBufferMemory, nullptr);
-
     }
 
     void Texture::createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling,

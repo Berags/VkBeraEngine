@@ -30,7 +30,6 @@ namespace Engine {
 
     class Device {
     public:
-
         /* VALIDATION LAYER */
 #ifdef NDEBUG
         const bool enableValidationLayers = false;
@@ -118,6 +117,7 @@ namespace Engine {
 
         // helper functions
         bool isSuitableDevice(VkPhysicalDevice device);
+
         bool isPreferredDevice(VkPhysicalDevice device);
 
         [[nodiscard]] std::vector<const char *> getRequiredExtensions() const;
