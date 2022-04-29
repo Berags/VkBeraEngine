@@ -20,7 +20,6 @@
 namespace Engine {
     class RenderSystem {
     public:
-
         RenderSystem(Engine::Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
         ~RenderSystem();
@@ -33,11 +32,9 @@ namespace Engine {
 
 
     private:
-
         void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
 
         void createPipeline(VkRenderPass renderPass);
-
 
         Engine::Device &device;
         std::unique_ptr<Engine::Pipeline> pipeline;
