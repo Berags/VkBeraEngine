@@ -142,44 +142,11 @@ namespace Engine {
         if (showGameObjectsWindow) {
             ImGui::Begin("Game Objects");
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(2, 2));
-            json j;
             if (ImGui::Button("Save")) {
+                json j;
                 for (auto &kv: frameInfo.gameObjects) {
                     auto &obj = kv.second;
-                    json objJson;
-                    json vec3;
-                    json transformJson;
-
-                    vec3["x"] = obj.transform.translation.x;
-                    vec3["y"] = obj.transform.translation.y;
-                    vec3["z"] = obj.transform.translation.z;
-                    transformJson["translation"] = vec3;
-
-                    vec3["x"] = obj.transform.rotation.x;
-                    vec3["y"] = obj.transform.rotation.y;
-                    vec3["z"] = obj.transform.rotation.z;
-                    transformJson["rotation"] = vec3;
-
-                    vec3["x"] = obj.transform.scale.x;
-                    vec3["y"] = obj.transform.scale.y;
-                    vec3["z"] = obj.transform.scale.z;
-                    transformJson["scale"] = vec3;
-
-                    vec3["x"] = obj.color.x;
-                    vec3["y"] = obj.color.y;
-                    vec3["z"] = obj.color.z;
-                    transformJson["color"] = vec3;
-
-                    json model;
-                    if (obj.pointLightComponent == nullptr) {
-                        model["file_name"] = obj.model->getFilePath();
-                    } else {
-                        model["file_name"] = nullptr;
-                    }
-
-                    objJson["transform"] = transformJson;
-                    objJson["model"] = model;
-                    j.push_back(objJson);
+                    saveObjectToJson(obj, j);
                 }
                 std::ofstream o("../json/game_state.json");
                 o << j;
@@ -460,5 +427,42 @@ namespace Engine {
             }*/
         }
         ImGui::End();
+    }
+
+    void ImGuiManager::saveObjectToJson(GameObject &obj, json &j) {
+        json objJson;
+        json vec3;
+        json transformJson;
+
+        vec3["x"] = obj.transform.translation.x;
+        vec3["y"] = obj.transform.translation.y;
+        vec3["z"] = obj.transform.translation.z;
+        transformJson["translation"] = vec3;
+
+        vec3["x"] = obj.transform.rotation.x;
+        vec3["y"] = obj.transform.rotation.y;
+        vec3["z"] = obj.transform.rotation.z;
+        transformJson["rotation"] = vec3;
+
+        vec3["x"] = obj.transform.scale.x;
+        vec3["y"] = obj.transform.scale.y;
+        vec3["z"] = obj.transform.scale.z;
+        transformJson["scale"] = vec3;
+
+        vec3["x"] = obj.color.x;
+        vec3["y"] = obj.color.y;
+        vec3["z"] = obj.color.z;
+        transformJson["color"] = vec3;
+
+        json model;
+        if (obj.pointLightComponent == nullptr) {
+            model["file_name"] = obj.model->getFilePath();
+        } else {
+            model["file_name"] = nullptr;
+        }
+
+        objJson["transform"] = transformJson;
+        objJson["model"] = model;
+        j.push_back(objJson);
     }
 }

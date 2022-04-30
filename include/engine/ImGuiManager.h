@@ -54,6 +54,8 @@ namespace Engine {
         VkDescriptorPool descriptorPool;
 
         static void ShowExampleAppSimpleOverlay(bool *p_open);
+
+        void saveObjectToJson(GameObject &obj, json &j);
     };
 };
 
