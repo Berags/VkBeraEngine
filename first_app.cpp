@@ -30,6 +30,11 @@ FirstApp::FirstApp() {
 FirstApp::~FirstApp() = default;
 
 void FirstApp::run() {
+    Engine::ECS::Entity entity = Engine::ECS::Entity::create();
+    Engine::ECS::TestComponent *testComponent{new Engine::ECS::TestComponent()};
+    entity.addComponent(testComponent);
+    entity.update(.0f);
+
     Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
@@ -107,6 +112,8 @@ void FirstApp::run() {
             renderer.beginSwapChainRenderPass(commandBuffer);
             renderSystem.renderGameObjects(frameInfo);
             pointLightSystem.render(frameInfo);
+
+            entity.update(frameTime);
 
             // ImGui rendering
             imGui.run(frameInfo);

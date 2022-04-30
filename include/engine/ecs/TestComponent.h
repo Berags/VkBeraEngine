@@ -6,12 +6,18 @@
 #define MINIMINIMOTORWAYS_TESTCOMPONENT_H
 
 #include "IComponent.h"
+#include "../Window.h"
 #include <iostream>
 
 namespace Engine::ECS {
     class TestComponent : public Engine::ECS::IComponent {
+    public:
+        void onCreate() override {
+            std::cout << "On Create function" << std::endl;
+        }
+
         void onUpdate(float dt) override {
-            std::cout << "Updating the component - dt = " << dt << std::endl;
+            IComponent::onUpdate(dt);
         }
     };
 }
