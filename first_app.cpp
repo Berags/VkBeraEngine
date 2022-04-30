@@ -15,6 +15,8 @@
 #include "include/engine/KeyboardMovementController.h"
 #include "include/engine/ImGuiManager.h"
 #include "include/engine/systems/PointLightSystem.h"
+#include "include/engine/ecs/Entity.h"
+#include "include/engine/ecs/TestComponent.h"
 
 
 FirstApp::FirstApp() {
