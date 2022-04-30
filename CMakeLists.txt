@@ -136,6 +136,6 @@ add_custom_target(
         DEPENDS ${SPIRV_BINARY_FILES}
 )
 
-find_package(wxWidgets REQUIRED gl core base OPTIONAL_COMPONENTS net)
-include(${wxWidgets_USE_FILE})
-target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+# find_package(wxWidgets REQUIRED gl core base OPTIONAL_COMPONENTS net)
+# include(${wxWidgets_USE_FILE})
+# target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
