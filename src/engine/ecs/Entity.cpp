@@ -7,7 +7,7 @@ namespace Engine::ECS {
 
     void Entity::addComponent(Engine::ECS::IComponent *component) {
         if (std::find(components.begin(), components.end(), component) == components.end()) {
-            // component not in name, add it
+            // component not in components, add it
             components.push_back(component);
         }
     }
@@ -21,6 +21,12 @@ namespace Engine::ECS {
         std::for_each(components.begin(), components.end(), [&](const auto &item) {
             item->onUpdate(dt);
         });
+    }
+
+    Entity::Entity(id_t entityId) : id(entityId) {}
+
+    id_t Entity::getId() const {
+        return id;
     }
 }
 
