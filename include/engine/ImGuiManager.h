@@ -52,6 +52,8 @@ namespace Engine {
         Engine::Device &device;
 
         VkDescriptorPool descriptorPool;
+
+        static void ShowExampleAppSimpleOverlay(bool *p_open);
     };
 };
 
