@@ -95,4 +95,8 @@ namespace Engine {
             obj.model->draw(frameInfo.commandBuffer);
         }
     }
+
+    const std::unique_ptr<Engine::Pipeline> &RenderSystem::getPipeline() const {
+        return pipeline;
+    }
 }

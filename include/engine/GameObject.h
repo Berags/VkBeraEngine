@@ -27,7 +27,6 @@ namespace Engine {
         float lightIntensity = 1.f;
     };
 
-
     class GameObject {
     public:
         using id_t = unsigned int;
@@ -45,7 +44,8 @@ namespace Engine {
             return GameObject{currentId++, name};
         }
 
-        static GameObject createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
+        static GameObject
+        createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
 
         GameObject(const GameObject &) = delete;
 

@@ -9,7 +9,7 @@
 
 namespace Engine {
 
-    Texture::Texture(std::shared_ptr<Engine::Model> model, Pipeline &pipeline, Engine::Device &device) : model(
+    Texture::Texture(std::shared_ptr<Engine::Model> model, std::shared_ptr<Engine::Pipeline> &pipeline, Engine::Device &device) : model(
             std::move(model)), pipeline(pipeline), device(device) {
     }
 
