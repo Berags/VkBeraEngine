@@ -14,14 +14,13 @@
 namespace Engine {
     class Texture {
     public:
-        Texture(std::shared_ptr<Engine::Model> model, Pipeline &pipeline, Engine::Device &device);
+        Texture(std::shared_ptr<Engine::Model> model, std::shared_ptr<Engine::Pipeline> &pipeline, Engine::Device &device);
 
         virtual ~Texture();
 
         void load();
 
-        void
-        createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer,
+        void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer &buffer,
                      VkDeviceMemory &bufferMemory);
 
         uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
@@ -40,7 +39,7 @@ namespace Engine {
 
     private:
         std::shared_ptr<Engine::Model> model;
-        Engine::Pipeline &pipeline;
+        std::shared_ptr<Engine::Pipeline> &pipeline;
         Engine::Device &device;
 
         VkImage image;

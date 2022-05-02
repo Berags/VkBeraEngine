@@ -6,7 +6,6 @@
 #include "../../include/engine/Model.h"
 #include "../../include/engine/exceptions/file/UnableToOpenFileException.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModuleException.h"
-#include <fstream>
 #include <iostream>
 #include <cassert>
 
@@ -192,5 +191,4 @@ namespace Engine {
     void Pipeline::bind(VkCommandBuffer commandBuffer) {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
     }
-
 }

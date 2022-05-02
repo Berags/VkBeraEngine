@@ -8,6 +8,8 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 
 #include "../../include/libs/tiny_obj_loader.h"
+#include "../../include/engine/Texture.h"
+#include "../../include/libs/stb_image.h"
 
 #include <cassert>
 #include <iostream>
@@ -197,5 +199,9 @@ namespace Engine {
                 indices.push_back(uniqueVertices[vertex]);
             }
         }
+    }
+
+    void Model::Data::loadModel(const std::string &filePath, const std::string &textureFilePath) {
+        loadModel(filePath);
     }
 }

@@ -59,6 +59,20 @@ namespace Engine {
         viewMatrix[3][0] = -glm::dot(j, position);
         viewMatrix[3][1] = -glm::dot(k, position);
         viewMatrix[3][2] = -glm::dot(i, position);
+
+        inverseViewMatrix = glm::mat4{1.f};
+        inverseViewMatrix[0][0] = j.x;
+        inverseViewMatrix[0][1] = j.y;
+        inverseViewMatrix[0][2] = j.z;
+        inverseViewMatrix[1][0] = k.x;
+        inverseViewMatrix[1][1] = k.y;
+        inverseViewMatrix[1][2] = k.z;
+        inverseViewMatrix[2][0] = i.x;
+        inverseViewMatrix[2][1] = i.y;
+        inverseViewMatrix[2][2] = i.z;
+        inverseViewMatrix[3][0] = position.x;
+        inverseViewMatrix[3][1] = position.y;
+        inverseViewMatrix[3][2] = position.z;
     }
 
     void Camera::setViewTarget(glm::vec3 position, glm::vec3 target, glm::vec3 up) {
@@ -91,5 +105,23 @@ namespace Engine {
         viewMatrix[3][0] = -glm::dot(u, position);
         viewMatrix[3][1] = -glm::dot(v, position);
         viewMatrix[3][2] = -glm::dot(w, position);
+
+        inverseViewMatrix = glm::mat4{1.f};
+        inverseViewMatrix[0][0] = u.x;
+        inverseViewMatrix[0][1] = u.y;
+        inverseViewMatrix[0][2] = u.z;
+        inverseViewMatrix[1][0] = v.x;
+        inverseViewMatrix[1][1] = v.y;
+        inverseViewMatrix[1][2] = v.z;
+        inverseViewMatrix[2][0] = w.x;
+        inverseViewMatrix[2][1] = w.y;
+        inverseViewMatrix[2][2] = w.z;
+        inverseViewMatrix[3][0] = position.x;
+        inverseViewMatrix[3][1] = position.y;
+        inverseViewMatrix[3][2] = position.z;
+    }
+
+    const glm::mat4 &Camera::getInverseViewMatrix() const {
+        return inverseViewMatrix;
     }
 }

@@ -17,6 +17,7 @@
 #include "include/engine/systems/PointLightSystem.h"
 #include "include/engine/ecs/Entity.h"
 #include "include/engine/ecs/TestComponent.h"
+#include "include/engine/Texture.h"
 
 
 FirstApp::FirstApp() {
@@ -104,6 +105,7 @@ void FirstApp::run() {
             Engine::GlobalUbo ubo{};
             ubo.projection = camera.getProjection();
             ubo.view = camera.getView();
+            ubo.inverseView = camera.getInverseViewMatrix();
             pointLightSystem.update(frameInfo, ubo);
             uboBuffers[frameIndex]->writeToBuffer(&ubo);
             uboBuffers[frameIndex]->flush();

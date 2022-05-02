@@ -42,6 +42,7 @@ namespace Engine {
             std::vector<uint32_t> indices{};
 
             void loadModel(const std::string &filePath);
+            void loadModel(const std::string &filePath, const std::string &textureFilePath);
         };
 
         Model(Device &device, const Engine::Model::Data &data, std::string &filePath);
