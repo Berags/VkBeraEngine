@@ -5,8 +5,6 @@
 #include "../../include/engine/ImGuiManager.h"
 #include <vulkan/vulkan_core.h>
 #include <stdexcept>
-#include "../../include/engine/Window.h"
-#include "../../include/engine/Device.h"
 
 namespace Engine {
     ImGuiManager::ImGuiManager(
@@ -60,9 +58,6 @@ namespace Engine {
         // pipeline cache is a potential future optimization, ignoring for now
         init_info.PipelineCache = VK_NULL_HANDLE;
         init_info.DescriptorPool = descriptorPool;
-        // todo, I should probably get around to integrating a memory allocator library such as Vulkan
-        // memory allocator (VMA) sooner than later. We don't want to have to update adding an allocator
-        // in a ton of locations.
         init_info.Allocator = VK_NULL_HANDLE;
         init_info.MinImageCount = 2;
         init_info.ImageCount = imageCount;
@@ -95,14 +90,14 @@ namespace Engine {
     // command buffer the necessary draw commands
     void ImGuiManager::render(VkCommandBuffer commandBuffer) {
         ImGui::Render();
-        ImDrawData *drawdata = ImGui::GetDrawData();
-        ImGui_ImplVulkan_RenderDrawData(drawdata, commandBuffer);
+        ImDrawData *pDrawData = ImGui::GetDrawData();
+        ImGui_ImplVulkan_RenderDrawData(pDrawData, commandBuffer);
     }
 
     void ImGuiManager::run(Engine::FrameInfo &frameInfo) {
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can
         // browse its code to learn more about Dear ImGui!).
-        if (show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
+        if (showDemoWindow) ImGui::ShowDemoWindow(&showDemoWindow);
         bool showOverlay = true;
         ImGuiManager::ShowExampleAppSimpleOverlay(&showOverlay);
 
@@ -113,28 +108,10 @@ namespace Engine {
             static int counter = 0;
 
             ImGui::Begin("VkBeraEngine - Debug");  // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text(
-                    "This is some useful text.");  // Display some text (you can use a format strings too)
             ImGui::Checkbox(
-                    "Demo Window",
-                    &show_demo_window);  // Edit bools storing our window open/close state
-            ImGui::Checkbox("Game Objects List", &showGameObjectsWindow);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);  // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color",
-                              (float *) &clear_color);  // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))  // Buttons return true when clicked (most widgets return true
-                // when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text(
-                    "Application average %.3f ms/frame (%.1f FPS)",
-                    1000.0f / ImGui::GetIO().Framerate,
-                    ImGui::GetIO().Framerate);
+                    "Show Demo Window",
+                    &showDemoWindow);  // Edit bools storing our window open/close state
+            ImGui::Checkbox("Show Game Objects List", &showGameObjectsWindow);
             ImGui::End();
         }
 
@@ -151,10 +128,23 @@ namespace Engine {
                 std::ofstream o("../json/game_state.json");
                 o << j;
                 o.close();
+                std::cout << "Game State saved to game_state.json\n";
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Add Light")) {
+                auto pointLight = Engine::GameObject::createPointLight(1.f);
+
+                frameInfo.gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+                std::cout << "Added light\n";
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("Add Entity")) {
+                showAddEntityWindow = true;
             }
             if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {
-                for (auto &kv: frameInfo.gameObjects) {
-                    auto &gameObj = kv.second;
+                for (auto iterator = frameInfo.gameObjects.begin();
+                     iterator != frameInfo.gameObjects.end(); ++iterator) {
+                    auto &gameObj = iterator->second;
                     if (gameObj.pointLightComponent == nullptr) {
                         ImGui::PushID(static_cast<int>(gameObj.getId()));
 
@@ -162,8 +152,7 @@ namespace Engine {
                         ImGui::TableNextRow();
                         ImGui::TableSetColumnIndex(0);
                         ImGui::AlignTextToFramePadding();
-                        bool node_open = ImGui::TreeNode("Object", "%s-%u", gameObj.getName().c_str(),
-                                                         static_cast<int>(gameObj.getId()));
+                        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
                         ImGui::TableSetColumnIndex(1);
                         ImGui::Text("Game Object");
 
@@ -171,6 +160,19 @@ namespace Engine {
                             ImGuiTreeNodeFlags flags =
                                     ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
                                     ImGuiTreeNodeFlags_Bullet;
+
+                            ImGui::PushID("Name");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
+                            ImGui::TableSetColumnIndex(1);
+                            static char objName[128] = "";
+                            strcpy(objName, gameObj.name.c_str());
+                            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
+                            gameObj.name = objName;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
                             ImGui::PushID("Scale Component");
                             ImGui::TableNextRow();
@@ -251,21 +253,25 @@ namespace Engine {
                             ImGui::NextColumn();
                             ImGui::PopID();
 
-                            ImGui::PushID("Color Component");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("Color", flags, "Color");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::ColorEdit3("clear color",
-                                              (float *) &clear_color);  // Edit 3 floats representing a color
-                            gameObj.color.x = clear_color.x;
-                            gameObj.color.y = clear_color.y;
-                            gameObj.color.z = clear_color.z;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
+                            if (ImGui::Button("Delete"))
+                                ImGui::OpenPopup("Delete?");
+                            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+                                ImGui::Text(
+                                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
+                                ImGui::Separator();
 
+                                if (ImGui::Button("OK", ImVec2(120, 0))) {
+                                    auto objectToDelete = iterator;
+                                    iterator++;
+                                    delete gameObj.model.get();
+                                    ImGui::CloseCurrentPopup();
+                                    frameInfo.gameObjects.erase(objectToDelete);
+                                }
+                                ImGui::SetItemDefaultFocus();
+                                ImGui::SameLine();
+                                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                                ImGui::EndPopup();
+                            }
                             ImGui::TreePop();
                         }
                         ImGui::PopID();
@@ -276,8 +282,7 @@ namespace Engine {
                         ImGui::TableNextRow();
                         ImGui::TableSetColumnIndex(0);
                         ImGui::AlignTextToFramePadding();
-                        bool node_open = ImGui::TreeNode("Object", "%s-%u", gameObj.getName().c_str(),
-                                                         static_cast<int>(gameObj.getId()));
+                        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
                         ImGui::TableSetColumnIndex(1);
                         ImGui::Text("Point Light");
 
@@ -285,6 +290,19 @@ namespace Engine {
                             ImGuiTreeNodeFlags flags =
                                     ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
                                     ImGuiTreeNodeFlags_Bullet;
+
+                            ImGui::PushID("Name");
+                            ImGui::TableNextRow();
+                            ImGui::TableSetColumnIndex(0);
+                            ImGui::AlignTextToFramePadding();
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
+                            ImGui::TableSetColumnIndex(1);
+                            static char objName[128] = "";
+                            strcpy(objName, gameObj.name.c_str());
+                            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
+                            gameObj.name = objName;
+                            ImGui::NextColumn();
+                            ImGui::PopID();
 
                             ImGui::PushID("Scale Component");
                             ImGui::TableNextRow();
@@ -332,36 +350,14 @@ namespace Engine {
                             ImGui::NextColumn();
                             ImGui::PopID();
 
-                            ImGui::PushID("Transform Component Rotation X");
+                            ImGui::PushID("Light Intensity");
                             ImGui::TableNextRow();
                             ImGui::TableSetColumnIndex(0);
                             ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
+                            ImGui::TreeNodeEx("TransformComponentField", flags, "Light Intensity");
                             ImGui::TableSetColumnIndex(1);
                             ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Rotation Y");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Rotation Z");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
+                            ImGui::DragFloat("##value", &gameObj.pointLightComponent->lightIntensity, .01f);
                             ImGui::NextColumn();
                             ImGui::PopID();
 
@@ -381,6 +377,25 @@ namespace Engine {
                             ImGui::NextColumn();
                             ImGui::PopID();
 
+                            if (ImGui::Button("Delete"))
+                                ImGui::OpenPopup("Delete?");
+                            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+                                ImGui::Text(
+                                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
+                                ImGui::Separator();
+
+                                if (ImGui::Button("OK", ImVec2(120, 0))) {
+                                    auto objectToDelete = iterator;
+                                    iterator++;
+                                    frameInfo.gameObjects.erase(objectToDelete);
+                                    ImGui::CloseCurrentPopup();
+                                }
+                                ImGui::SetItemDefaultFocus();
+                                ImGui::SameLine();
+                                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                                ImGui::EndPopup();
+                            }
+
                             ImGui::TreePop();
                         }
                         ImGui::PopID();
@@ -389,6 +404,29 @@ namespace Engine {
                 ImGui::EndTable();
             }
             ImGui::PopStyleVar();
+            ImGui::End();
+        }
+
+        if (showAddEntityWindow) {
+            ImGui::Begin("New Entity");
+
+            static char objFileName[128] = "";
+            ImGui::InputText("OBJ File Name: ", objFileName, IM_ARRAYSIZE(objFileName));
+
+            if (ImGui::Button("Add")) {
+                std::string objFullPath{"../models/"};
+                objFullPath += objFileName;
+
+                std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, objFullPath.c_str());
+                auto gameObject = Engine::GameObject::createGameObject(objFileName);
+                gameObject.model = model;
+
+                frameInfo.gameObjects.emplace(gameObject.getId(), std::move(gameObject));
+
+                std::cout << "Added entity with model file path: " << objFullPath << std::endl;
+                showAddEntityWindow = false;
+            }
+
             ImGui::End();
         }
     }
@@ -461,6 +499,7 @@ namespace Engine {
             model["file_name"] = nullptr;
         }
 
+        objJson["name"] = obj.name;
         objJson["transform"] = transformJson;
         objJson["model"] = model;
         j.push_back(objJson);

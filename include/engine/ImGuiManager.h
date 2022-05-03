@@ -41,13 +41,12 @@ namespace Engine {
 
         void render(VkCommandBuffer commandBuffer);
 
-        // Example state
-        bool show_demo_window = false;
-        bool showGameObjectsWindow = false;
-        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
         void run(Engine::FrameInfo &frameInfo);
 
+        // Example state
+        bool showDemoWindow = false;
+        bool showGameObjectsWindow = false;
+        bool showAddEntityWindow = false;
     private:
         Engine::Device &device;
 
@@ -55,7 +54,7 @@ namespace Engine {
 
         static void ShowExampleAppSimpleOverlay(bool *p_open);
 
-        void saveObjectToJson(GameObject &obj, json &j);
+        static void saveObjectToJson(GameObject &obj, json &j);
     };
 };
 
