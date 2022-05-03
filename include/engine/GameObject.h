@@ -38,8 +38,9 @@ namespace Engine {
 
         glm::vec3 color{};
         TransformComponent transform{};
+        std::string name;
 
-        static GameObject createGameObject(std::string &name) {
+        static GameObject createGameObject(const char *name) {
             static id_t currentId = 0;
             return GameObject{currentId++, name};
         }
@@ -59,16 +60,11 @@ namespace Engine {
             return id;
         }
 
-        [[nodiscard]] const std::string &getName() const {
-            return name;
-        }
 
     private:
         id_t id;
 
-        std::string name;
-
-        explicit GameObject(id_t objectId, std::string &name) : id(objectId), name(name) {}
+        explicit GameObject(id_t objectId, const char *name) : id(objectId), name(name) {}
     };
 }
 
