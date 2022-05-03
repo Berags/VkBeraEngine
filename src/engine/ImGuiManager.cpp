@@ -145,261 +145,7 @@ namespace Engine {
                 for (auto iterator = frameInfo.gameObjects.begin();
                      iterator != frameInfo.gameObjects.end(); ++iterator) {
                     auto &gameObj = iterator->second;
-                    if (gameObj.pointLightComponent == nullptr) {
-                        ImGui::PushID(static_cast<int>(gameObj.getId()));
-
-                        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::Text("Game Object");
-
-                        if (node_open) {
-                            ImGuiTreeNodeFlags flags =
-                                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
-                                    ImGuiTreeNodeFlags_Bullet;
-
-                            ImGui::PushID("Name");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
-                            ImGui::TableSetColumnIndex(1);
-                            static char objName[128] = "";
-                            strcpy(objName, gameObj.name.c_str());
-                            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
-                            gameObj.name = objName;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Scale Component");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
-                            gameObj.transform.scale.y = gameObj.transform.scale.x;
-                            gameObj.transform.scale.z = gameObj.transform.scale.x;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component X");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Y");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Z");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Rotation X");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Rotation Y");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Rotation Z");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            if (ImGui::Button("Delete"))
-                                ImGui::OpenPopup("Delete?");
-                            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-                                ImGui::Text(
-                                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
-                                ImGui::Separator();
-
-                                if (ImGui::Button("OK", ImVec2(120, 0))) {
-                                    auto objectToDelete = iterator;
-                                    iterator++;
-                                    delete gameObj.model.get();
-                                    ImGui::CloseCurrentPopup();
-                                    frameInfo.gameObjects.erase(objectToDelete);
-                                }
-                                ImGui::SetItemDefaultFocus();
-                                ImGui::SameLine();
-                                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-                                ImGui::EndPopup();
-                            }
-                            ImGui::TreePop();
-                        }
-                        ImGui::PopID();
-                    } else {
-                        ImGui::PushID(static_cast<int>(gameObj.getId()));
-
-                        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
-                        ImGui::TableNextRow();
-                        ImGui::TableSetColumnIndex(0);
-                        ImGui::AlignTextToFramePadding();
-                        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
-                        ImGui::TableSetColumnIndex(1);
-                        ImGui::Text("Point Light");
-
-                        if (node_open) {
-                            ImGuiTreeNodeFlags flags =
-                                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
-                                    ImGuiTreeNodeFlags_Bullet;
-
-                            ImGui::PushID("Name");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
-                            ImGui::TableSetColumnIndex(1);
-                            static char objName[128] = "";
-                            strcpy(objName, gameObj.name.c_str());
-                            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
-                            gameObj.name = objName;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Scale Component");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
-                            gameObj.transform.scale.y = gameObj.transform.scale.x;
-                            gameObj.transform.scale.z = gameObj.transform.scale.x;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component X");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Y");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Transform Component Z");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Light Intensity");
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("TransformComponentField", flags, "Light Intensity");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::DragFloat("##value", &gameObj.pointLightComponent->lightIntensity, .01f);
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            ImGui::PushID("Color Component");
-                            ImVec4 colorVec4 = ImVec4(gameObj.color.x, gameObj.color.y, gameObj.color.z, 1.f);
-                            ImGui::TableNextRow();
-                            ImGui::TableSetColumnIndex(0);
-                            ImGui::AlignTextToFramePadding();
-                            ImGui::TreeNodeEx("Color", flags, "Color");
-                            ImGui::TableSetColumnIndex(1);
-                            ImGui::SetNextItemWidth(-FLT_MIN);
-                            ImGui::ColorEdit3("clear color",
-                                              (float *) &colorVec4);  // Edit 3 floats representing a color
-                            gameObj.color.x = colorVec4.x;
-                            gameObj.color.y = colorVec4.y;
-                            gameObj.color.z = colorVec4.z;
-                            ImGui::NextColumn();
-                            ImGui::PopID();
-
-                            if (ImGui::Button("Delete"))
-                                ImGui::OpenPopup("Delete?");
-                            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
-                                ImGui::Text(
-                                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
-                                ImGui::Separator();
-
-                                if (ImGui::Button("OK", ImVec2(120, 0))) {
-                                    auto objectToDelete = iterator;
-                                    iterator++;
-                                    frameInfo.gameObjects.erase(objectToDelete);
-                                    ImGui::CloseCurrentPopup();
-                                }
-                                ImGui::SetItemDefaultFocus();
-                                ImGui::SameLine();
-                                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-                                ImGui::EndPopup();
-                            }
-
-                            ImGui::TreePop();
-                        }
-                        ImGui::PopID();
-                    }
+                    showGameObject(frameInfo, iterator, gameObj);
                 }
                 ImGui::EndTable();
             }
@@ -429,6 +175,276 @@ namespace Engine {
 
             ImGui::End();
         }
+    }
+
+    void ImGuiManager::showGameObject(FrameInfo &frameInfo,
+                                      Engine::GameObject::Map::iterator &iterator,
+                                      GameObject &gameObj) {
+        gameObj.pointLightComponent ?
+        showEntityEditor(frameInfo, iterator, gameObj) :
+        showLightEditor(frameInfo, iterator, gameObj);
+    }
+
+    void
+    ImGuiManager::showEntityEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
+                                   GameObject &gameObj) {
+        ImGui::PushID(static_cast<int>(gameObj.getId()));
+
+        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::AlignTextToFramePadding();
+        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
+        ImGui::TableSetColumnIndex(1);
+        ImGui::Text("Point Light");
+
+        if (node_open) {
+            ImGuiTreeNodeFlags flags =
+                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
+                    ImGuiTreeNodeFlags_Bullet;
+
+            ImGui::PushID("Name");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
+            ImGui::TableSetColumnIndex(1);
+            static char objName[128] = "";
+            strcpy(objName, gameObj.name.c_str());
+            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
+            gameObj.name = objName;
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Scale Component");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
+            gameObj.transform.scale.y = gameObj.transform.scale.x;
+            gameObj.transform.scale.z = gameObj.transform.scale.x;
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component X");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Y");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Z");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Light Intensity");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Light Intensity");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.pointLightComponent->lightIntensity, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Color Component");
+            ImVec4 colorVec4 = ImVec4(gameObj.color.x, gameObj.color.y, gameObj.color.z, 1.f);
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("Color", flags, "Color");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::ColorEdit3("clear color",
+                              (float *) &colorVec4);  // Edit 3 floats representing a color
+            gameObj.color.x = colorVec4.x;
+            gameObj.color.y = colorVec4.y;
+            gameObj.color.z = colorVec4.z;
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            if (ImGui::Button("Delete"))
+                ImGui::OpenPopup("Delete?");
+            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+                ImGui::Text(
+                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
+                ImGui::Separator();
+
+                if (ImGui::Button("OK", ImVec2(120, 0))) {
+                    auto objectToDelete = iterator;
+                    iterator++;
+                    frameInfo.gameObjects.erase(objectToDelete);
+                    ImGui::CloseCurrentPopup();
+                }
+                ImGui::SetItemDefaultFocus();
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                ImGui::EndPopup();
+            }
+
+            ImGui::TreePop();
+        }
+        ImGui::PopID();
+    }
+
+    void
+    ImGuiManager::showLightEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
+                                  GameObject &gameObj) {
+        ImGui::PushID(static_cast<int>(gameObj.getId()));
+
+        // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::AlignTextToFramePadding();
+        bool node_open = ImGui::TreeNode("Object", "%s", gameObj.name.c_str());
+        ImGui::TableSetColumnIndex(1);
+        ImGui::Text("Game Object");
+
+        if (node_open) {
+            ImGuiTreeNodeFlags flags =
+                    ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
+                    ImGuiTreeNodeFlags_Bullet;
+
+            ImGui::PushID("Name");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Name");
+            ImGui::TableSetColumnIndex(1);
+            static char objName[128] = "";
+            strcpy(objName, gameObj.name.c_str());
+            ImGui::InputText("", objName, IM_ARRAYSIZE(objName));
+            gameObj.name = objName;
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Scale Component");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Scale Component");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.scale.x, .01f);
+            gameObj.transform.scale.y = gameObj.transform.scale.x;
+            gameObj.transform.scale.z = gameObj.transform.scale.x;
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component X");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation X");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.x, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Y");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Y");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.y, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Z");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Translation Z");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.translation.z, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Rotation X");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation X");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.rotation.x, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Rotation Y");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Y");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.rotation.y, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            ImGui::PushID("Transform Component Rotation Z");
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TreeNodeEx("TransformComponentField", flags, "Rotation Z");
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::DragFloat("##value", &gameObj.transform.rotation.z, .01f);
+            ImGui::NextColumn();
+            ImGui::PopID();
+
+            if (ImGui::Button("Delete"))
+                ImGui::OpenPopup("Delete?");
+            if (ImGui::BeginPopupModal("Delete?", nullptr, ImGuiWindowFlags_AlwaysAutoResize)) {
+                ImGui::Text(
+                        "This entity will be removed.\nThis operation cannot be undone!\n\n");
+                ImGui::Separator();
+
+                if (ImGui::Button("OK", ImVec2(120, 0))) {
+                    auto objectToDelete = iterator;
+                    iterator++;
+                    delete gameObj.model.get();
+                    ImGui::CloseCurrentPopup();
+                    frameInfo.gameObjects.erase(objectToDelete);
+                }
+                ImGui::SetItemDefaultFocus();
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                ImGui::EndPopup();
+            }
+            ImGui::TreePop();
+        }
+        ImGui::PopID();
     }
 
     void ImGuiManager::ShowExampleAppSimpleOverlay(bool *p_open) {

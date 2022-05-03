@@ -47,6 +47,7 @@ namespace Engine {
         bool showDemoWindow = false;
         bool showGameObjectsWindow = false;
         bool showAddEntityWindow = false;
+
     private:
         Engine::Device &device;
 
@@ -55,6 +56,18 @@ namespace Engine {
         static void ShowExampleAppSimpleOverlay(bool *p_open);
 
         static void saveObjectToJson(GameObject &obj, json &j);
+
+        static void showGameObject(FrameInfo &frameInfo,
+                                   Engine::GameObject::Map::iterator &iterator,
+                                   GameObject &gameObj);
+
+        static void showLightEditor(FrameInfo &frameInfo,
+                                    Engine::GameObject::Map::iterator &iterator,
+                                    GameObject &gameObj);
+
+        static void showEntityEditor(FrameInfo &frameInfo,
+                                     Engine::GameObject::Map::iterator &iterator,
+                                     GameObject &gameObj);
     };
 };
 

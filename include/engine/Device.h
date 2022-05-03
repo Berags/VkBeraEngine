@@ -47,8 +47,7 @@ namespace Engine {
 
         Device operator=(const Device &) = delete;
 
-        Device(Device
-               &&) = delete;
+        Device(Device &&) = delete;
 
         Device &operator=(Device &&) = delete;
 
