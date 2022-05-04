@@ -1,3 +1,6 @@
+include(./.env.cmake OPTIONAL RESULT_VARIABLE LOCAL_ENV)
+message(STATUS "Local .env.cmake: ${LOCAL_ENV}")
+
 cmake_minimum_required(VERSION 3.21)
 project(MiniminiMotorways VERSION 0.23.0)
 
