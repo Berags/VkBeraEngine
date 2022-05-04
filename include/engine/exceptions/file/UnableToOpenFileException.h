@@ -8,18 +8,16 @@
 #include <string>
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class UnableToOpenFileException : public Engine::Exceptions::Exception {
-        public:
-            explicit UnableToOpenFileException(std::string fileName);
+namespace Engine::Exceptions {
+    class UnableToOpenFileException : public std::exception {
+    public:
+        explicit UnableToOpenFileException(std::string fileName);
 
-            const char *what() const noexcept override;
+        [[nodiscard]] const char *what() const noexcept override;
 
-        private:
-            const std::string fileName;
-        };
-    }
+    private:
+        const std::string fileName;
+    };
 }
 
 

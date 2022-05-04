@@ -28,10 +28,9 @@ namespace Engine {
 
     class ImGuiManager {
     public:
-        ImGuiManager(Engine::Window
-                     &window,
-                     Engine::Device &device, VkRenderPass
-                     renderPass,
+        ImGuiManager(Engine::Window &window,
+                     Engine::Device &device,
+                     VkRenderPass renderPass,
                      uint32_t imageCount
         );
 
@@ -43,7 +42,7 @@ namespace Engine {
 
         void run(Engine::FrameInfo &frameInfo);
 
-        // Example state
+        // ImGui Windows states
         bool showDemoWindow = false;
         bool showGameObjectsWindow = false;
         bool showAddEntityWindow = false;

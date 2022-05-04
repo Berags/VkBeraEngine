@@ -7,14 +7,12 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class FailedToCreateWindowSurfaceException : public Engine::Exceptions::Exception {
+namespace Engine::Exceptions {
+        class FailedToCreateWindowSurfaceException : public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
     }
-}
 
 
 

@@ -10,13 +10,17 @@
 #include "GameObject.h"
 
 namespace Engine {
-    static const uint8_t MAX_LIGHT = 10;
+    // Number of maximum light that can be present in our game object list
+    static const uint32_t MAX_LIGHT = 32;
 
     struct PointLight {
-        glm::vec4 position{}; // w is padding
+        glm::vec4 position{}; // w is used for padding
         glm::vec4 color{};    // w is intensity
     };
 
+    // Global Uniform Buffer Object that is used when drawing a shader to the screen.
+    // https://www.khronos.org/opengl/wiki/Uniform_Buffer_Object
+    // https://vulkan-tutorial.com/Uniform_buffers/Descriptor_layout_and_buffer
     struct GlobalUbo {
         glm::mat4 projection{1.f};
         glm::mat4 view{1.f};
@@ -26,6 +30,7 @@ namespace Engine {
         int numLights;
     };
 
+    // Contains all information that are needed during a frame draw
     struct FrameInfo {
         int frameIndex;
         float frameTime;

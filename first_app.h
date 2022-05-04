@@ -7,13 +7,7 @@
 
 #include <memory>
 #include <vector>
-#include "include/engine/Window.h"
-#include "include/engine/Device.h"
-#include "include/engine/SwapChain.h"
-#include "include/engine/Model.h"
-#include "include/engine/GameObject.h"
-#include "include/engine/Renderer.h"
-#include "include/engine/Descriptors.h"
+#include "include/engine/Core.h"
 
 class FirstApp {
 public:

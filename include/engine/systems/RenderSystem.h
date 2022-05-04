@@ -30,7 +30,7 @@ namespace Engine {
 
         void renderGameObjects(Engine::FrameInfo &frameInfo);
 
-        const std::unique_ptr<Engine::Pipeline> &getPipeline() const;
+        [[nodiscard]] const std::unique_ptr<Engine::Pipeline> &getPipeline() const;
 
     private:
         void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);

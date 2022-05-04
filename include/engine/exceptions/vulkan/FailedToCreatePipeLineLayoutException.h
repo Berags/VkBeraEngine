@@ -7,15 +7,13 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
+namespace Engine::Exceptions {
 
-        class FailedToCreatePipeLineLayoutException : public Engine::Exceptions::Exception {
+        class FailedToCreatePipeLineLayoutException : public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
     }
-}
 
 
 #endif //MINIMINIMOTORWAYS_FAILEDTOCREATEPIPELINELAYOUTEXCEPTION_H

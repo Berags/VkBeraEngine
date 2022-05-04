@@ -7,14 +7,12 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class FailedToCreateSwapChainException : public Engine::Exceptions::Exception {
+namespace Engine::Exceptions {
+        class FailedToCreateSwapChainException : public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
     }
-}
 
 
 

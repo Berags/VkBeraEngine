@@ -52,6 +52,8 @@ namespace Engine {
         std::string name;
         int height;
         int width;
+
+        // True if the window was resized during last frame buffer draw
         bool frameBufferResized = false;
 
         void initWindow();
