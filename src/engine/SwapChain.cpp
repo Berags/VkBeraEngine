@@ -13,11 +13,6 @@
 // headers
 #include "../../include/engine/SwapChain.h"
 #include "../../include/engine/exceptions/vulkan/FailedToSubmitDrawCommandBufferException.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateSwapChainException.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateTextureImageViewException.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateSynchronizationObjectException.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateRenderPassException.h"
-#include "../../include/engine/Buffer.h"
 
 namespace Engine {
 

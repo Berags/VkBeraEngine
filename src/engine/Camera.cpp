@@ -2,9 +2,12 @@
 // Created by Jacopo Beragnoli on 15/04/22.
 //
 
-#include "../../include/engine/Camera.h"
+// libs
 #include <cassert>
 #include <limits>
+
+// includes
+#include "../../include/engine/Camera.h"
 
 namespace Engine {
 

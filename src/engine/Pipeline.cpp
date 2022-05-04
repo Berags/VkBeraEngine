@@ -2,9 +2,12 @@
 // Created by Jacopo Beragnoli on 05/04/22.
 //
 
-#include "../../include/engine/Core.h"
+// libs
 #include <iostream>
 #include <cassert>
+
+// includes
+#include "../../include/engine/Core.h"
 
 namespace Engine {
     Pipeline::Pipeline(Engine::Device &device, const std::string &vertFilePath, const std::string &fragFilePath,

@@ -24,11 +24,6 @@ FirstApp::FirstApp() {
 FirstApp::~FirstApp() = default;
 
 void FirstApp::run() {
-    Engine::ECS::Entity entity = Engine::ECS::Entity::create();
-    Engine::ECS::TestComponent *testComponent{new Engine::ECS::TestComponent()};
-    entity.addComponent(testComponent);
-    entity.update(.0f);
-
     Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
@@ -80,7 +75,7 @@ void FirstApp::run() {
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspectRatio = renderer.getAspectRatio();
-        camera.setProspectiveProjection(glm::radians(50.f), aspectRatio, .1f, 100.f);
+        camera.setProspectiveProjection(glm::radians(80.f), aspectRatio, .1f, 25.f);
 
         if (auto commandBuffer = renderer.beginFrame()) {
             imGui.newFrame();
@@ -107,8 +102,6 @@ void FirstApp::run() {
             renderer.beginSwapChainRenderPass(commandBuffer);
             renderSystem.renderGameObjects(frameInfo);
             pointLightSystem.render(frameInfo);
-
-            entity.update(frameTime);
 
             // ImGui rendering
             imGui.run(frameInfo);

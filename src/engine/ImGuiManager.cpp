@@ -2,9 +2,12 @@
 // Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#include "../../include/engine/ImGuiManager.h"
+// libs
 #include <vulkan/vulkan_core.h>
 #include <stdexcept>
+
+// includes
+#include "../../include/engine/ImGuiManager.h"
 
 namespace Engine {
     ImGuiManager::ImGuiManager(

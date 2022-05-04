@@ -27,6 +27,7 @@
 #include "ecs/IComponent.h"
 #include "ecs/TestComponent.h"
 #include "ecs/Entity.h"
+#include "ecs/EntityManager.h"
 
 #include "systems/RenderSystem.h"
 #include "systems/PointLightSystem.h"

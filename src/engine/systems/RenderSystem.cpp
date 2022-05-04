@@ -3,14 +3,15 @@
 //
 
 // libs
+#include <glm/glm.hpp>
+
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
-#include <glm/glm.hpp>
 #include <array>
 #include <cassert>
 
-// headers
+// includes
 #include "../../../include/engine/systems/RenderSystem.h"
 #include "../../../include/engine/exceptions/vulkan/FailedToCreatePipeLineLayoutException.h"
 

@@ -37,7 +37,7 @@ namespace Engine {
     private:
         KeyMappings keys{};
         const float moveSpeed{3.f};
-        const float lookSpeed{2.f};
+        const float lookSpeed{3.f};
     };
 }
 

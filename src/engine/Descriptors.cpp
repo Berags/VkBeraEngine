@@ -2,9 +2,12 @@
 // Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#include "../../include/engine/Descriptors.h"
+// libs
 #include <cassert>
 #include <stdexcept>
+
+// includes
+#include "../../include/engine/Descriptors.h"
 
 namespace Engine {
     // *************** Descriptor Set Layout Builder *********************

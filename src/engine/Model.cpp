@@ -2,16 +2,17 @@
 // Created by Jacopo Beragnoli on 12/04/22.
 //
 
-#include "../../include/engine/Model.h"
-
 // libs
 #define TINYOBJLOADER_IMPLEMENTATION
 
 #include "../../include/libs/tiny_obj_loader.h"
-#include "../../include/libs/stb_image.h"
 
+#include "../../include/libs/stb_image.h"
 #include <cassert>
 #include <iostream>
+
+// includes
+#include "../../include/engine/Model.h"
 
 namespace std {
     template<>
