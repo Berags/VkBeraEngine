@@ -7,15 +7,13 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class FailedToCreateSynchronizationObjectException :public Engine::Exceptions::Exception {
+namespace Engine::Exceptions {
+        class FailedToCreateSynchronizationObjectException :public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
 
     }
-}
 
 
 #endif //MINIMINIMOTORWAYS_FAILEDTOCREATESYNCHRONIZATIONOBJECTEXCEPTION_H

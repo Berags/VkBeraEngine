@@ -11,14 +11,7 @@
 #include <numeric>
 
 #include "first_app.h"
-#include "include/engine/systems/RenderSystem.h"
-#include "include/engine/KeyboardMovementController.h"
-#include "include/engine/ImGuiManager.h"
-#include "include/engine/systems/PointLightSystem.h"
-#include "include/engine/ecs/Entity.h"
-#include "include/engine/ecs/TestComponent.h"
-#include "include/engine/Texture.h"
-
+#include "include/engine/Core.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -138,7 +131,7 @@ void FirstApp::loadGameObjects() {
         if (it["model"]["file_name"].is_null()) {
             // Light
             std::cout << "light\n";
-            auto pointLight = Engine::GameObject::createPointLight(1.f);
+            auto pointLight = Engine::GameObject::createPointLight(it["intensity"].get<float>());
             pointLight.name = it["name"].get<std::string>();
             pointLight.color = glm::vec3(it["transform"]["color"]["x"].get<float>(),
                                          it["transform"]["color"]["y"].get<float>(),

@@ -15,7 +15,7 @@ namespace Engine {
     public:
         class Builder {
         public:
-            Builder(Engine::Device &device) : device{device} {}
+            explicit Builder(Engine::Device &device) : device{device} {}
 
             Builder &addBinding(
                     uint32_t binding,
@@ -23,7 +23,7 @@ namespace Engine {
                     VkShaderStageFlags stageFlags,
                     uint32_t count = 1);
 
-            std::unique_ptr<DescriptorSetLayout> build() const;
+            [[nodiscard]] std::unique_ptr<DescriptorSetLayout> build() const;
 
         private:
             Engine::Device &device;
@@ -39,7 +39,7 @@ namespace Engine {
 
         DescriptorSetLayout &operator=(const DescriptorSetLayout &) = delete;
 
-        VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
+        [[nodiscard]] VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
     private:
         Engine::Device &device;
@@ -53,7 +53,7 @@ namespace Engine {
     public:
         class Builder {
         public:
-            Builder(Engine::Device &device) : device{device} {}
+            explicit Builder(Engine::Device &device) : device{device} {}
 
             Builder &addPoolSize(VkDescriptorType descriptorType, uint32_t count);
 
@@ -61,7 +61,7 @@ namespace Engine {
 
             Builder &setMaxSets(uint32_t count);
 
-            std::unique_ptr<DescriptorPool> build() const;
+            [[nodiscard]] std::unique_ptr<DescriptorPool> build() const;
 
         private:
             Engine::Device &device;

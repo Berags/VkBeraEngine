@@ -509,10 +509,11 @@ namespace Engine {
         transformJson["color"] = vec3;
 
         json model;
-        if (obj.pointLightComponent == nullptr) {
+        if (!obj.pointLightComponent) {
             model["file_name"] = obj.model->getFilePath();
         } else {
             model["file_name"] = nullptr;
+            objJson["intensity"] = obj.pointLightComponent->lightIntensity;
         }
 
         objJson["name"] = obj.name;

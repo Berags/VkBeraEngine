@@ -40,13 +40,16 @@ namespace Engine {
         TransformComponent transform{};
         std::string name;
 
+        // Factory method that create a generic game object with a unique identifier
         static GameObject createGameObject(const char *name) {
             static id_t currentId = 0;
             return GameObject{currentId++, name};
         }
 
-        static GameObject
-        createPointLight(float intensity = 10.f, float radius = .1f, glm::vec3 color = glm::vec3(1.f));
+        // Factory method that create a billboard point light
+        static GameObject createPointLight(float intensity = 10.f,
+                                           float radius = .1f,
+                                           glm::vec3 color = glm::vec3(1.f));
 
         GameObject(const GameObject &) = delete;
 
@@ -60,10 +63,13 @@ namespace Engine {
             return id;
         }
 
-
     private:
+        // Unique identifier
         id_t id;
 
+        // Private Constructor so that a GameObject can be created only by calling factory methods:
+        // - createGameObject, to create an actual game object with an .obj model
+        // - createPointLight, to create a billboard point light without a model
         explicit GameObject(id_t objectId, const char *name) : id(objectId), name(name) {}
     };
 }

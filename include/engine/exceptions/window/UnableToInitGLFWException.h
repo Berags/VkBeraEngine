@@ -7,14 +7,12 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class UnableToInitGLFWException : public Engine::Exceptions::Exception {
+namespace Engine::Exceptions {
+        class UnableToInitGLFWException : public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
     }
-}
 
 
 #endif //MINIMINIMOTORWAYS_UNABLETOINITGLFWEXCEPTION_H

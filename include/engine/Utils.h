@@ -13,21 +13,15 @@
 
 using json = nlohmann::json;
 
-namespace Engine {
+namespace Engine::Utils {
 
+    // Template that allows to generate a hash function
+    // from: https://stackoverflow.com/a/57595105
     template<typename T, typename... Rest>
     void hashCombine(std::size_t &seed, const T &v, const Rest &... rest) {
         seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
         (hashCombine(seed, rest), ...);
     };
-
-    template<typename T>
-    T readFromJson(const std::string &file) {
-        std::ifstream i(file);
-        json j;
-        i >> j;
-        return j;
-    }
 }
 
 

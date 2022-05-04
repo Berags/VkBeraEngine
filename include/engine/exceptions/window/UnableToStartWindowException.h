@@ -7,13 +7,11 @@
 
 #include "../Exception.h"
 
-namespace Engine {
-    namespace Exceptions {
-        class UnableToStartWindowException : public Engine::Exceptions::Exception {
+namespace Engine::Exceptions {
+        class UnableToStartWindowException : public std::exception {
         public:
-            const char *what() const noexcept override;
+            [[nodiscard]] const char *what() const noexcept override;
         };
     }
-}
 
 #endif //MINIMINIMOTORWAYS_UNABLETOSTARTWINDOWEXCEPTION_H

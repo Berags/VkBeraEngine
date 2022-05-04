@@ -8,19 +8,17 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 
 #include "../../include/libs/tiny_obj_loader.h"
-#include "../../include/engine/Texture.h"
 #include "../../include/libs/stb_image.h"
 
 #include <cassert>
 #include <iostream>
-#include <cstring>
 
 namespace std {
     template<>
     struct hash<Engine::Model::Vertex> {
         size_t operator()(const Engine::Model::Vertex &vertex) const {
             size_t seed = 0;
-            Engine::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+            Engine::Utils::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
             return seed;
         }
     };

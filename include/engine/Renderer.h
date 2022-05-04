@@ -38,7 +38,7 @@ namespace Engine {
 
         [[nodiscard]] bool isFrameInProgress() const { return isFrameStarted; }
 
-        uint32_t getImageCount() const { return swapChain->imageCount(); }
+        [[nodiscard]] uint32_t getImageCount() const { return swapChain->imageCount(); }
 
         [[nodiscard]] VkCommandBuffer getCurrentCommandBuffer() const {
             assert(isFrameStarted && "Cannot get command buffer when frame not in progress");

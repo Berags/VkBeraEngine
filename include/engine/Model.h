@@ -18,14 +18,24 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-
 namespace Engine {
     class Model {
     public:
         struct Vertex {
+            // Current 3D world position of the vertex
             glm::vec3 position;
+
+            // Vertex color
             glm::vec3 color;
+
+            // Normalized directional vector intended as a replacement
+            //  to the true geometric normal of the surface
+            // https://en.wikipedia.org/wiki/Vertex_normal
             glm::vec3 normal{};
+
+            // UV mapping is the 3D modeling process of projecting a 2D image
+            // to a 3D model's surface for texture mapping.
+            // https://en.wikipedia.org/wiki/UV_mapping
             glm::vec2 uv{};
 
             bool operator==(const Vertex &that) const {
@@ -38,10 +48,23 @@ namespace Engine {
         };
 
         struct Data {
+            // All vertices loaded from .obj file
             std::vector<Vertex> vertices{};
+
+            // Stores the indices loaded from .obj file
+            // If hasIndexBuffer is false this vector is empty
             std::vector<uint32_t> indices{};
 
+            // Load a model from a file string path
+            // Uses https://github.com/tinyobjloader/tinyobjloader library
+            // Able to load up to 6M vertices .obj files
+            // http://casual-effects.com/data/index.html
             void loadModel(const std::string &filePath);
+
+            // Load a model from a file string path with its relative texture file
+            // Uses https://github.com/tinyobjloader/tinyobjloader
+            // Able to load up to 6M vertices .obj files
+            // http://casual-effects.com/data/index.html
             void loadModel(const std::string &filePath, const std::string &textureFilePath);
         };
 
@@ -53,6 +76,8 @@ namespace Engine {
 
         Model &operator=(const Model &) = delete;
 
+        // Factory method that creates a model from a file path
+        // Only one model should be created for each game object
         static std::unique_ptr<Engine::Model> createModelFromFile(Engine::Device &device, const char *filePath);
 
         void bind(VkCommandBuffer commandBuffer);
@@ -64,13 +89,17 @@ namespace Engine {
     private:
         Engine::Device &device;
 
+        // The file name
         std::string file;
 
+        // Vertices information
         std::unique_ptr<Engine::Buffer> vertexBuffer;
         uint32_t vertexCount;
 
+        // Indices information
         std::unique_ptr<Engine::Buffer> indexBuffer;
         uint32_t indexCount;
+        // True if .obj uses an index buffer to optimize the complexity of the model
         bool hasIndexBuffer{false};
 
         void createVertexBuffers(const std::vector<Vertex> &vertices);
