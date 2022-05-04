@@ -10,16 +10,18 @@
 namespace Engine::ECS {
     class IComponent {
     public:
-        virtual void onCreate() = 0; // Only called one time when dt == 0
+        // On Create Method
+        // Is called when a Component is created and added to an Entity
+        virtual void onCreate() = 0;
 
-        virtual void onUpdate(float dt) {
-            if (equals(dt, .0f)) onCreate();
-        }
+        // On Update Method
+        // Is called on each frame and updates the Component related to an Entity
+        virtual void onUpdate(float dt) = 0;
 
-    private:
-        static bool equals(float a, float b) {
-            return fabs(a - b) <= ((fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * std::numeric_limits<double>::epsilon());
-        }
+        // On Destroy Method
+        // Is called whenever a Component is removed from an Entity or whenever an
+        // Entity is destroyed
+        virtual void onDestroy() = 0;
     };
 }
 

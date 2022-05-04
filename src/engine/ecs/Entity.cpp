@@ -28,5 +28,11 @@ namespace Engine::ECS {
     id_t Entity::getId() const {
         return id;
     }
+
+    void Entity::destroy() {
+        std::for_each(components.begin(), components.end(), [&](const auto &item) {
+            item->onDestroy();
+        });
+    }
 }
 

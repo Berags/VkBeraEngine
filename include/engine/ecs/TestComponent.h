@@ -13,11 +13,15 @@ namespace Engine::ECS {
     class TestComponent : public Engine::ECS::IComponent {
     public:
         void onCreate() override {
-            std::cout << "On Create function" << std::endl;
+            std::cout << "On Create method" << std::endl;
         }
 
         void onUpdate(float dt) override {
-            IComponent::onUpdate(dt);
+            std::cout << "On Update method" << std::endl;
+        }
+
+        void onDestroy() override {
+            std::cout << "On destroy method" << std::endl;
         }
     };
 }
