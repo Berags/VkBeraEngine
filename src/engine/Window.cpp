@@ -10,9 +10,7 @@
 
 // headers
 #include "../../include/engine/Window.h"
-#include "../../include/engine/exceptions/window/UnableToStartWindowException.h"
-#include "../../include/engine/exceptions/window/UnableToInitGLFWException.h"
-#include "../../include/engine/exceptions/window/FailedToCreateWindowSurfaceException.h"
+#include "../../include/engine/exceptions/Exception.h"
 
 namespace Engine {
     Window::Window(std::string &name, int width, int height) : name(name), width(width), height(height) {
