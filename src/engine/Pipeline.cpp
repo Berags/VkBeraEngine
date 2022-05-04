@@ -2,10 +2,7 @@
 // Created by Jacopo Beragnoli on 05/04/22.
 //
 
-#include "../../include/engine/Pipeline.h"
-#include "../../include/engine/Model.h"
-#include "../../include/engine/exceptions/file/UnableToOpenFileException.h"
-#include "../../include/engine/exceptions/vulkan/FailedToCreateShaderModuleException.h"
+#include "../../include/engine/Core.h"
 #include <iostream>
 #include <cassert>
 
