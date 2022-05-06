@@ -29,12 +29,12 @@ namespace Engine {
             glm::vec3 color;
 
             // Normalized directional vector intended as a replacement
-            //  to the true geometric normal of the surface
+            //  to the true geometric normal of the getSurface
             // https://en.wikipedia.org/wiki/Vertex_normal
             glm::vec3 normal{};
 
             // UV mapping is the 3D modeling process of projecting a 2D image
-            // to a 3D model's surface for texture mapping.
+            // to a 3D model's getSurface for texture mapping.
             // https://en.wikipedia.org/wiki/UV_mapping
             glm::vec2 uv{};
 

@@ -29,7 +29,7 @@ namespace Engine {
     }
 
     RenderSystem::~RenderSystem() {
-        vkDestroyPipelineLayout(device.device(), pipelineLayout, nullptr);
+        vkDestroyPipelineLayout(device.getVkDevice(), pipelineLayout, nullptr);
     }
 
     void RenderSystem::createPipelineLayout(VkDescriptorSetLayout globalSetLayout) {
@@ -46,7 +46,7 @@ namespace Engine {
         pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
         pipelineLayoutInfo.pushConstantRangeCount = 1;
         pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-        if (vkCreatePipelineLayout(device.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
+        if (vkCreatePipelineLayout(device.getVkDevice(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
             VK_SUCCESS) {
             throw Engine::Exceptions::FailedToCreatePipeLineLayoutException();
         }

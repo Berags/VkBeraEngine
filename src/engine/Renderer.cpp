@@ -26,7 +26,7 @@ namespace Engine {
             extent = window.getExtent();
             glfwWaitEvents();
         }
-        vkDeviceWaitIdle(device.device());
+        vkDeviceWaitIdle(device.getVkDevice());
 
         if (swapChain == nullptr) {
             swapChain = std::make_unique<Engine::SwapChain>(device, extent);
@@ -49,7 +49,7 @@ namespace Engine {
         allocInfo.commandPool = device.getCommandPool();
         allocInfo.commandBufferCount = static_cast<uint32_t>(commandBuffers.size());
 
-        if (vkAllocateCommandBuffers(device.device(), &allocInfo, commandBuffers.data()) !=
+        if (vkAllocateCommandBuffers(device.getVkDevice(), &allocInfo, commandBuffers.data()) !=
             VK_SUCCESS) {
             throw std::runtime_error("failed to allocate command buffers!");
         }
@@ -57,7 +57,7 @@ namespace Engine {
 
     void Renderer::freeCommandBuffers() {
         vkFreeCommandBuffers(
-                device.device(),
+                device.getVkDevice(),
                 device.getCommandPool(),
                 static_cast<uint32_t>(commandBuffers.size()),
                 commandBuffers.data());

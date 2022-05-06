@@ -1468,46 +1468,46 @@ struct ImGuiContext
     ImGuiWindow*            TabFocusRequestCurrWindow;          //
     ImGuiWindow*            TabFocusRequestNextWindow;          //
     int                     TabFocusRequestCurrCounterRegular;  // Any item being requested for focus, stored as an index (we on layout to be stable between the frame pressing TAB and the next frame, semi-ouch)
-    int                     TabFocusRequestCurrCounterTabStop;  // Tab item being requested for focus, stored as an index
-    int                     TabFocusRequestNextCounterRegular;  // Stored for next frame
-    int                     TabFocusRequestNextCounterTabStop;  // "
-    bool                    TabFocusPressed;                    // Set in NewFrame() when user pressed Tab
+    int TabFocusRequestCurrCounterTabStop;  // Tab item being requested for focus, stored as an index
+    int TabFocusRequestNextCounterRegular;  // Stored for next frame
+    int TabFocusRequestNextCounterTabStop;  // "
+    bool TabFocusPressed;                    // Set in NewFrame() when user pressed Tab
 
     // Render
-    float                   DimBgRatio;                         // 0.0..1.0 animation when fading in a dimming background (for modal window and CTRL+TAB list)
-    ImGuiMouseCursor        MouseCursor;
+    float DimBgRatio;                         // 0.0..1.0 animation when fading in a dimming background (for modal window and CTRL+TAB list)
+    ImGuiMouseCursor MouseCursor;
 
     // Drag and Drop
-    bool                    DragDropActive;
-    bool                    DragDropWithinSource;               // Set when within a BeginDragDropXXX/EndDragDropXXX block for a drag source.
-    bool                    DragDropWithinTarget;               // Set when within a BeginDragDropXXX/EndDragDropXXX block for a drag target.
-    ImGuiDragDropFlags      DragDropSourceFlags;
-    int                     DragDropSourceFrameCount;
-    int                     DragDropMouseButton;
-    ImGuiPayload            DragDropPayload;
-    ImRect                  DragDropTargetRect;                 // Store rectangle of current target candidate (we favor small targets when overlapping)
-    ImGuiID                 DragDropTargetId;
-    ImGuiDragDropFlags      DragDropAcceptFlags;
-    float                   DragDropAcceptIdCurrRectSurface;    // Target item surface (we resolve overlapping targets by prioritizing the smaller surface)
-    ImGuiID                 DragDropAcceptIdCurr;               // Target item id (set at the time of accepting the payload)
-    ImGuiID                 DragDropAcceptIdPrev;               // Target item id from previous frame (we need to store this to allow for overlapping drag and drop targets)
-    int                     DragDropAcceptFrameCount;           // Last time a target expressed a desire to accept the source
-    ImGuiID                 DragDropHoldJustPressedId;          // Set when holding a payload just made ButtonBehavior() return a press.
+    bool DragDropActive;
+    bool DragDropWithinSource;               // Set when within a BeginDragDropXXX/EndDragDropXXX block for a drag source.
+    bool DragDropWithinTarget;               // Set when within a BeginDragDropXXX/EndDragDropXXX block for a drag target.
+    ImGuiDragDropFlags DragDropSourceFlags;
+    int DragDropSourceFrameCount;
+    int DragDropMouseButton;
+    ImGuiPayload DragDropPayload;
+    ImRect DragDropTargetRect;                 // Store rectangle of current target candidate (we favor small targets when overlapping)
+    ImGuiID DragDropTargetId;
+    ImGuiDragDropFlags DragDropAcceptFlags;
+    float DragDropAcceptIdCurrRectSurface;    // Target item surface (we resolve overlapping targets by prioritizing the smaller getSurface)
+    ImGuiID DragDropAcceptIdCurr;               // Target item id (set at the time of accepting the payload)
+    ImGuiID DragDropAcceptIdPrev;               // Target item id from previous frame (we need to store this to allow for overlapping drag and drop targets)
+    int DragDropAcceptFrameCount;           // Last time a target expressed a desire to accept the source
+    ImGuiID DragDropHoldJustPressedId;          // Set when holding a payload just made ButtonBehavior() return a press.
     ImVector<unsigned char> DragDropPayloadBufHeap;             // We don't expose the ImVector<> directly, ImGuiPayload only holds pointer+size
-    unsigned char           DragDropPayloadBufLocal[16];        // Local buffer for small payloads
+    unsigned char DragDropPayloadBufLocal[16];        // Local buffer for small payloads
 
     // Table
-    ImGuiTable*                     CurrentTable;
-    ImPool<ImGuiTable>              Tables;
-    ImVector<ImGuiPtrOrIndex>       CurrentTableStack;
-    ImVector<float>                 TablesLastTimeActive;       // Last used timestamp of each tables (SOA, for efficient GC)
-    ImVector<ImDrawChannel>         DrawChannelsTempMergeBuffer;
+    ImGuiTable *CurrentTable;
+    ImPool<ImGuiTable> Tables;
+    ImVector<ImGuiPtrOrIndex> CurrentTableStack;
+    ImVector<float> TablesLastTimeActive;       // Last used timestamp of each tables (SOA, for efficient GC)
+    ImVector<ImDrawChannel> DrawChannelsTempMergeBuffer;
 
     // Tab bars
-    ImGuiTabBar*                    CurrentTabBar;
-    ImPool<ImGuiTabBar>             TabBars;
-    ImVector<ImGuiPtrOrIndex>       CurrentTabBarStack;
-    ImVector<ImGuiShrinkWidthItem>  ShrinkWidthBuffer;
+    ImGuiTabBar *CurrentTabBar;
+    ImPool<ImGuiTabBar> TabBars;
+    ImVector<ImGuiPtrOrIndex> CurrentTabBarStack;
+    ImVector<ImGuiShrinkWidthItem> ShrinkWidthBuffer;
 
     // Widget state
     ImVec2                  LastValidMousePos;

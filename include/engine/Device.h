@@ -53,13 +53,13 @@ namespace Engine {
 
         VkCommandPool getCommandPool() { return commandPool; }
 
-        VkDevice device() { return device_; }
+        VkDevice getVkDevice() { return device_; }
 
-        VkSurfaceKHR surface() { return surface_; }
+        VkSurfaceKHR getSurface() { return surface_; }
 
-        VkQueue graphicsQueue() { return graphicsQueue_; }
+        VkQueue getGraphicsQueue() { return graphicsQueue_; }
 
-        VkQueue presentQueue() { return presentQueue_; }
+        VkQueue getPresentQueue() { return presentQueue_; }
 
         SwapChainSupportDetails getSwapChainSupport() { return querySwapChainSupport(physicalDevice); }
 

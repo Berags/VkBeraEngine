@@ -46,8 +46,8 @@ namespace Engine {
 
     Buffer::~Buffer() {
         unmap();
-        vkDestroyBuffer(lveDevice.device(), buffer, nullptr);
-        vkFreeMemory(lveDevice.device(), memory, nullptr);
+        vkDestroyBuffer(lveDevice.getVkDevice(), buffer, nullptr);
+        vkFreeMemory(lveDevice.getVkDevice(), memory, nullptr);
     }
 
 /**
@@ -61,7 +61,7 @@ namespace Engine {
  */
     VkResult Buffer::map(VkDeviceSize size, VkDeviceSize offset) {
         assert(buffer && memory && "Called map on buffer before create");
-        return vkMapMemory(lveDevice.device(), memory, offset, size, 0, &mapped);
+        return vkMapMemory(lveDevice.getVkDevice(), memory, offset, size, 0, &mapped);
     }
 
 /**
@@ -71,7 +71,7 @@ namespace Engine {
  */
     void Buffer::unmap() {
         if (mapped) {
-            vkUnmapMemory(lveDevice.device(), memory);
+            vkUnmapMemory(lveDevice.getVkDevice(), memory);
             mapped = nullptr;
         }
     }
@@ -98,7 +98,7 @@ namespace Engine {
     }
 
 /**
- * Flush a memory range of the buffer to make it visible to the device
+ * Flush a memory range of the buffer to make it visible to the getVkDevice
  *
  * @note Only required for non-coherent memory
  *
@@ -114,7 +114,7 @@ namespace Engine {
         mappedRange.memory = memory;
         mappedRange.offset = offset;
         mappedRange.size = size;
-        return vkFlushMappedMemoryRanges(lveDevice.device(), 1, &mappedRange);
+        return vkFlushMappedMemoryRanges(lveDevice.getVkDevice(), 1, &mappedRange);
     }
 
 /**
@@ -134,7 +134,7 @@ namespace Engine {
         mappedRange.memory = memory;
         mappedRange.offset = offset;
         mappedRange.size = size;
-        return vkInvalidateMappedMemoryRanges(lveDevice.device(), 1, &mappedRange);
+        return vkInvalidateMappedMemoryRanges(lveDevice.getVkDevice(), 1, &mappedRange);
     }
 
 /**
@@ -165,7 +165,7 @@ namespace Engine {
     }
 
 /**
- *  Flush the memory range at index * alignmentSize of the buffer to make it visible to the device
+ *  Flush the memory range at index * alignmentSize of the buffer to make it visible to the getVkDevice
  *
  * @param index Used in offset calculation
  *

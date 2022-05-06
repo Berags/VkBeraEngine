@@ -32,7 +32,7 @@ namespace Engine {
         pool_info.maxSets = 1000 * IM_ARRAYSIZE(pool_sizes);
         pool_info.poolSizeCount = (uint32_t) IM_ARRAYSIZE(pool_sizes);
         pool_info.pPoolSizes = pool_sizes;
-        if (vkCreateDescriptorPool(device.device(), &pool_info, nullptr, &descriptorPool) != VK_SUCCESS) {
+        if (vkCreateDescriptorPool(device.getVkDevice(), &pool_info, nullptr, &descriptorPool) != VK_SUCCESS) {
             throw std::runtime_error("failed to set up descriptor pool for imgui");
         }
 
@@ -54,9 +54,9 @@ namespace Engine {
         ImGui_ImplVulkan_InitInfo init_info = {};
         init_info.Instance = device.getInstance();
         init_info.PhysicalDevice = device.getPhysicalDevice();
-        init_info.Device = device.device();
+        init_info.Device = device.getVkDevice();
         init_info.QueueFamily = device.getGraphicsQueueFamily();
-        init_info.Queue = device.graphicsQueue();
+        init_info.Queue = device.getGraphicsQueue();
 
         // pipeline cache is a potential future optimization, ignoring for now
         init_info.PipelineCache = VK_NULL_HANDLE;
@@ -68,7 +68,7 @@ namespace Engine {
         ImGui_ImplVulkan_Init(&init_info, renderPass);
 
         // upload fonts, this is done by recording and submitting a one time use command buffer
-        // which can be done easily bye using some existing helper functions on the lve device object
+        // which can be done easily bye using some existing helper functions on the lve getVkDevice object
         auto commandBuffer = device.beginSingleTimeCommands();
         ImGui_ImplVulkan_CreateFontsTexture(commandBuffer);
         device.endSingleTimeCommands(commandBuffer);
@@ -76,7 +76,7 @@ namespace Engine {
     }
 
     ImGuiManager::~ImGuiManager() {
-        vkDestroyDescriptorPool(device.device(), descriptorPool, nullptr);
+        vkDestroyDescriptorPool(device.getVkDevice(), descriptorPool, nullptr);
         ImGui_ImplVulkan_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();

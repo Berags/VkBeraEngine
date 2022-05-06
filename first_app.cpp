@@ -112,7 +112,7 @@ void FirstApp::run() {
         }
     }
 
-    vkDeviceWaitIdle(device.device());
+    vkDeviceWaitIdle(device.getVkDevice());
 }
 
 void FirstApp::loadGameObjects() {

@@ -105,7 +105,7 @@ namespace tinyobj {
 //  -clamp on | off                        # only render texels in the clamped
 //  0-1 range (default off)
 //                                         #   When unclamped, textures are
-//                                         repeated across a surface,
+//                                         repeated across a getSurface,
 //                                         #   when clamped, only texels which
 //                                         fall within the 0-1
 //                                         #   range are rendered.
@@ -753,7 +753,7 @@ struct PrimGroup {
     return faceGroup.empty() && lineGroup.empty() && pointsGroup.empty();
   }
 
-  // TODO(syoyo): bspline, surface, ...
+    // TODO(syoyo): bspline, getSurface, ...
 };
 
 // See

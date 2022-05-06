@@ -5,5 +5,5 @@
 #include "../../../../include/engine/exceptions/window/FailedToCreateWindowSurfaceException.h"
 
 const char *Engine::Exceptions::FailedToCreateWindowSurfaceException::what() const noexcept {
-    return "Failed to create window surface! - Vulkan";
+    return "Failed to create window getSurface! - Vulkan";
 }

@@ -140,7 +140,7 @@ namespace Engine {
         }
 
         vkGetPhysicalDeviceProperties(physicalDevice, &properties);
-        std::cout << "Physical device: " << properties.deviceName << std::endl;
+        std::cout << "Physical getVkDevice: " << properties.deviceName << std::endl;
     }
 
     void Device::createLogicalDevice() {
@@ -172,7 +172,7 @@ namespace Engine {
         createInfo.enabledExtensionCount = static_cast<uint32_t>(deviceExtensions.size());
         createInfo.ppEnabledExtensionNames = deviceExtensions.data();
 
-        // might not really be necessary anymore because device specific validation layers
+        // might not really be necessary anymore because getVkDevice specific validation layers
         // have been deprecated
         if (enableValidationLayers) {
             createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
@@ -182,7 +182,7 @@ namespace Engine {
         }
 
         if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device_) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create logical device!");
+            throw std::runtime_error("failed to create logical getVkDevice!");
         }
 
         vkGetDeviceQueue(device_, indices.graphicsFamily, 0, &graphicsQueue_);
