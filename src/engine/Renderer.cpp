@@ -11,7 +11,6 @@
 #include "../../include/engine/Renderer.h"
 
 namespace Engine {
-
     Renderer::Renderer(Engine::Window &window, Engine::Device &device)
             : window(window), device(device) {
         recreateSwapChain();

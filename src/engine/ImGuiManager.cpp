@@ -5,6 +5,7 @@
 // libs
 #include <vulkan/vulkan_core.h>
 #include <stdexcept>
+#include "../../include/libs/imgui/ImGuiFileDialog/ImGuiFileDialog.h"
 
 // includes
 #include "../../include/engine/ImGuiManager.h"
@@ -141,8 +142,31 @@ namespace Engine {
                 std::cout << "Added light\n";
             }
             ImGui::SameLine();
-            if (ImGui::Button("Add Entity")) {
-                showAddEntityWindow = true;
+            if (ImGui::Button("Add Entity"))
+                ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File", ".obj", ".");
+
+            // display
+            if (ImGuiFileDialog::Instance()->Display("ChooseFileDlgKey")) {
+                // action if OK
+                if (ImGuiFileDialog::Instance()->IsOk()) {
+                    std::string filePathName = ImGuiFileDialog::Instance()->GetFilePathName();
+                    std::string filePath = ImGuiFileDialog::Instance()->GetCurrentPath();
+                    // action
+
+                    std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device,
+                                                                                              filePathName.c_str());
+                    auto gameObject = Engine::GameObject::createGameObject(filePathName.c_str());
+                    gameObject.model = model;
+                    frameInfo.gameObjects.emplace(gameObject.getId(), std::move(gameObject));
+
+                    std::cout << "Added entity with model file path: " << filePathName <<
+                              std::endl;
+                }
+
+                // close
+                ImGuiFileDialog::Instance()->Close();
+
+                // showAddEntityWindow = true;
             }
             if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {
                 for (auto iterator = frameInfo.gameObjects.begin();
@@ -153,29 +177,6 @@ namespace Engine {
                 ImGui::EndTable();
             }
             ImGui::PopStyleVar();
-            ImGui::End();
-        }
-
-        if (showAddEntityWindow) {
-            ImGui::Begin("New Entity");
-
-            static char objFileName[128] = "";
-            ImGui::InputText("OBJ File Name: ", objFileName, IM_ARRAYSIZE(objFileName));
-
-            if (ImGui::Button("Add")) {
-                std::string objFullPath{"../models/"};
-                objFullPath += objFileName;
-
-                std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device, objFullPath.c_str());
-                auto gameObject = Engine::GameObject::createGameObject(objFileName);
-                gameObject.model = model;
-
-                frameInfo.gameObjects.emplace(gameObject.getId(), std::move(gameObject));
-
-                std::cout << "Added entity with model file path: " << objFullPath << std::endl;
-                showAddEntityWindow = false;
-            }
-
             ImGui::End();
         }
     }
@@ -524,4 +525,5 @@ namespace Engine {
         objJson["model"] = model;
         j.push_back(objJson);
     }
+
 }

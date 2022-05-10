@@ -18,6 +18,7 @@ namespace Engine::ECS {
         // Creates a new Entity and adds it to availableEntities Map
         // Checks if number of living entities is greater than MAX_ENTITIES
         // and asserts if true
+        // Returns the entity created
         template<typename T>
         T createNewEntity() {
             assert(livingEntityCount < Engine::ECS::EntityManager::MAX_ENTITIES && "Too many entities!");
