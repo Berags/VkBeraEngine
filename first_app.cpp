@@ -12,6 +12,7 @@
 
 #include "first_app.h"
 #include "include/engine/Core.h"
+#include "include/game/entities/Test.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -25,6 +26,9 @@ FirstApp::~FirstApp() = default;
 
 void FirstApp::run() {
     Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
+    Engine::ECS::EntityManager entityManager{};
+    auto entity = entityManager.createNewEntity<Game::Test>();
+    entity.addComponent<Engine::ECS::TestComponent>();
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
     for (auto &uboBuffer: uboBuffers) {
@@ -87,7 +91,7 @@ void FirstApp::run() {
                     commandBuffer,
                     camera,
                     globalDescriptorSets[frameIndex],
-                    gameObjects
+                    gameObjects,
             };
             // Update
             Engine::GlobalUbo ubo{};
@@ -97,6 +101,8 @@ void FirstApp::run() {
             pointLightSystem.update(frameInfo, ubo);
             uboBuffers[frameIndex]->writeToBuffer(&ubo);
             uboBuffers[frameIndex]->flush();
+
+            entityManager.updateEntities(frameInfo);
 
             // Render
             renderer.beginSwapChainRenderPass(commandBuffer);

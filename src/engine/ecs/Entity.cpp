@@ -7,22 +7,15 @@
 
 namespace Engine::ECS {
 
-    void Entity::addComponent(Engine::ECS::IComponent *component) {
-        if (std::find(components.begin(), components.end(), component) == components.end()) {
-            // component not in components, add it
-            components.push_back(component);
-        }
-    }
-
     void Entity::removeComponent(Engine::ECS::IComponent *component) {
         auto it = std::find(components.begin(), components.end(), component);
         if (it != components.end()) { components.erase(it); }
     }
 
-    void Entity::update(float dt) {
-        std::for_each(components.begin(), components.end(), [&](const auto &item) {
-            item->onUpdate(dt);
-        });
+    void Entity::update(Engine::FrameInfo &frameInfo) {
+        for (auto &component: components) {
+            component->onUpdate(frameInfo);
+        }
     }
 
     Entity::Entity(id_t entityId) : id(entityId) {}
@@ -35,6 +28,10 @@ namespace Engine::ECS {
         std::for_each(components.begin(), components.end(), [&](const auto &item) {
             item->onDestroy();
         });
+    }
+
+    const std::vector<Engine::ECS::IComponent *> &Entity::getComponents() const {
+        return components;
     }
 }
 

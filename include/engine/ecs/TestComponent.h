@@ -12,11 +12,11 @@
 namespace Engine::ECS {
     class TestComponent : public Engine::ECS::IComponent {
     public:
-        void onCreate() override {
+        void onCreate() const override {
             std::cout << "On Create method" << std::endl;
         }
 
-        void onUpdate(float dt) override {
+        void onUpdate(FrameInfo &frameInfo) override {
             std::cout << "On Update method" << std::endl;
         }
 

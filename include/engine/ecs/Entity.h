@@ -19,14 +19,23 @@ namespace Engine::ECS {
 
         // Entity Factory Method
         // Generates its own id
-        static Entity create() {
+        template<typename T>
+        static T create() {
             static id_t currentId = 0;
-            return Entity{currentId++};
+            return T{currentId++};
         }
 
         // Adds a component to the Entity components vector
         // Checks if the same component is already stored
-        void addComponent(Engine::ECS::IComponent *component);
+        template<typename T>
+        void addComponent() {
+            T *component = new T();
+            if (std::find(components.begin(), components.end(), component) == components.end()) {
+                // component not in components, add it
+                components.push_back(component);
+                component->onCreate();
+            }
+        }
 
         // Removes a component to the Entity components vector
         // Checks if the component is actually stored
@@ -34,7 +43,7 @@ namespace Engine::ECS {
 
         // Updates all the components stored into components vector
         // Calls onUpdate on each component stored into components vector
-        void update(float dt);
+        void update(Engine::FrameInfo &frameInfo);
 
         // Destroys the Entity
         // Calls onDestroy on each component stored into components vector
@@ -42,11 +51,15 @@ namespace Engine::ECS {
 
         [[nodiscard]] id_t getId() const;
 
+        [[nodiscard]] const std::vector<Engine::ECS::IComponent *> &getComponents() const;
+
+    protected:
+        // Available only by its sub classes
+        explicit Entity(id_t entityId);
+
     private:
         id_t id;
         std::vector<Engine::ECS::IComponent *> components;
-
-        explicit Entity(id_t entityId);
     };
 }
 
