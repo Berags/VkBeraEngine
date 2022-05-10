@@ -13,6 +13,7 @@
 #include "first_app.h"
 #include "include/engine/Core.h"
 #include "include/game/entities/Test.h"
+#include "include/game/entities/Player.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -27,8 +28,8 @@ FirstApp::~FirstApp() = default;
 void FirstApp::run() {
     Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
     Engine::ECS::EntityManager entityManager{};
-    auto entity = entityManager.createNewEntity<Game::Test>();
-    entity.addComponent<Engine::ECS::TestComponent>();
+    auto player = entityManager.createNewEntity<Game::Entities::Player>();
+    player.addComponent<Engine::ECS::TestComponent>();
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
     for (auto &uboBuffer: uboBuffers) {

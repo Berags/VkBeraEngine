@@ -17,7 +17,14 @@ namespace Engine::ECS {
         }
 
         void onUpdate(FrameInfo &frameInfo) override {
-            std::cout << "On Update method" << std::endl;
+            static uint32_t frame = 0;
+            static uint32_t secondPassed = 0;
+            frame++;
+            if (frame == 120) {
+                secondPassed++;
+                std::cout << "On Update method. Second elapsed: " << secondPassed << std::endl;
+                frame = 0;
+            }
         }
 
         void onDestroy() override {
