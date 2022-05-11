@@ -6,7 +6,8 @@
 
 namespace Game::Components {
     void KeyboardInputComponent::onCreate() const {
-        std::cout << "Attached Keyboard Input Controller Component" << std::endl;
+        std::cout << "Attached Keyboard Input Controller Component to GameObject with Id: " << gameObject.getId()
+                  << std::endl;
     }
 
     void KeyboardInputComponent::onUpdate(Engine::FrameInfo &frameInfo) {

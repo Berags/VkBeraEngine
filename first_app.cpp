@@ -16,6 +16,7 @@
 #include "include/game/entities/Player.h"
 #include "include/game/components/GameObjectComponent.h"
 #include "include/game/components/KeyboardInputComponent.h"
+#include "include/game/components/HealthComponent.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -64,6 +65,7 @@ void FirstApp::run() {
     auto viewerObject = Engine::GameObject::createGameObject("Camera");
     auto player = entityManager.createNewEntity<Game::Entities::Player>();
     player.addComponent<Game::Components::KeyboardInputComponent>(window, viewerObject);
+    player.addComponent<Game::Components::HealthComponent>();
 
     viewerObject.transform.translation.z = -2.5f;
 

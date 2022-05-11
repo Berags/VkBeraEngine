@@ -12,8 +12,6 @@ namespace Game::Entities {
     public:
         explicit Player(id_t entityId) : Entity(entityId) {}
 
-    private:
-        uint32_t health{100};
     };
 }
 

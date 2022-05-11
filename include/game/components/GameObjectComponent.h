@@ -10,6 +10,8 @@
 namespace Game::Components {
     class GameObjectComponent : public Engine::ECS::IComponent {
     public:
+        GameObjectComponent(Engine::GameObject &gameObject) : gameObject(gameObject) {}
+
         void onCreate() const override {
             std::cout << "Created GameObjectComponent" << std::endl;
         }
@@ -29,6 +31,7 @@ namespace Game::Components {
         }
 
     private:
+        Engine::GameObject &gameObject;
     };
 }
 
