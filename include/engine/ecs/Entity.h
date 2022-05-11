@@ -27,6 +27,8 @@ namespace Engine::ECS {
 
         // Adds a component to the Entity components vector
         // Checks if the same component is already stored
+        // Template args taken from:
+        // https://stackoverflow.com/questions/35587654/candidate-function-not-viable-expects-an-l-value-for-3rd-argument
         template<typename T, typename ... Ts>
         void addComponent(Ts &... args) {
             T *component = new T(args...);
