@@ -4,6 +4,7 @@
 
 // includes
 #include "../../include/engine/GameObject.h"
+#include "../../include/engine/FrameInfo.h"
 
 namespace Engine {
     glm::mat4 TransformComponent::mat4() const {

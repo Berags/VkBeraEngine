@@ -12,6 +12,10 @@
 namespace Engine::ECS {
     class TestComponent : public Engine::ECS::IComponent {
     public:
+        TestComponent(int a) {
+            std::cout << a << std::endl;
+        }
+
         void onCreate() const override {
             std::cout << "On Create method" << std::endl;
         }

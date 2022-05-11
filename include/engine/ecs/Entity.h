@@ -27,9 +27,9 @@ namespace Engine::ECS {
 
         // Adds a component to the Entity components vector
         // Checks if the same component is already stored
-        template<typename T>
-        void addComponent() {
-            T *component = new T();
+        template<typename T, typename ... Ts>
+        void addComponent(Ts &... args) {
+            T *component = new T(args...);
             if (std::find(components.begin(), components.end(), component) == components.end()) {
                 // component not in components, add it
                 components.push_back(component);

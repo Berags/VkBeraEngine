@@ -14,6 +14,8 @@
 #include "include/engine/Core.h"
 #include "include/game/entities/Test.h"
 #include "include/game/entities/Player.h"
+#include "include/game/components/GameObjectComponent.h"
+#include "include/game/components/KeyboardInputComponent.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
@@ -28,8 +30,6 @@ FirstApp::~FirstApp() = default;
 void FirstApp::run() {
     Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
     Engine::ECS::EntityManager entityManager{};
-    auto player = entityManager.createNewEntity<Game::Entities::Player>();
-    player.addComponent<Engine::ECS::TestComponent>();
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
     for (auto &uboBuffer: uboBuffers) {
@@ -62,8 +62,10 @@ void FirstApp::run() {
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 6.f), glm::vec3(.0f, .0f, 2.5f));
 
     auto viewerObject = Engine::GameObject::createGameObject("Camera");
+    auto player = entityManager.createNewEntity<Game::Entities::Player>();
+    player.addComponent<Game::Components::KeyboardInputComponent>(window, viewerObject);
+
     viewerObject.transform.translation.z = -2.5f;
-    Engine::KeyboardMovementController cameraController{};
 
     auto currentTime = std::chrono::high_resolution_clock::now();
 
@@ -76,7 +78,6 @@ void FirstApp::run() {
 
         frameTime = glm::min(frameTime, 1.f / 60.f);
 
-        cameraController.moveInPlaneXZ(window.getGlfwWindow(), frameTime, viewerObject);
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspectRatio = renderer.getAspectRatio();
