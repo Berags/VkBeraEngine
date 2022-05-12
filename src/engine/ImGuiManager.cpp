@@ -317,9 +317,8 @@ namespace Engine {
         ImGui::PopID();
     }
 
-    void
-    ImGuiManager::showLightEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
-                                  GameObject &gameObj) {
+    void ImGuiManager::showLightEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
+                                       GameObject &gameObj) {
         ImGui::PushID(static_cast<int>(gameObj.getId()));
 
         // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.

@@ -32,7 +32,11 @@ namespace Engine::ECS {
         template<typename T, typename ... Ts>
         void addComponent(Ts &... args) {
             T *component = new T(args...);
-            if (std::find(components.begin(), components.end(), component) == components.end()) {
+            bool isAlreadyInComponents = false;
+            std::for_each(components.begin(), components.end(), [&](const auto &item) {
+                if (Engine::Utils::instanceof<T>(item)) isAlreadyInComponents = true;
+            });
+            if (!isAlreadyInComponents) {
                 // component not in components, add it
                 components.push_back(component);
                 component->onCreate();
@@ -41,7 +45,17 @@ namespace Engine::ECS {
 
         // Removes a component to the Entity components vector
         // Checks if the component is actually stored
-        void removeComponent(Engine::ECS::IComponent *component);
+        template<typename T>
+        void removeComponent() {
+            components.erase(
+                    std::remove_if(
+                            components.begin(),
+                            components.end(),
+                            [](auto &component) {
+                                return Engine::Utils::instanceof<T>(component);
+                            }
+                    ));
+        }
 
         // Updates all the components stored into components vector
         // Calls onUpdate on each component stored into components vector
@@ -56,7 +70,7 @@ namespace Engine::ECS {
         [[nodiscard]] const std::vector<Engine::ECS::IComponent *> &getComponents() const;
 
     protected:
-        // Available only by its sub classes
+        // Available only by its subclasses
         explicit Entity(id_t entityId);
 
     private:

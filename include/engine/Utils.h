@@ -22,6 +22,12 @@ namespace Engine::Utils {
         seed ^= std::hash<T>{}(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
         (hashCombine(seed, rest), ...);
     };
+
+    // Returns true if ptr is an instance of Base class
+    template<typename Base, typename T>
+    inline bool instanceof(const T *ptr) {
+        return dynamic_cast<const Base *>(ptr) != nullptr;
+    }
 }
 
 

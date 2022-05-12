@@ -7,11 +7,6 @@
 
 namespace Engine::ECS {
 
-    void Entity::removeComponent(Engine::ECS::IComponent *component) {
-        auto it = std::find(components.begin(), components.end(), component);
-        if (it != components.end()) { components.erase(it); }
-    }
-
     void Entity::update(Engine::FrameInfo &frameInfo) {
         for (auto &component: components) {
             component->onUpdate(frameInfo);
