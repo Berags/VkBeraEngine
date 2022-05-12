@@ -17,13 +17,14 @@
 #include "include/game/components/GameObjectComponent.h"
 #include "include/game/components/KeyboardInputComponent.h"
 #include "include/game/components/HealthComponent.h"
+#include "include/game/entities/Enemy.h"
 
 FirstApp::FirstApp() {
     globalPool = Engine::DescriptorPool::Builder(device)
             .setMaxSets(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
-    loadGameObjects();
+    Engine::Scene::load(gameObjects, device);
 }
 
 FirstApp::~FirstApp() = default;

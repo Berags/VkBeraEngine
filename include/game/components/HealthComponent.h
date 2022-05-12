@@ -13,7 +13,6 @@ namespace Game::Components {
     public:
         explicit HealthComponent(uint32_t health = 100) : health(health) {}
 
-    public:
         void onCreate() const override {
             std::cout << "Attached health component with Health Value: " << health << std::endl;
         }

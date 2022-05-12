@@ -20,6 +20,7 @@
 #include "SwapChain.h"
 #include "Utils.h"
 #include "Window.h"
+#include "Scene.h"
 
 #include "exceptions/Exception.h"
 

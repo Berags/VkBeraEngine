@@ -1,0 +1,11 @@
+Model Information:
+* title:	DOOM
+* source:	https://sketchfab.com/3d-models/doom-3db8a5696a3e444bb05b6c2b1c24a16b
+* author:	The WarVet (https://sketchfab.com/TheWidowedWarVet)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "DOOM" (https://sketchfab.com/3d-models/doom-3db8a5696a3e444bb05b6c2b1c24a16b) by The WarVet (https://sketchfab.com/TheWidowedWarVet) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

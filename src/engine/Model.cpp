@@ -13,6 +13,7 @@
 
 // includes
 #include "../../include/engine/Model.h"
+#include "../../include/libs/tiny_gltf.h"
 
 namespace std {
     template<>
@@ -200,7 +201,26 @@ namespace Engine {
         }
     }
 
-    void Model::Data::loadModel(const std::string &filePath, const std::string &textureFilePath) {
-        loadModel(filePath);
+    void Model::Data::loadModelglTf(const std::string &filePath) {
+        tinygltf::Model model;
+        tinygltf::TinyGLTF loader;
+        std::string err;
+        std::string warn;
+
+        bool ret = loader.LoadASCIIFromFile(&model, &err, &warn, filePath);
+
+        if (!warn.empty()) {
+            std::cerr << "Warn: " << warn << std::endl;
+        }
+
+        if (!err.empty()) {
+            std::cerr << "Error: " << err << std::endl;
+        }
+
+        if (!ret) {
+            std::cerr << "Failed to parse GLTF";
+        }
+
+        std::cout << "Loaded glTF file\n";
     }
 }
