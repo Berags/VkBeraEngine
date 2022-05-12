@@ -8,7 +8,6 @@
 #include "../../engine/Core.h"
 
 namespace Game::Components {
-
     class HealthComponent : public Engine::ECS::IComponent {
     public:
         explicit HealthComponent(uint32_t health = 100) : health(health) {}
@@ -17,18 +16,13 @@ namespace Game::Components {
             std::cout << "Attached health component with Health Value: " << health << std::endl;
         }
 
-        void onUpdate(Engine::FrameInfo &frameInfo) override {
+        void onUpdate(Engine::FrameInfo &frameInfo) override {}
 
-        }
-
-        void onDestroy() override {
-
-        }
+        void onDestroy() override {}
 
     private:
         uint32_t health;
     };
-
 } // Game::Components
 
 #endif //MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
