@@ -60,6 +60,7 @@ file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.cpp)
+add_library(core ${SOURCES} ${HEADERS})
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} main.cpp first_app.cpp first_app.h)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
@@ -100,7 +101,13 @@ elseif (UNIX)
             ${TINYOBJ_PATH}
             ${Vulkan_INCLUDE_DIRS}
             )
+    target_include_directories(core PUBLIC
+            ${PROJECT_SOURCE_DIR}/src
+            ${TINYOBJ_PATH}
+            ${Vulkan_INCLUDE_DIRS}
+            )
     target_link_libraries(${PROJECT_NAME} glfw ${Vulkan_LIBRARIES})
+    target_link_libraries(core glfw ${Vulkan_LIBRARIES})
 endif()
 
 ############## Build SHADERS #######################
@@ -139,6 +146,4 @@ add_custom_target(
         DEPENDS ${SPIRV_BINARY_FILES}
 )
 
-# find_package(wxWidgets REQUIRED gl core base OPTIONAL_COMPONENTS net)
-# include(${wxWidgets_USE_FILE})
-# target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+add_subdirectory(tests)
