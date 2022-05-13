@@ -8,6 +8,8 @@
 
 // includes
 #include "../../include/engine/Core.h"
+#include "../../include/engine/Pipeline.h"
+
 
 namespace Engine {
     Pipeline::Pipeline(Engine::Device &device, const std::string &vertFilePath, const std::string &fragFilePath,
@@ -190,5 +192,21 @@ namespace Engine {
 
     void Pipeline::bind(VkCommandBuffer commandBuffer) {
         vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+    }
+
+    void Pipeline::enableAlphaRendering(PipelineConfigInfo &configInfo) {
+        // We enable it only for Alpha Blended objects
+        // If we set it to true for each pipeline we would have performance issue
+        configInfo.colorBlendAttachment.blendEnable = VK_TRUE;
+
+        configInfo.colorBlendAttachment.colorWriteMask =
+                VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |
+                VK_COLOR_COMPONENT_A_BIT;
+        configInfo.colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+        configInfo.colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+        configInfo.colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;
+        configInfo.colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;   // Optional
+        configInfo.colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;  // Optional
+        configInfo.colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;              // Optional
     }
 }

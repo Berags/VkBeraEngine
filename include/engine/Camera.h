@@ -39,6 +39,8 @@ namespace Engine {
 
         [[nodiscard]] const glm::mat4 &getInverseViewMatrix() const;
 
+        [[nodiscard]] const glm::vec3 getPosition() const;
+
     private:
         glm::mat4 projectionMatrix{1.f};
         glm::mat4 viewMatrix{1.f};

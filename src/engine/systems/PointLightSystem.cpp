@@ -10,6 +10,7 @@
 
 #include <array>
 #include <cassert>
+#include <map>
 
 // includes
 #include "../../../include/engine/systems/PointLightSystem.h"
@@ -59,6 +60,7 @@ namespace Engine {
 
         PipelineConfigInfo pipelineConfig{};
         Engine::Pipeline::defaultConfigInfo(pipelineConfig);
+        Engine::Pipeline::enableAlphaRendering(pipelineConfig);
         pipelineConfig.attributeDescription.clear();
         pipelineConfig.bindingDescription.clear();
         pipelineConfig.renderPass = renderPass;
@@ -72,6 +74,18 @@ namespace Engine {
 
     void PointLightSystem::render(
             Engine::FrameInfo &frameInfo) {
+        // Sort lights
+        std::map<float, Engine::GameObject::id_t> sorted;
+        for (auto &kv: frameInfo.gameObjects) {
+            auto &obj = kv.second;
+            if (!obj.pointLightComponent) continue; // Is not a point light
+            // pointLightComponent == nullptr
+            // Calculate Distance
+            auto offset = frameInfo.camera.getPosition() - obj.transform.translation;
+            float distanceSquared = glm::dot(offset, offset);
+            sorted[distanceSquared] = obj.getId();
+        }
+
         pipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(
@@ -82,9 +96,10 @@ namespace Engine {
                 &frameInfo.globalDescriptorSet,
                 0, nullptr);
 
-        for (auto &kv: frameInfo.gameObjects) {
-            auto &gameObj = kv.second;
-            if (gameObj.pointLightComponent == nullptr) continue;
+        // Iterate to sorted map in reverse order
+        for (auto it = sorted.rbegin(); it != sorted.rend(); ++it) {
+            // Find object with id from sorted map to frameInfo.gameObjects
+            auto &gameObj = frameInfo.gameObjects.at(it->second);
 
             PointLightPushConstants push{};
             push.position = glm::vec4(gameObj.transform.translation, 1.f);

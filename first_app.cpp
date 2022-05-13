@@ -111,6 +111,10 @@ void FirstApp::run() {
 
             // Render
             renderer.beginSwapChainRenderPass(commandBuffer);
+
+            // Rendering order matters
+            // First we want to render all solid objects
+            // Then all semi-transparent objects
             renderSystem.renderGameObjects(frameInfo);
             pointLightSystem.render(frameInfo);
 

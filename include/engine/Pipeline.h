@@ -47,6 +47,8 @@ namespace Engine {
 
         static void defaultConfigInfo(PipelineConfigInfo &configInfo);
 
+        static void enableAlphaRendering(PipelineConfigInfo &configInfo);
+
         void bind(VkCommandBuffer commandBuffer);
 
     private:

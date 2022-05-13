@@ -120,4 +120,8 @@ namespace Engine {
     const glm::mat4 &Camera::getInverseViewMatrix() const {
         return inverseViewMatrix;
     }
+
+    const glm::vec3 Camera::getPosition() const {
+        return glm::vec3(inverseViewMatrix[3]);
+    }
 }

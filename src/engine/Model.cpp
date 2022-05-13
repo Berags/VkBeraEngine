@@ -222,5 +222,6 @@ namespace Engine {
         }
 
         std::cout << "Loaded glTF file\n";
+        const tinygltf::Scene &scene = model.scenes[model.defaultScene > -1 ? model.defaultScene : 0];
     }
 }
