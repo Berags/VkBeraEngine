@@ -19,11 +19,11 @@ namespace Engine::ECS {
         // Checks if number of living entities is greater than MAX_ENTITIES
         // and asserts if true
         // Returns the entity created
-        template<typename T>
-        T createNewEntity() {
+        template<typename T, typename ... Ts>
+        T createNewEntity(Ts &... args) {
             assert(livingEntityCount < Engine::ECS::EntityManager::MAX_ENTITIES && "Too many entities!");
 
-            T entity = Engine::ECS::Entity::create<T>();
+            T entity = Engine::ECS::Entity::create<T>(args...);
             std::cout << "Created entity with id: " << entity.getId() << std::endl;
             availableEntities.emplace(livingEntityCount, &entity);
             livingEntityCount++;
