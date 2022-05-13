@@ -5,5 +5,6 @@ cmake -S ../ -B .
 if [ -z "$MAKEFLAGS" ]; then
   export MAKEFLAGS=-j$(nproc)
 fi
-make && make Shaders && ./MiniminiMotorways
+make && make Shaders
+./MiniminiMotorways
 cd ..
