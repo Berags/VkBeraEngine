@@ -29,6 +29,5 @@ void main() {
     if (dis >= 1.0) {
         discard;
     }
-    float cosDistance = .5 * (cos(dis * MATH_PI) + 1.0);
-    outColor = vec4(push.color.xyz + cosDistance, cosDistance);
+    outColor = vec4(push.color.xyz, .5 * (cos(dis * MATH_PI) + 1.0));
 }

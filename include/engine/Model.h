@@ -60,6 +60,12 @@ namespace Engine {
             // Able to load up to 6M vertices .obj files
             // http://casual-effects.com/data/index.html
             void loadModel(const std::string &filePath);
+
+            // Load a model from a file string path with its relative texture file
+            // Uses https://github.com/tinyobjloader/tinyobjloader
+            // Able to load up to 6M vertices .obj files
+            // http://casual-effects.com/data/index.html
+            static void loadModelglTf(const std::string &filePath);
         };
 
         Model(Device &device, const Engine::Model::Data &data, std::string &filePath);
