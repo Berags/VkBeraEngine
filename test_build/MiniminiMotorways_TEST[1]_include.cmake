@@ -1,5 +1,0 @@
-if (EXISTS "/Users/jacopo/CLionProjects/MiniminiMotorways/test_build/MiniminiMotorways_TEST[1]_tests.cmake")
-    include("/Users/jacopo/CLionProjects/MiniminiMotorways/test_build/MiniminiMotorways_TEST[1]_tests.cmake")
-else ()
-    add_test(MiniminiMotorways_TEST_NOT_BUILT MiniminiMotorways_TEST_NOT_BUILT)
-endif ()

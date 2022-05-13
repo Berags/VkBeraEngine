@@ -1,3 +1,0 @@
-MiniminiMotorways_TEST_NOT_BUILT 0 0
----
-MiniminiMotorways_TEST_NOT_BUILT
