@@ -23,7 +23,7 @@ namespace Engine::ECS {
         T createNewEntity(Ts &... args) {
             assert(livingEntityCount < Engine::ECS::EntityManager::MAX_ENTITIES && "Too many entities!");
 
-            T entity = Engine::ECS::Entity::create<T>(args...);
+            T entity{livingEntityCount, args...};
             std::cout << "Created entity with id: " << entity.getId() << std::endl;
             availableEntities.emplace(livingEntityCount, &entity);
             livingEntityCount++;
@@ -54,6 +54,5 @@ namespace Engine::ECS {
         uint32_t livingEntityCount{};
     };
 }
-
 
 #endif //MINIMINIMOTORWAYS_ENTITYMANAGER_H

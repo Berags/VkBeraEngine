@@ -6,6 +6,12 @@
 #define MINIMINIMOTORWAYS_EXCEPTION_H
 
 #include <exception>
+#include <cstdio>
+#include <iostream>
+
+namespace Engine::Exceptions {
+#define PRINT_STACK_TRACE std::cerr << "Generated from file: " << __FILE__ << "\nFunction call: " << __func__ << "\nLine: " << __LINE__<< "\n";
+}
 
 #include "file/UnableToOpenFileException.h"
 

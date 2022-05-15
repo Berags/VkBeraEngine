@@ -13,6 +13,7 @@
 #include "Device.h"
 #include "FrameInfo.h"
 #include "GameObject.h"
+#include "GameObjectFactory.h"
 #include "ImGuiManager.h"
 #include "Model.h"
 #include "Pipeline.h"

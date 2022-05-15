@@ -10,7 +10,7 @@
 namespace Game {
     class Test : public Engine::ECS::Entity {
     public:
-        explicit Test(id_t entityId) : Entity(entityId) {}
+        explicit Test(id_t id) : Entity(id) {}
     };
 }
 

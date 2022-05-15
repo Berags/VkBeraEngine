@@ -29,7 +29,7 @@ namespace Game::Components {
                 : window(window),
                   gameObject(gameObject) {}
 
-        void onCreate() const override;
+        void onCreate() override;
 
         // Changes the camera position based on player input
         // W -> forward

@@ -10,7 +10,7 @@
 namespace Game::Entities {
     class Player : public Engine::ECS::Entity {
     public:
-        explicit Player(id_t entityId) : Entity(entityId) {}
+        explicit Player(id_t id) : Entity(id) {}
     };
 }
 

@@ -63,7 +63,7 @@ void FirstApp::run() {
     Engine::Camera camera{};
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 6.f), glm::vec3(.0f, .0f, 2.5f));
 
-    auto viewerObject = Engine::GameObject::createGameObject("Camera");
+    auto viewerObject = Engine::GameObjectFactory::createGameObject("Camera");
     auto player = entityManager.createNewEntity<Game::Entities::Player>();
     player.addComponent<Game::Components::KeyboardInputComponent>(window, viewerObject);
     player.addComponent<Game::Components::HealthComponent>();
@@ -139,7 +139,7 @@ void FirstApp::loadGameObjects() {
         if (it["model"]["file_name"].is_null()) {
             // Light
             std::cout << "light\n";
-            auto pointLight = Engine::GameObject::createPointLight(it["intensity"].get<float>());
+            auto pointLight = Engine::GameObjectFactory::createPointLight(it["intensity"].get<float>());
             pointLight.name = it["name"].get<std::string>();
             pointLight.color = glm::vec3(it["transform"]["color"]["x"].get<float>(),
                                          it["transform"]["color"]["y"].get<float>(),
@@ -157,7 +157,7 @@ void FirstApp::loadGameObjects() {
             std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device,
                                                                                       it["model"]["file_name"].get<std::string>().c_str());
             std::string name = it["model"]["file_name"].get<std::string>().substr(10);
-            auto obj = Engine::GameObject::createGameObject(name.c_str());
+            auto obj = Engine::GameObjectFactory::createGameObject(name.c_str());
             obj.model = model;
             obj.name = it["name"].get<std::string>();
             obj.color = glm::vec3(it["transform"]["color"]["x"].get<float>(),

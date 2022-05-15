@@ -6,14 +6,11 @@
 #include "../include/engine/ecs/Entity.h"
 
 namespace Engine::ECS {
-
     void Entity::update(Engine::FrameInfo &frameInfo) {
         for (auto &component: components) {
             component->onUpdate(frameInfo);
         }
     }
-
-    Entity::Entity(id_t entityId) : id(entityId) {}
 
     id_t Entity::getId() const {
         return id;
@@ -22,6 +19,7 @@ namespace Engine::ECS {
     void Entity::destroy() {
         std::for_each(components.begin(), components.end(), [&](const auto &item) {
             item->onDestroy();
+            free(item);
         });
     }
 

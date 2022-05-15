@@ -21,7 +21,7 @@ namespace Engine {
         std::ifstream file{filePath, std::ios::ate | std::ios::binary};
 
         if (!file.is_open() || file.fail()) {
-            throw Engine::Exceptions::UnableToOpenFileException(filePath);
+            throw Engine::Exceptions::UnableToOpenFileException(filePath.c_str());
         }
 
         long fileSize = static_cast<long>(file.tellg());

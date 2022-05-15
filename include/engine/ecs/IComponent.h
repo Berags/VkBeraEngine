@@ -13,7 +13,7 @@ namespace Engine::ECS {
     public:
         // On Create Method
         // Is called when a Component is created and added to an Entity
-        virtual void onCreate() const = 0;
+        virtual void onCreate() = 0;
 
         // On Update Method
         // Is called on each frame and updates the Component related to an Entity

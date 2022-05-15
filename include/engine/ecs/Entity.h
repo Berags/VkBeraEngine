@@ -13,22 +13,10 @@ namespace Engine::ECS {
     public:
         using id_t = uint32_t;
 
-        // Explicitly deleted public constructor so that an Entity
-        // can only be created from its Factory Method
-        Entity() = delete;
-
-        // Entity Factory Method
-        // Generates its own id
-        template<typename T>
-        static T create() {
-            static id_t currentId = 0;
-            return T{currentId++};
-        }
+        explicit Entity(id_t id) : id(id) {}
 
         // Adds a component to the Entity components vector
         // Checks if the same component is already stored
-        // Template args taken from:
-        // https://stackoverflow.com/questions/35587654/candidate-function-not-viable-expects-an-l-value-for-3rd-argument
         template<typename T, typename ... Ts>
         void addComponent(Ts &... args) {
             T *component = new T(args...);
@@ -41,6 +29,16 @@ namespace Engine::ECS {
                 components.push_back(component);
                 component->onCreate();
             }
+        }
+
+        // Returns a pointer to the component of Type T if is inside
+        // of components vector
+        template<typename T>
+        T *getComponent() {
+            for (auto &component: components) {
+                if (Engine::Utils::instanceof<T>(component)) return dynamic_cast<T *>(component);
+            }
+            return nullptr;
         }
 
         // Removes a component to the Entity components vector
@@ -68,10 +66,6 @@ namespace Engine::ECS {
         [[nodiscard]] id_t getId() const;
 
         [[nodiscard]] const std::vector<Engine::ECS::IComponent *> &getComponents() const;
-
-    protected:
-        // Available only by its subclasses
-        explicit Entity(id_t entityId);
 
     private:
         id_t id;

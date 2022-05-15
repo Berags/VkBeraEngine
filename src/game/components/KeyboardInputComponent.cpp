@@ -5,7 +5,7 @@
 #include "../../../include/game/components/KeyboardInputComponent.h"
 
 namespace Game::Components {
-    void KeyboardInputComponent::onCreate() const {
+    void KeyboardInputComponent::onCreate() {
         std::cout << "Attached Keyboard Input Controller Component to GameObject with Id: " << gameObject.getId()
                   << std::endl;
     }

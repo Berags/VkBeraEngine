@@ -12,7 +12,7 @@ namespace Game::Components {
     public:
         GameObjectComponent(Engine::GameObject &gameObject) : gameObject(gameObject) {}
 
-        void onCreate() const override {
+        void onCreate() override {
             std::cout << "Created GameObjectComponent" << std::endl;
         }
 

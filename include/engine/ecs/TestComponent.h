@@ -16,7 +16,7 @@ namespace Engine::ECS {
             std::cout << a << std::endl;
         }
 
-        void onCreate() const override {
+        void onCreate() override {
             std::cout << "On Create method" << std::endl;
         }
 

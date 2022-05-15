@@ -136,7 +136,7 @@ namespace Engine {
             }
             ImGui::SameLine();
             if (ImGui::Button("Add Light")) {
-                auto pointLight = Engine::GameObject::createPointLight(1.f);
+                auto pointLight = Engine::GameObjectFactory::createPointLight(1.f);
 
                 frameInfo.gameObjects.emplace(pointLight.getId(), std::move(pointLight));
                 std::cout << "Added light\n";
@@ -155,7 +155,7 @@ namespace Engine {
 
                     std::shared_ptr<Engine::Model> model = Engine::Model::createModelFromFile(device,
                                                                                               filePathName.c_str());
-                    auto gameObject = Engine::GameObject::createGameObject(filePathName.c_str());
+                    auto gameObject = Engine::GameObjectFactory::createGameObject(filePathName.c_str());
                     gameObject.model = model;
                     frameInfo.gameObjects.emplace(gameObject.getId(), std::move(gameObject));
 

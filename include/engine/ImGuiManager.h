@@ -16,8 +16,7 @@
 #include "../libs/imgui/imgui.h"
 #include "../libs/imgui/imgui_impl_glfw.h"
 #include "../libs/imgui/imgui_impl_vulkan.h"
-#include "GameObject.h"
-#include "FrameInfo.h"
+#include "Core.h"
 
 namespace Engine {
     static void check_vk_result(VkResult err) {

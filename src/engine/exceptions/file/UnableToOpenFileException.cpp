@@ -7,8 +7,8 @@
 #include <utility>
 
 const char *Engine::Exceptions::UnableToOpenFileException::what() const noexcept {
-    return "Unable to open selected file!";
+    return message.c_str();
 }
 
-Engine::Exceptions::UnableToOpenFileException::UnableToOpenFileException(std::string fileName) : fileName(std::move(
-        fileName)) {}
+Engine::Exceptions::UnableToOpenFileException::UnableToOpenFileException(const char *fileName) : message(
+        std::string("Unable to open selected file! - File Name: ") + std::string(fileName)) {}
