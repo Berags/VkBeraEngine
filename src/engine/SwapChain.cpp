@@ -171,7 +171,7 @@ namespace Engine {
         createInfo.oldSwapchain = oldSwapChain == nullptr ? VK_NULL_HANDLE : oldSwapChain->swapChain;
 
         if (vkCreateSwapchainKHR(device.getVkDevice(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
-            throw Engine::Exceptions::FailedToCreateSwapChainException();
+            throw Engine::Exceptions::FailedToCreateVkObject("Swap Chain");
         }
 
         // we only specified a minimum number of images in the swap chain, so the implementation is
@@ -202,7 +202,7 @@ namespace Engine {
 
             if (vkCreateImageView(device.getVkDevice(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
                 VK_SUCCESS) {
-                throw Engine::Exceptions::FailedToCreateTextureImageViewException();
+                throw Engine::Exceptions::FailedToCreateVkObject("Image View");
             }
         }
     }
@@ -265,7 +265,7 @@ namespace Engine {
         renderPassInfo.pDependencies = &dependency;
 
         if (vkCreateRenderPass(device.getVkDevice(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS) {
-            throw Engine::Exceptions::FailedToCreateRenderPassException();
+            throw Engine::Exceptions::FailedToCreateVkObject("Render Pass");
         }
     }
 
@@ -338,7 +338,7 @@ namespace Engine {
             viewInfo.subresourceRange.layerCount = 1;
 
             if (vkCreateImageView(device.getVkDevice(), &viewInfo, nullptr, &depthImageViews[i]) != VK_SUCCESS) {
-                throw Engine::Exceptions::FailedToCreateTextureImageViewException();
+                throw Engine::Exceptions::FailedToCreateVkObject("Image View");
             }
         }
     }
@@ -362,7 +362,7 @@ namespace Engine {
                 vkCreateSemaphore(device.getVkDevice(), &semaphoreInfo, nullptr, &renderFinishedSemaphores[i]) !=
                 VK_SUCCESS ||
                 vkCreateFence(device.getVkDevice(), &fenceInfo, nullptr, &inFlightFences[i]) != VK_SUCCESS) {
-                throw Engine::Exceptions::FailedToCreateSynchronizationObjectException();
+                throw Engine::Exceptions::FailedToCreateVkObject("Synchronization Object");
             }
         }
     }

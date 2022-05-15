@@ -113,7 +113,7 @@ namespace Engine {
         createInfo.pCode = reinterpret_cast<const uint32_t *>(code.data());
 
         if (vkCreateShaderModule(device.getVkDevice(), &createInfo, nullptr, shaderModule) != VK_SUCCESS)
-            throw Engine::Exceptions::FailedToCreateShaderModuleException();
+            throw Engine::Exceptions::FailedToCreateVkObject("Shader Module");
     }
 
     void Pipeline::defaultConfigInfo(PipelineConfigInfo &configInfo) {

@@ -62,4 +62,15 @@ TEST(Engine, Exceptions) {
                          FAIL() << "Expected UnableToOpenFileException!";
                      }
                  }, Engine::Exceptions::UnableToOpenFileException);
+    ASSERT_THROW({
+                     try {
+                         Tests::Utils::throwException<Engine::Exceptions::UnableToStartWindowException>();
+                     } catch (const Engine::Exceptions::UnableToStartWindowException &e) {
+                         ASSERT_STREQ("Unable to start the GLFW Window!", e.what());
+                         PRINT_STACK_TRACE;
+                         throw;
+                     } catch (...) {
+                         FAIL() << "Expected UnableToOpenFileException!";
+                     }
+                 }, Engine::Exceptions::UnableToStartWindowException);
 }

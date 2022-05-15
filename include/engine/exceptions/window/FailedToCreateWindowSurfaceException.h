@@ -8,12 +8,13 @@
 #include "../Exception.h"
 
 namespace Engine::Exceptions {
-        class FailedToCreateWindowSurfaceException : public std::exception {
-        public:
-            [[nodiscard]] const char *what() const noexcept override;
-        };
-    }
-
+    class FailedToCreateWindowSurfaceException : public std::exception {
+    public:
+        [[nodiscard]] const char *what() const noexcept override {
+            return "Failed to create window getSurface! - Vulkan";
+        }
+    };
+}
 
 
 #endif //MINIMINIMOTORWAYS_FAILEDTOCREATEWINDOWSURFACEEXCEPTION_H

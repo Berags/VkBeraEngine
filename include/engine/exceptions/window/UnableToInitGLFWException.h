@@ -8,11 +8,13 @@
 #include "../Exception.h"
 
 namespace Engine::Exceptions {
-        class UnableToInitGLFWException : public std::exception {
-        public:
-            [[nodiscard]] const char *what() const noexcept override;
-        };
-    }
+    class UnableToInitGLFWException : public std::exception {
+    public:
+        [[nodiscard]] const char *what() const noexcept override {
+            return "Unable to init GLFW OpenGL library!";
+        }
+    };
+}
 
 
 #endif //MINIMINIMOTORWAYS_UNABLETOINITGLFWEXCEPTION_H

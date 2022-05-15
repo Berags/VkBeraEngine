@@ -13,7 +13,7 @@
 
 // includes
 #include "../../../include/engine/systems/RenderSystem.h"
-#include "../../../include/engine/exceptions/vulkan/FailedToCreatePipeLineLayoutException.h"
+#include "../../../include/engine/exceptions/Exception.h"
 
 namespace Engine {
 
@@ -48,7 +48,7 @@ namespace Engine {
         pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
         if (vkCreatePipelineLayout(device.getVkDevice(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
             VK_SUCCESS) {
-            throw Engine::Exceptions::FailedToCreatePipeLineLayoutException();
+            throw Engine::Exceptions::FailedToCreateVkObject("Pipeline Layout");
         }
     }
 

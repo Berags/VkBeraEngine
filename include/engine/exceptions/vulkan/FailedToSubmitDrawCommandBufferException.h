@@ -8,12 +8,13 @@
 #include "../Exception.h"
 
 namespace Engine::Exceptions {
-        class FailedToSubmitDrawCommandBufferException : public std::exception {
-        public:
-            [[nodiscard]] const char *what() const noexcept override;
-        };
-    }
-
+    class FailedToSubmitDrawCommandBufferException : public std::exception {
+    public:
+        [[nodiscard]] const char *what() const noexcept override {
+            return "Failed to submit draw command buffer! - Vulkan";
+        }
+    };
+}
 
 
 #endif //MINIMINIMOTORWAYS_FAILEDTOSUBMITDRAWCOMMANDBUFFEREXCEPTION_H
