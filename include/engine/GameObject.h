@@ -60,7 +60,6 @@ namespace Engine {
     private:
         // Unique identifier
         id_t id;
-
     };
 }
 

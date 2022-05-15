@@ -7,7 +7,6 @@
 #include "utils.h"
 #include "../include/game/entities/Enemy.h"
 #include <gtest/gtest.h>
-#include <gtest/gtest-spi.h>
 
 Engine::ECS::EntityManager entityManager{};
 
