@@ -64,13 +64,24 @@ TEST(Engine, Exceptions) {
                  }, Engine::Exceptions::UnableToOpenFileException);
     ASSERT_THROW({
                      try {
+                         Tests::Utils::throwException<Engine::Exceptions::FailedToCreateVkObject>("Pipeline Layout");
+                     } catch (const Engine::Exceptions::FailedToCreateVkObject &e) {
+                         ASSERT_STREQ("Failed to create Vulkan Object: Pipeline Layout", e.what());
+                         PRINT_STACK_TRACE;
+                         throw;
+                     } catch (...) {
+                         FAIL() << "Expected UnableToStartWindowException!";
+                     }
+                 }, Engine::Exceptions::FailedToCreateVkObject);
+    ASSERT_THROW({
+                     try {
                          Tests::Utils::throwException<Engine::Exceptions::UnableToStartWindowException>();
                      } catch (const Engine::Exceptions::UnableToStartWindowException &e) {
                          ASSERT_STREQ("Unable to start the GLFW Window!", e.what());
                          PRINT_STACK_TRACE;
                          throw;
                      } catch (...) {
-                         FAIL() << "Expected UnableToOpenFileException!";
+                         FAIL() << "Expected UnableToStartWindowException!";
                      }
                  }, Engine::Exceptions::UnableToStartWindowException);
 }

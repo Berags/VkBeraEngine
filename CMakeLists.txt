@@ -61,7 +61,7 @@ file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.hpp)
 file(GLOB_RECURSE HEADERS ${PROJECT_SOURCE_DIR}/include/*.cpp)
 add_library(core ${SOURCES} ${HEADERS})
-add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} main.cpp first_app.cpp first_app.h)
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} main.cpp Application.cpp Application.h)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build")

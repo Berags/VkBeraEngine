@@ -2,31 +2,29 @@
 // Created by Jacopo Beragnoli on 12/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_FIRST_APP_H
-#define MINIMINIMOTORWAYS_FIRST_APP_H
+#ifndef MINIMINIMOTORWAYS_APPLICATION_H
+#define MINIMINIMOTORWAYS_APPLICATION_H
 
 #include <memory>
 #include <vector>
 #include "include/engine/Core.h"
 
-class FirstApp {
+class Application {
 public:
     static constexpr int WIDTH = 800;
     static constexpr int HEIGHT = 600;
 
-    FirstApp();
+    Application();
 
-    ~FirstApp();
+    ~Application();
 
-    FirstApp(const FirstApp &) = delete;
+    Application(const Application &) = delete;
 
-    FirstApp &operator=(const FirstApp &) = delete;
+    Application &operator=(const Application &) = delete;
 
     void run();
 
 private:
-    void loadGameObjects();
-
     Engine::Window window{(std::string &) "VkBeraEngine", WIDTH, HEIGHT};
     Engine::Device device{window};
     Engine::Renderer renderer{window, device};
@@ -36,4 +34,4 @@ private:
 };
 
 
-#endif //MINIMINIMOTORWAYS_FIRST_APP_H
+#endif //MINIMINIMOTORWAYS_APPLICATION_H

@@ -11,7 +11,7 @@ namespace Engine::Exceptions {
     class FailedToCreateVkObject : public std::exception {
     public:
         explicit FailedToCreateVkObject(const char *vkObjectName)
-                : message("Failed to create Vulkan Object: ", vkObjectName) {}
+                : message(std::string("Failed to create Vulkan Object: ") + std::string(vkObjectName)) {}
 
         [[nodiscard]] const char *what() const noexcept override {
             return message.c_str();
