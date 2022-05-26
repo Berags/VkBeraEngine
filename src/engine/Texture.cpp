@@ -203,7 +203,6 @@ namespace Engine {
     }
 
     void TextureStorage::unloadTexture(const std::string &textureName) {
-
         if (textureDatas.count(textureName) == 0)
             return;
 
