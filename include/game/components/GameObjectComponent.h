@@ -5,7 +5,10 @@
 #ifndef MINIMINIMOTORWAYS_GAMEOBJECTCOMPONENT_H
 #define MINIMINIMOTORWAYS_GAMEOBJECTCOMPONENT_H
 
-#include "../../engine/Core.h"
+#include "../../engine/Window.h"
+#include "../../engine/GameObject.h"
+#include "../../engine/FrameInfo.h"
+#include "../../engine/ecs/IComponent.h"
 
 namespace Game::Components {
     class GameObjectComponent : public Engine::ECS::IComponent {

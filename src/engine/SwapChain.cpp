@@ -3,8 +3,6 @@
 //
 
 // libs
-#define STB_IMAGE_IMPLEMENTATION
-
 #include "../../include/libs/stb_image.h"
 #include <array>
 #include <iostream>
@@ -44,7 +42,7 @@ namespace Engine {
             vkFreeMemory(device.getVkDevice(), depthImageMemories[i], nullptr);
         }
 
-        for (auto framebuffer: swapChainFramebuffers) {
+        for (auto framebuffer: swapChainFrameBuffers) {
             vkDestroyFramebuffer(device.getVkDevice(), framebuffer, nullptr);
         }
 
@@ -189,21 +187,7 @@ namespace Engine {
     void SwapChain::createImageViews() {
         swapChainImageViews.resize(swapChainImages.size());
         for (int i = 0; i < swapChainImages.size(); i++) {
-            VkImageViewCreateInfo viewInfo{};
-            viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-            viewInfo.image = swapChainImages[i];
-            viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-            viewInfo.format = swapChainImageFormat;
-            viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-            viewInfo.subresourceRange.baseMipLevel = 0;
-            viewInfo.subresourceRange.levelCount = 1;
-            viewInfo.subresourceRange.baseArrayLayer = 0;
-            viewInfo.subresourceRange.layerCount = 1;
-
-            if (vkCreateImageView(device.getVkDevice(), &viewInfo, nullptr, &swapChainImageViews[i]) !=
-                VK_SUCCESS) {
-                throw Engine::Exceptions::FailedToCreateVkObject("Image View");
-            }
+            device.createImageView(swapChainImageViews[i], swapChainImages[i], swapChainImageFormat);
         }
     }
 
@@ -270,7 +254,7 @@ namespace Engine {
     }
 
     void SwapChain::createFrameBuffers() {
-        swapChainFramebuffers.resize(imageCount());
+        swapChainFrameBuffers.resize(imageCount());
         for (size_t i = 0; i < imageCount(); i++) {
             std::array<VkImageView, 2> attachments = {swapChainImageViews[i], depthImageViews[i]};
 
@@ -288,7 +272,7 @@ namespace Engine {
                     device.getVkDevice(),
                     &framebufferInfo,
                     nullptr,
-                    &swapChainFramebuffers[i]) != VK_SUCCESS) {
+                    &swapChainFrameBuffers[i]) != VK_SUCCESS) {
                 throw std::runtime_error("failed to create framebuffer!");
             }
         }
@@ -393,7 +377,7 @@ namespace Engine {
         return VK_PRESENT_MODE_FIFO_KHR;
     }
 
-    VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) {
+    VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const {
         if (capabilities.currentExtent.width != std::numeric_limits<uint32_t>::max()) {
             return capabilities.currentExtent;
         } else {
@@ -409,7 +393,7 @@ namespace Engine {
         }
     }
 
-    VkFormat SwapChain::findDepthFormat() {
+    VkFormat SwapChain::findDepthFormat() const {
         return device.findSupportedFormat(
                 {VK_FORMAT_D32_SFLOAT, VK_FORMAT_D32_SFLOAT_S8_UINT, VK_FORMAT_D24_UNORM_S8_UINT},
                 VK_IMAGE_TILING_OPTIMAL,

@@ -10,7 +10,7 @@
 #include <iostream>
 
 namespace Engine::ECS {
-    class TestComponent : public Engine::ECS::IComponent {
+    class TestComponent : public IComponent {
     public:
         TestComponent(int a) {
             std::cout << a << std::endl;

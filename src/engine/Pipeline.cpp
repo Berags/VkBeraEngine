@@ -4,11 +4,13 @@
 
 // libs
 #include <iostream>
+#include <fstream>
 #include <cassert>
 
 // includes
-#include "../../include/engine/Core.h"
 #include "../../include/engine/Pipeline.h"
+#include "../../include/engine/exceptions/Exception.h"
+#include "../../include/engine/Model.h"
 
 
 namespace Engine {

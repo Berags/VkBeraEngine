@@ -5,7 +5,7 @@
 #ifndef MINIMINIMOTORWAYS_PLAYER_H
 #define MINIMINIMOTORWAYS_PLAYER_H
 
-#include "../../engine/Core.h"
+#include "../../engine/ecs/Entity.h"
 
 namespace Game::Entities {
     class Player : public Engine::ECS::Entity {

@@ -84,14 +84,17 @@ namespace Engine {
 
         void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
-        void copyBufferToImage(
-                VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
+        void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount);
+
+        void transitionImageLayout(VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout);
 
         VkInstance getInstance() { return instance; }
 
         VkPhysicalDevice getPhysicalDevice() { return physicalDevice; }
 
         uint32_t getGraphicsQueueFamily() { return findPhysicalQueueFamilies().graphicsFamily; }
+
+        void createImageView(VkImageView &imageView, VkImage &image, VkFormat format);
 
         void createImageWithInfo(
                 const VkImageCreateInfo &imageInfo,

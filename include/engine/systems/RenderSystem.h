@@ -7,20 +7,19 @@
 
 #include <memory>
 #include <vector>
-#include "../Window.h"
-#include "../Device.h"
-#include "../SwapChain.h"
-#include "../Pipeline.h"
-#include "../Model.h"
-#include "../GameObject.h"
-#include "../Renderer.h"
-#include "../Camera.h"
 #include "../FrameInfo.h"
+#include "../Pipeline.h"
+#include "../Descriptors.h"
 
 namespace Engine {
     class RenderSystem {
     public:
-        RenderSystem(Engine::Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+        RenderSystem(
+                Engine::Device &device,
+                Engine::TextureStorage &lveTextureStorage,
+                VkRenderPass renderPass,
+                Engine::DescriptorSetLayout &globalSetLayout
+        );
 
         ~RenderSystem();
 
@@ -38,6 +37,8 @@ namespace Engine {
         void createPipeline(VkRenderPass renderPass);
 
         Engine::Device &device;
+        Engine::TextureStorage &textureStorage;
+
         std::unique_ptr<Engine::Pipeline> pipeline;
         VkPipelineLayout pipelineLayout{};
     };

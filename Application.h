@@ -7,7 +7,11 @@
 
 #include <memory>
 #include <vector>
-#include "include/engine/Core.h"
+#include "include/engine/Window.h"
+#include "include/engine/Renderer.h"
+#include "include/engine/TextureStorage.h"
+#include "include/engine/Descriptors.h"
+#include "include/engine/GameObject.h"
 
 class Application {
 public:
@@ -25,9 +29,10 @@ public:
     void run();
 
 private:
-    Engine::Window window{(std::string &) "VkBeraEngine", WIDTH, HEIGHT};
+    Engine::Window window{"VkBeraEngine", WIDTH, HEIGHT};
     Engine::Device device{window};
     Engine::Renderer renderer{window, device};
+    Engine::TextureStorage textureStorage{device};
 
     std::unique_ptr<Engine::DescriptorPool> globalPool{};
     Engine::GameObject::Map gameObjects;

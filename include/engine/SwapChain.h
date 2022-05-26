@@ -24,7 +24,7 @@ namespace Engine {
 
         void operator=(const SwapChain &) = delete;
 
-        [[nodiscard]] VkFramebuffer getFrameBuffer(int index) const { return swapChainFramebuffers[index]; }
+        [[nodiscard]] VkFramebuffer getFrameBuffer(int index) const { return swapChainFrameBuffers[index]; }
 
         [[nodiscard]] VkRenderPass getRenderPass() const { return renderPass; }
 
@@ -44,7 +44,7 @@ namespace Engine {
             return static_cast<float>(swapChainExtent.width) / static_cast<float>(swapChainExtent.height);
         }
 
-        VkFormat findDepthFormat();
+        [[nodiscard]] VkFormat findDepthFormat() const;
 
         VkResult acquireNextImage(uint32_t *imageIndex);
 
@@ -74,13 +74,13 @@ namespace Engine {
         static VkPresentModeKHR chooseSwapPresentMode(
                 const std::vector<VkPresentModeKHR> &availablePresentModes);
 
-        VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities);
+        [[nodiscard]] VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR &capabilities) const;
 
         VkFormat swapChainImageFormat;
         VkFormat swapChainDepthFormat;
         VkExtent2D swapChainExtent;
 
-        std::vector<VkFramebuffer> swapChainFramebuffers;
+        std::vector<VkFramebuffer> swapChainFrameBuffers;
         VkRenderPass renderPass;
 
         std::vector<VkImage> depthImages;

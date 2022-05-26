@@ -5,32 +5,34 @@
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
-#include <glm/gtc/constants.hpp>
-#include <array>
 #include <chrono>
 #include <numeric>
 
 #include "Application.h"
-#include "include/engine/Core.h"
-#include "include/game/entities/Test.h"
 #include "include/game/entities/Player.h"
-#include "include/game/components/GameObjectComponent.h"
 #include "include/game/components/KeyboardInputComponent.h"
 #include "include/game/components/HealthComponent.h"
-#include "include/game/entities/Enemy.h"
+#include "include/engine/Scene.h"
+#include "include/engine/GameObjectFactory.h"
+#include "include/engine/ImGuiManager.h"
+#include "include/engine/ecs/EntityManager.h"
+#include "include/engine/MousePicker.h"
+#include "include/engine/systems/PointLightSystem.h"
+#include "include/engine/systems/RenderSystem.h"
 
 Application::Application() {
     globalPool = Engine::DescriptorPool::Builder(device)
             .setMaxSets(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
+
+    Engine::Scene::loadTextures(textureStorage);
     Engine::Scene::load(gameObjects, device);
 }
 
 Application::~Application() = default;
 
 void Application::run() {
-    Engine::ImGuiManager imGui{window, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
     Engine::ECS::EntityManager entityManager{};
 
     std::vector<std::unique_ptr<Engine::Buffer>> uboBuffers(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT);
@@ -56,12 +58,22 @@ void Application::run() {
                 .build(globalDescriptorSets[i]);
     }
 
-    Engine::RenderSystem renderSystem{device, renderer.getSwapChainRenderPass(),
-                                      globalSetLayout->getDescriptorSetLayout()};
+    auto textureSetLayout = Engine::DescriptorSetLayout::Builder(device)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT)
+            .build();
+
+    std::vector<VkDescriptorSet> descriptorSets{Engine::SwapChain::MAX_FRAMES_IN_FLIGHT};
+
+    Engine::RenderSystem renderSystem{device,
+                                      textureStorage,
+                                      renderer.getSwapChainRenderPass(),
+                                      *globalSetLayout};
     Engine::PointLightSystem pointLightSystem{device, renderer.getSwapChainRenderPass(),
                                               globalSetLayout->getDescriptorSetLayout()};
     Engine::Camera camera{};
     camera.setViewTarget(glm::vec3(-1.f, -2.f, 6.f), glm::vec3(.0f, .0f, 2.5f));
+    Engine::Editor::MousePicker mousePicker{window, camera, camera.getProjection()};
+    Engine::ImGuiManager imGui{window, camera, device, renderer.getSwapChainRenderPass(), renderer.getImageCount()};
 
     auto viewerObject = Engine::GameObjectFactory::createGameObject("Camera");
     auto player = entityManager.createNewEntity<Game::Entities::Player>();
@@ -88,6 +100,8 @@ void Application::run() {
 
         if (auto commandBuffer = renderer.beginFrame()) {
             imGui.newFrame();
+
+            // mousePicker.update(); // Updated mouse ray casting
 
             int frameIndex = renderer.getFrameIndex();
             Engine::FrameInfo frameInfo{

@@ -44,7 +44,7 @@ namespace Engine {
 
         VkResult invalidateIndex(int index);
 
-        [[nodiscard]] VkBuffer getBuffer() const { return buffer; }
+        [[nodiscard]] VkBuffer getVkBuffer() const { return buffer; }
 
         [[nodiscard]] void *getMappedMemory() const { return mapped; }
 

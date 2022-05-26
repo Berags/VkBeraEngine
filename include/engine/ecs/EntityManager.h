@@ -7,7 +7,6 @@
 
 #include <unordered_map>
 #include "Entity.h"
-#include "../FrameInfo.h"
 
 namespace Engine::ECS {
     class EntityManager {

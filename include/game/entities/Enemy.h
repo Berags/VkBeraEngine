@@ -5,7 +5,7 @@
 #ifndef MINIMINIMOTORWAYS_ENEMY_H
 #define MINIMINIMOTORWAYS_ENEMY_H
 
-#include "../../engine/Core.h"
+#include "../../engine/ecs/Entity.h"
 
 namespace Game::Entities {
     class Enemy : public Engine::ECS::Entity {

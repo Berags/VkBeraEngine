@@ -5,7 +5,10 @@
 #ifndef MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
 #define MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
 
-#include "../../engine/Core.h"
+#include "../../engine/Window.h"
+#include "../../engine/GameObject.h"
+#include "../../engine/FrameInfo.h"
+#include "../../engine/ecs/IComponent.h"
 
 namespace Game::Components {
     class HealthComponent : public Engine::ECS::IComponent {

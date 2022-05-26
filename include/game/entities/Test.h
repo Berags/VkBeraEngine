@@ -5,7 +5,7 @@
 #ifndef MINIMINIMOTORWAYS_TEST_H
 #define MINIMINIMOTORWAYS_TEST_H
 
-#include "../../engine/Core.h"
+#include "../../engine/ecs/Entity.h"
 
 namespace Game {
     class Test : public Engine::ECS::Entity {

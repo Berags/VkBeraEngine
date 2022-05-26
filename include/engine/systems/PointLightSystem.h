@@ -7,7 +7,8 @@
 
 #include <memory>
 #include <vector>
-#include "../Core.h"
+#include "../FrameInfo.h"
+#include "../Pipeline.h"
 
 namespace Engine {
     class PointLightSystem {

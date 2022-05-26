@@ -3,6 +3,7 @@
 //
 
 #include "../../include/engine/Scene.h"
+#include "../../include/engine/GameObjectFactory.h"
 
 namespace Engine {
     void Scene::load(Engine::GameObject::Map &gameObjects, Engine::Device &device) {
@@ -47,8 +48,15 @@ namespace Engine {
                 obj.transform.rotation = glm::vec3(it["transform"]["rotation"]["x"].get<float>(),
                                                    it["transform"]["rotation"]["y"].get<float>(),
                                                    it["transform"]["rotation"]["z"].get<float>());
+                obj.model->setTextureName("statue");
                 gameObjects.emplace(obj.getId(), std::move(obj));
             }
         }
+    }
+
+    void Scene::loadTextures(TextureStorage &textureStorage) {
+        //textureStorage.loadTexture("../textures/texture.jpg", "statue");
+        textureStorage.loadTexture("../textures/viking_room.png", "statue");
+        //textureStorage.loadTexture("../textures/lost_empire.jpg", "statue");
     }
 }

@@ -12,7 +12,7 @@
 namespace Engine {
     class Window {
     public:
-        explicit Window(std::string &name, int width, int height);
+        Window(const char *name, int width, int height);
 
         ~Window();
 
@@ -26,11 +26,13 @@ namespace Engine {
 
         void resetWindowResizedFlag();
 
-        void swapBuffers() const {
+        void swapBuffers() {
             glfwSwapBuffers(this->glfwWindow);
         }
 
         void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+
+        void setCursorPositionToCenter();
 
         [[nodiscard]] VkExtent2D getExtent() const {
             return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)};
@@ -46,6 +48,10 @@ namespace Engine {
 
         [[nodiscard]] GLFWwindow *getGlfwWindow() const;
 
+        [[nodiscard]] float getMouseX() const;
+
+        [[nodiscard]] float getMouseY() const;
+
     private:
         GLFWwindow *glfwWindow;
 
@@ -53,12 +59,17 @@ namespace Engine {
         int height;
         int width;
 
+        float mouseX;
+        float mouseY;
+
         // True if the window was resized during last frame buffer draw
         bool frameBufferResized = false;
 
         void initWindow();
 
         static void frameBufferResizedCallback(GLFWwindow *glfWwindow, int width, int height);
+
+        static void cursorPositionCallback(GLFWwindow *glfWwindow, double xPos, double yPos);
     };
 }
 

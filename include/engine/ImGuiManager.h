@@ -12,11 +12,12 @@
 #include <string>
 #include "Window.h"
 #include "Device.h"
+#include "Camera.h"
+#include "FrameInfo.h"
 
 #include "../libs/imgui/imgui.h"
 #include "../libs/imgui/imgui_impl_glfw.h"
 #include "../libs/imgui/imgui_impl_vulkan.h"
-#include "Core.h"
 
 namespace Engine {
     static void check_vk_result(VkResult err) {
@@ -28,6 +29,7 @@ namespace Engine {
     class ImGuiManager {
     public:
         ImGuiManager(Engine::Window &window,
+                     Engine::Camera &camera,
                      Engine::Device &device,
                      VkRenderPass renderPass,
                      uint32_t imageCount
@@ -41,13 +43,15 @@ namespace Engine {
 
         void run(Engine::FrameInfo &frameInfo);
 
+    private:
+        Engine::Device &device;
+        Engine::Camera &camera;
+        Engine::GameObject::id_t selectedId;
+
         // ImGui Windows states
         bool showDemoWindow = false;
         bool showGameObjectsWindow = false;
         bool showAddEntityWindow = false;
-
-    private:
-        Engine::Device &device;
 
         VkDescriptorPool descriptorPool;
 
@@ -55,17 +59,17 @@ namespace Engine {
 
         static void saveObjectToJson(GameObject &obj, json &j);
 
-        static void showGameObject(FrameInfo &frameInfo,
-                                   Engine::GameObject::Map::iterator &iterator,
-                                   GameObject &gameObj);
+        void showGameObject(FrameInfo &frameInfo,
+                            Engine::GameObject::Map::iterator &iterator,
+                            GameObject &gameObj);
 
-        static void showLightEditor(FrameInfo &frameInfo,
-                                    Engine::GameObject::Map::iterator &iterator,
-                                    GameObject &gameObj);
+        void showLightEditor(FrameInfo &frameInfo,
+                             Engine::GameObject::Map::iterator &iterator,
+                             GameObject &gameObj);
 
-        static void showEntityEditor(FrameInfo &frameInfo,
-                                     Engine::GameObject::Map::iterator &iterator,
-                                     GameObject &gameObj);
+        void showEntityEditor(FrameInfo &frameInfo,
+                              Engine::GameObject::Map::iterator &iterator,
+                              GameObject &gameObj);
     };
 };
 

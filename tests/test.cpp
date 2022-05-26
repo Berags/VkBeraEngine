@@ -1,11 +1,12 @@
 //
 // Created by Jacopo Beragnoli on 13/05/22.
 //
-#include "../include/engine/Core.h"
 #include "../include/game/entities/Player.h"
+#include "../include/engine/exceptions/Exception.h"
 #include "../include/game/components/HealthComponent.h"
 #include "utils.h"
 #include "../include/game/entities/Enemy.h"
+#include "../include/engine/ecs/EntityManager.h"
 #include <gtest/gtest.h>
 
 Engine::ECS::EntityManager entityManager{};
@@ -47,6 +48,10 @@ TEST(EntityComponentSystem, Entity) {
                         entity.addComponent<Game::Components::HealthComponent>();
                         entity.destroy();
                     });
+    ASSERT_EXIT({
+                    component = entity.getComponent<Game::Components::HealthComponent>();
+                    component->onCreate();
+                }, testing::KilledBySignal(SIGSEGV), "^$") << "Destroyed entity's component should be nullptr!";
 }
 
 TEST(Engine, Exceptions) {

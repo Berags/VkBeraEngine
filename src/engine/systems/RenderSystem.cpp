@@ -16,15 +16,17 @@
 #include "../../../include/engine/exceptions/Exception.h"
 
 namespace Engine {
-
     struct SimplePushConstantData {
         glm::mat4 modelMatrix{1.f};
         glm::mat4 normalMatrix{1.f};
     };
 
-    RenderSystem::RenderSystem(Engine::Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-            : device(device) {
-        createPipelineLayout(globalSetLayout);
+    RenderSystem::RenderSystem(Engine::Device &device,
+                               Engine::TextureStorage &lveTextureStorage,
+                               VkRenderPass renderPass,
+                               Engine::DescriptorSetLayout &globalSetLayout) :
+            device{device}, textureStorage{lveTextureStorage} {
+        createPipelineLayout(globalSetLayout.getDescriptorSetLayout());
         createPipeline(renderPass);
     }
 
@@ -38,7 +40,10 @@ namespace Engine {
         pushConstantRange.offset = 0;
         pushConstantRange.size = sizeof(SimplePushConstantData);
 
-        std::vector<VkDescriptorSetLayout> descriptorSetLayouts{globalSetLayout};
+        std::vector<VkDescriptorSetLayout> descriptorSetLayouts{
+                globalSetLayout,
+                textureStorage.getTextureDescriptorSetLayout().getDescriptorSetLayout()
+        };
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -46,8 +51,7 @@ namespace Engine {
         pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
         pipelineLayoutInfo.pushConstantRangeCount = 1;
         pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-        if (vkCreatePipelineLayout(device.getVkDevice(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
-            VK_SUCCESS) {
+        if (vkCreatePipelineLayout(device.getVkDevice(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
             throw Engine::Exceptions::FailedToCreateVkObject("Pipeline Layout");
         }
     }
@@ -74,24 +78,42 @@ namespace Engine {
                 frameInfo.commandBuffer,
                 VK_PIPELINE_BIND_POINT_GRAPHICS,
                 pipelineLayout,
-                0, 1,
+                0,
+                1,
                 &frameInfo.globalDescriptorSet,
-                0, nullptr);
+                0,
+                nullptr
+        );
 
         for (auto &kv: frameInfo.gameObjects) {
             auto &obj = kv.second;
             if (obj.model == nullptr) continue;
+
             SimplePushConstantData push{};
             push.modelMatrix = obj.transform.mat4();
             push.normalMatrix = obj.transform.normalMatrix();
-
             vkCmdPushConstants(
                     frameInfo.commandBuffer,
                     pipelineLayout,
                     VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
                     0,
                     sizeof(SimplePushConstantData),
-                    &push);
+                    &push
+            );
+
+            auto descriptorTextureSet = textureStorage.getDescriptorSet(obj.model->getTextureName(),
+                                                                        Engine::TextureStorage::DEFAULT_SAMPLER_NAME);
+            vkCmdBindDescriptorSets(
+                    frameInfo.commandBuffer,
+                    VK_PIPELINE_BIND_POINT_GRAPHICS,
+                    pipelineLayout,
+                    1,
+                    1,
+                    &descriptorTextureSet,
+                    0,
+                    nullptr
+            );
+
             obj.model->bind(frameInfo.commandBuffer);
             obj.model->draw(frameInfo.commandBuffer);
         }

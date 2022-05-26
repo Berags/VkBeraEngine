@@ -19,7 +19,7 @@ namespace std {
     struct hash<Engine::Model::Vertex> {
         size_t operator()(const Engine::Model::Vertex &vertex) const {
             size_t seed = 0;
-            Engine::Utils::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+            Engine::Utils::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv, vertex.textCoord);
             return seed;
         }
     };
@@ -60,16 +60,15 @@ namespace Engine {
                 VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
         );
 
-        device.copyBuffer(stagingBuffer.getBuffer(), vertexBuffer->getBuffer(), bufferSize);
+        device.copyBuffer(stagingBuffer.getVkBuffer(), vertexBuffer->getVkBuffer(), bufferSize);
     }
 
     void Model::createIndexBuffers(const std::vector<uint32_t> &indices) {
         indexCount = static_cast<uint32_t>(indices.size());
         hasIndexBuffer = indexCount > 0;
 
-        if (!hasIndexBuffer) {
+        if (!hasIndexBuffer)
             return;
-        }
 
         VkDeviceSize bufferSize = sizeof(indices[0]) * indexCount;
         uint32_t indexSize = sizeof(indices[0]);
@@ -79,7 +78,7 @@ namespace Engine {
                 indexSize,
                 indexCount,
                 VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
-                VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+                VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
         };
 
         stagingBuffer.map();
@@ -93,7 +92,7 @@ namespace Engine {
                 VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT
         );
 
-        device.copyBuffer(stagingBuffer.getBuffer(), indexBuffer->getBuffer(), bufferSize);
+        device.copyBuffer(stagingBuffer.getVkBuffer(), indexBuffer->getVkBuffer(), bufferSize);
     }
 
     void Model::draw(VkCommandBuffer commandBuffer) const {
@@ -105,12 +104,12 @@ namespace Engine {
     }
 
     void Model::bind(VkCommandBuffer commandBuffer) {
-        VkBuffer buffers[] = {vertexBuffer->getBuffer()};
+        VkBuffer buffers[] = {vertexBuffer->getVkBuffer()};
         VkDeviceSize offsets[] = {0};
         vkCmdBindVertexBuffers(commandBuffer, 0, 1, buffers, offsets);
 
         if (hasIndexBuffer) {
-            vkCmdBindIndexBuffer(commandBuffer, indexBuffer->getBuffer(), 0, VK_INDEX_TYPE_UINT32);
+            vkCmdBindIndexBuffer(commandBuffer, indexBuffer->getVkBuffer(), 0, VK_INDEX_TYPE_UINT32);
         }
     }
 
@@ -143,6 +142,7 @@ namespace Engine {
         attributeDescriptions.push_back({1, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, color)});
         attributeDescriptions.push_back({2, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, normal)});
         attributeDescriptions.push_back({3, 0, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex, uv)});
+        attributeDescriptions.push_back({4, 0, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex, textCoord)});
 
         return attributeDescriptions;
     }
@@ -189,6 +189,10 @@ namespace Engine {
                     vertex.uv = {
                             attrib.texcoords[3 * index.texcoord_index + 0],
                             attrib.texcoords[3 * index.texcoord_index + 1],
+                    };
+                    vertex.textCoord = {
+                            attrib.texcoords[2 * index.texcoord_index + 0],
+                            1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
                     };
                 }
                 if (uniqueVertices.count(vertex) == 0) {

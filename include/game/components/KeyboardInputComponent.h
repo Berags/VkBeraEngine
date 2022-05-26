@@ -5,7 +5,12 @@
 #ifndef MINIMINIMOTORWAYS_KEYBOARDINPUTCOMPONENT_H
 #define MINIMINIMOTORWAYS_KEYBOARDINPUTCOMPONENT_H
 
-#include "../../engine/Core.h"
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
+#include "../../engine/Window.h"
+#include "../../engine/GameObject.h"
+#include "../../engine/FrameInfo.h"
+#include "../../engine/ecs/IComponent.h"
 
 namespace Game::Components {
     class KeyboardInputComponent : public Engine::ECS::IComponent {
@@ -23,6 +28,7 @@ namespace Game::Components {
             int lookRight = GLFW_KEY_RIGHT;
             int lookUp = GLFW_KEY_UP;
             int lookDown = GLFW_KEY_DOWN;
+            int run = GLFW_KEY_LEFT_SHIFT;
         };
 
         KeyboardInputComponent(Engine::Window &window, Engine::GameObject &gameObject)
@@ -46,7 +52,7 @@ namespace Game::Components {
         Engine::GameObject &gameObject;
 
         KeyMappings keys{};
-        const float moveSpeed{3.f};
+        float moveSpeed{3.f};
         const float lookSpeed{3.f};
     };
 } // Game::Components

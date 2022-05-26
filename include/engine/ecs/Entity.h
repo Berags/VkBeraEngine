@@ -15,6 +15,8 @@ namespace Engine::ECS {
 
         explicit Entity(id_t id) : id(id) {}
 
+        virtual ~Entity();
+
         // Adds a component to the Entity components vector
         // Checks if the same component is already stored
         template<typename T, typename ... Ts>

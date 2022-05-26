@@ -21,10 +21,15 @@ namespace Engine::ECS {
             item->onDestroy();
             free(item);
         });
+        components.clear();
     }
 
     const std::vector<Engine::ECS::IComponent *> &Entity::getComponents() const {
         return components;
+    }
+
+    Entity::~Entity() {
+        std::cout << "Destroying entity" << std::endl;
     }
 }
 

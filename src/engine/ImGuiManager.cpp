@@ -4,16 +4,19 @@
 
 // libs
 #include <vulkan/vulkan_core.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <stdexcept>
 #include "../../include/libs/imgui/ImGuiFileDialog/ImGuiFileDialog.h"
 
 // includes
 #include "../../include/engine/ImGuiManager.h"
+#include "../../include/engine/GameObjectFactory.h"
 
 namespace Engine {
     ImGuiManager::ImGuiManager(
-            Engine::Window &window, Engine::Device &device, VkRenderPass renderPass, uint32_t imageCount)
-            : device{device} {
+            Engine::Window &window, Engine::Camera &camera, Engine::Device &device, VkRenderPass renderPass,
+            uint32_t imageCount)
+            : device{device}, camera{camera} {
         // set up a descriptor pool stored on this instance, see header for more comments on this.
         VkDescriptorPoolSize pool_sizes[] = {
                 {VK_DESCRIPTOR_TYPE_SAMPLER,                1000},
@@ -157,6 +160,7 @@ namespace Engine {
                                                                                               filePathName.c_str());
                     auto gameObject = Engine::GameObjectFactory::createGameObject(filePathName.c_str());
                     gameObject.model = model;
+                    model->setTextureName("statue");
                     frameInfo.gameObjects.emplace(gameObject.getId(), std::move(gameObject));
 
                     std::cout << "Added entity with model file path: " << filePathName <<
@@ -189,9 +193,8 @@ namespace Engine {
         showLightEditor(frameInfo, iterator, gameObj);
     }
 
-    void
-    ImGuiManager::showEntityEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
-                                   GameObject &gameObj) {
+    void ImGuiManager::showEntityEditor(FrameInfo &frameInfo, Engine::GameObject::Map::iterator &iterator,
+                                        GameObject &gameObj) {
         ImGui::PushID(static_cast<int>(gameObj.getId()));
 
         // Text and Tree nodes are less high than framed widgets, using AlignTextToFramePadding() we add vertical spacing to make the tree lines equal high.
@@ -203,6 +206,7 @@ namespace Engine {
         ImGui::Text("Point Light");
 
         if (node_open) {
+            selectedId = gameObj.getId();
             ImGuiTreeNodeFlags flags =
                     ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen |
                     ImGuiTreeNodeFlags_Bullet;
@@ -314,6 +318,7 @@ namespace Engine {
 
             ImGui::TreePop();
         }
+
         ImGui::PopID();
     }
 

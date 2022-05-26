@@ -15,6 +15,7 @@
 #include "Device.h"
 #include "Utils.h"
 #include "Buffer.h"
+#include "TextureStorage.h"
 #include <glm/glm.hpp>
 #include <vector>
 
@@ -38,8 +39,15 @@ namespace Engine {
             // https://en.wikipedia.org/wiki/UV_mapping
             glm::vec2 uv{};
 
+            glm::vec2 textCoord{};
+
             bool operator==(const Vertex &that) const {
-                return position == that.position && color == that.color && normal == that.normal && uv == that.uv;
+                return
+                        position == that.position &&
+                        color == that.color &&
+                        normal == that.normal &&
+                        uv == that.uv &&
+                        textCoord == that.textCoord;
             }
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
@@ -80,19 +88,31 @@ namespace Engine {
 
         [[nodiscard]] const std::string &getFilePath() const;
 
+        void setTextureName(std::string &&texture) {
+            this->textureName = std::move(texture);
+        }
+
+        std::string &getTextureName() {
+            return textureName;
+        }
+
     private:
         Engine::Device &device;
 
         // The file name
         std::string file;
 
+        std::string textureName;
+
+        std::string samplerName = Engine::TextureStorage::DEFAULT_SAMPLER_NAME;
+
         // Vertices information
         std::unique_ptr<Engine::Buffer> vertexBuffer;
-        uint32_t vertexCount;
+        uint32_t vertexCount{};
 
         // Indices information
         std::unique_ptr<Engine::Buffer> indexBuffer;
-        uint32_t indexCount;
+        uint32_t indexCount{};
         // True if .obj uses an index buffer to optimize the complexity of the model
         bool hasIndexBuffer{false};
 
