@@ -11,6 +11,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 
 #include "../../include/libs/stb_image.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
 
 namespace Engine {
     const std::string TextureStorage::DEFAULT_SAMPLER_NAME = "DefaultSampler";
@@ -112,7 +113,7 @@ namespace Engine {
     ) {
         VkSampler textureSampler{};
         if (vkCreateSampler(device.getVkDevice(), &samplerInfo, nullptr, &textureSampler) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create texture sampler!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Texture Sampler");
         }
 
         assert(textureSamplers.count(samplerName) == 0 && "Sampler already in use");

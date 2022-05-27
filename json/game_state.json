@@ -1,15 +1,15 @@
 [
   {
-    "intensity": 2.0399999618530273,
+    "intensity": 1.0,
     "model": {
       "file_name": null
     },
     "name": "Point Light",
     "transform": {
       "color": {
-        "x": 0.0,
-        "y": 0.9505494236946106,
-        "z": 0.010445540770888329
+        "x": 0.9450550079345703,
+        "y": 1.0,
+        "z": 0.0
       },
       "rotation": {
         "x": 0.0,
@@ -22,8 +22,124 @@
         "z": 0.10000000149011612
       },
       "translation": {
-        "x": 0.699999988079071,
-        "y": -0.46000000834465027,
+        "x": 1.9600000381469727,
+        "y": -1.850000023841858,
+        "z": 4.119999885559082
+      }
+    }
+  },
+  {
+    "intensity": 1.850000023841858,
+    "model": {
+      "file_name": null
+    },
+    "name": "Point Light",
+    "transform": {
+      "color": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "translation": {
+        "x": 0.0,
+        "y": -0.4399999976158142,
+        "z": 4.940000057220459
+      }
+    }
+  },
+  {
+    "model": {
+      "file_name": "/Users/jacopo/CLionProjects/MiniminiMotorways/models/quad.obj",
+      "texture": "statue"
+    },
+    "name": "Simple Texture",
+    "transform": {
+      "color": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": -1.5709999799728394,
+        "z": -1.5709999799728394
+      },
+      "scale": {
+        "x": 0.4300000071525574,
+        "y": 0.4300000071525574,
+        "z": 0.4300000071525574
+      },
+      "translation": {
+        "x": 1.590000033378601,
+        "y": -0.5,
+        "z": 0.0
+      }
+    }
+  },
+  {
+    "intensity": 0.3199999928474426,
+    "model": {
+      "file_name": null
+    },
+    "name": "Point Light",
+    "transform": {
+      "color": {
+        "x": 0.8304250240325928,
+        "y": 0.93471759557724,
+        "z": 0.9505494236946106
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "translation": {
+        "x": 1.7899999618530273,
+        "y": -0.7699999809265137,
+        "z": -0.8299999833106995
+      }
+    }
+  },
+  {
+    "model": {
+      "file_name": "/Users/jacopo/CLionProjects/MiniminiMotorways/models/viking_room.obj",
+      "texture": "viking_room"
+    },
+    "name": "Viking Room",
+    "transform": {
+      "color": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 1.570796012878418,
+        "y": 1.5709999799728394,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0
+      },
+      "translation": {
+        "x": 0.0,
+        "y": 0.0,
         "z": 0.0
       }
     }
@@ -46,9 +162,9 @@
         "z": 0.0
       },
       "scale": {
-        "x": 0.10000000149011612,
-        "y": 0.10000000149011612,
-        "z": 0.10000000149011612
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
       },
       "translation": {
         "x": 0.0,
@@ -58,10 +174,69 @@
     }
   },
   {
+    "intensity": 0.6700000166893005,
     "model": {
-      "file_name": "/Users/jacopo/CLionProjects/MiniminiMotorways/models/viking_room.obj"
+      "file_name": null
     },
-    "name": "Viking Room",
+    "name": "Fire",
+    "transform": {
+      "color": {
+        "x": 0.9505494236946106,
+        "y": 0.2820311188697815,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "translation": {
+        "x": 0.029999999329447746,
+        "y": -0.09000000357627869,
+        "z": -0.15000000596046448
+      }
+    }
+  },
+  {
+    "intensity": 0.5299999713897705,
+    "model": {
+      "file_name": null
+    },
+    "name": "Point Light",
+    "transform": {
+      "color": {
+        "x": 0.3669544756412506,
+        "y": 0.7857142686843872,
+        "z": 0.3715561032295227
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "translation": {
+        "x": 1.7899999618530273,
+        "y": -0.3400000035762787,
+        "z": -1.409999966621399
+      }
+    }
+  },
+  {
+    "model": {
+      "file_name": "/Users/jacopo/CLionProjects/MiniminiMotorways/models/quad.obj",
+      "texture": "high_resolution"
+    },
+    "name": "High Resolution",
     "transform": {
       "color": {
         "x": 0.0,
@@ -69,19 +244,19 @@
         "z": 0.0
       },
       "rotation": {
-        "x": 1.6299999952316284,
+        "x": 1.5709999799728394,
         "y": 0.0,
         "z": 0.0
       },
       "scale": {
-        "x": 1.0,
-        "y": 1.0,
-        "z": 1.0
+        "x": 0.8799999952316284,
+        "y": 0.8799999952316284,
+        "z": 0.8799999952316284
       },
       "translation": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 1.1200000047683716,
+        "y": -0.9800000190734863,
+        "z": 5.659999847412109
       }
     }
   }

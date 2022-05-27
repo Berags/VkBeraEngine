@@ -89,3 +89,14 @@ TEST(Engine, Exceptions) {
                      }
                  }, Engine::Exceptions::UnableToStartWindowException);
 }
+
+TEST(Engine, Vulkan) {
+    uint32_t version = 0;
+    auto vkEnumerateInstanceVersion = (PFN_vkEnumerateInstanceVersion) vkGetInstanceProcAddr(
+            nullptr, "vkEnumerateInstanceVersion");
+
+    ASSERT_NE(vkEnumerateInstanceVersion, nullptr) << "Vulkan was unable to enumerate current SDK Version!";
+    vkEnumerateInstanceVersion(&version);
+    std::cout << "Vulkan Version: (" << version << ") " << VK_VERSION_MAJOR(version) << "." << VK_VERSION_MINOR(version)
+              << "." << VK_VERSION_PATCH(version) << "\n";
+}

@@ -12,7 +12,11 @@
 namespace Engine {
     class SwapChain {
     public:
-        static constexpr int MAX_FRAMES_IN_FLIGHT = 3;
+        // This allows to actually have a swapping back-front buffer
+        // So that we have 2 frames rendering per second, when the first is finished rendering
+        // we draw it to the screen and swap pointers
+        // https://vulkan-tutorial.com/Drawing_a_triangle/Drawing/Frames_in_flight
+        static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
         SwapChain(Device &deviceRef, VkExtent2D windowExtent);
 

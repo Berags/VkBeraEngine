@@ -38,7 +38,9 @@ namespace Engine {
 
         void destroySampler(const std::string &samplerName);
 
-        const Engine::DescriptorSetLayout &getTextureDescriptorSetLayout() const { return *textureSetLayout; }
+        [[nodiscard]] const Engine::DescriptorSetLayout &getTextureDescriptorSetLayout() const {
+            return *textureSetLayout;
+        }
 
         const VkDescriptorSet getDescriptorSet(const std::string &textureName, const std::string &samplerName);
 
@@ -53,7 +55,6 @@ namespace Engine {
 
         VkSampler getSampler(const std::string &samplerName);
 
-
         std::unordered_map<std::string, TextureData> textureDatas;
         std::unordered_map<std::string, VkSampler> textureSamplers;
         std::unique_ptr<Engine::DescriptorPool> texturePool;
@@ -62,7 +63,6 @@ namespace Engine {
 
         Engine::Device &device;
     };
-
 } // Engine
 
 #endif //MINIMINIMOTORWAYS_TEXTURESTORAGE_H

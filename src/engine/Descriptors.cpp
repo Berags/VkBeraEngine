@@ -8,6 +8,7 @@
 
 // includes
 #include "../../include/engine/Descriptors.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
 
 namespace Engine {
     // *************** Descriptor Set Layout Builder *********************
@@ -52,7 +53,7 @@ namespace Engine {
                 &descriptorSetLayoutInfo,
                 nullptr,
                 &descriptorSetLayout) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create descriptor set layout!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Descriptor Set Layout");
         }
     }
 
@@ -60,7 +61,7 @@ namespace Engine {
         vkDestroyDescriptorSetLayout(device.getVkDevice(), descriptorSetLayout, nullptr);
     }
 
-// *************** Descriptor Pool Builder *********************
+    // *************** Descriptor Pool Builder *********************
 
     DescriptorPool::Builder &DescriptorPool::Builder::addPoolSize(
             VkDescriptorType descriptorType, uint32_t count) {
@@ -83,7 +84,7 @@ namespace Engine {
         return std::make_unique<DescriptorPool>(device, maxSets, poolFlags, poolSizes);
     }
 
-// *************** Descriptor Pool *********************
+    // *************** Descriptor Pool *********************
 
     DescriptorPool::DescriptorPool(
             Engine::Device &device,
@@ -100,7 +101,7 @@ namespace Engine {
 
         if (vkCreateDescriptorPool(device.getVkDevice(), &descriptorPoolInfo, nullptr, &descriptorPool) !=
             VK_SUCCESS) {
-            throw std::runtime_error("failed to create descriptor pool!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Descriptor Pool");
         }
     }
 

@@ -10,22 +10,21 @@
 #include "Camera.h"
 
 namespace Engine::Editor {
-
+    // Class that handles all calculation to get RayCasting vector from cursor position
+    // Note: In future will be implemented as a reusable component!
+    // https://www.youtube.com/watch?v=DLKN0jExRIM
     class MousePicker {
     public:
         MousePicker(Engine::Window &window, Engine::Camera &camera, const glm::mat4 &projectionMatrix)
-                : window(window), camera(camera), projectionMatrix(projectionMatrix),
-                  viewMatrix(camera.getView()), currentRay(glm::vec3(.0f)) {}
+                : window(window), camera(camera), currentRay(glm::vec3(.0f)) {}
 
         void update();
 
         [[nodiscard]] const glm::vec3 &getCurrentRay() const { return currentRay; }
 
     private:
+        // The up-to-date ray casting vector
         glm::vec3 currentRay;
-
-        glm::mat4 projectionMatrix;
-        glm::mat4 viewMatrix;
 
         Engine::Window &window;
         Engine::Camera &camera;

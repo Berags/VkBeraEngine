@@ -101,7 +101,7 @@ void Application::run() {
         if (auto commandBuffer = renderer.beginFrame()) {
             imGui.newFrame();
 
-            // mousePicker.update(); // Updated mouse ray casting
+            mousePicker.update(); // Updated mouse ray casting
 
             int frameIndex = renderer.getFrameIndex();
             Engine::FrameInfo frameInfo{
@@ -112,6 +112,7 @@ void Application::run() {
                     globalDescriptorSets[frameIndex],
                     gameObjects,
             };
+
             // Update
             Engine::GlobalUbo ubo{};
             ubo.projection = camera.getProjection();

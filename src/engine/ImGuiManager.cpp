@@ -11,6 +11,7 @@
 // includes
 #include "../../include/engine/ImGuiManager.h"
 #include "../../include/engine/GameObjectFactory.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
 
 namespace Engine {
     ImGuiManager::ImGuiManager(
@@ -37,7 +38,7 @@ namespace Engine {
         pool_info.poolSizeCount = (uint32_t) IM_ARRAYSIZE(pool_sizes);
         pool_info.pPoolSizes = pool_sizes;
         if (vkCreateDescriptorPool(device.getVkDevice(), &pool_info, nullptr, &descriptorPool) != VK_SUCCESS) {
-            throw std::runtime_error("failed to set up descriptor pool for imgui");
+            throw Engine::Exceptions::FailedToCreateVkObject("ImGui Descriptor Pool");
         }
 
         // Setup Dear ImGui context

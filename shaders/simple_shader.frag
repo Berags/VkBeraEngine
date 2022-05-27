@@ -1,4 +1,4 @@
-#version 450
+#version 460
 
 layout (location = 0) in vec3 fragColor;
 layout (location = 1) in vec3 fragPosWorld;
@@ -55,7 +55,8 @@ void main() {
         specularLight += intensity * blinnTerm;
     }
 
-    outColor = vec4(diffuseLight * fragColor + specularLight * fragColor, 1.0);
+    // Old version to calculate outColor without texture
+    // outColor = vec4(diffuseLight * fragColor + specularLight * fragColor, 1.0);
     vec4 textColor = texture(texSampler, fragTexCoord);
-    outColor = vec4(diffuseLight * textColor.xyz + specularLight * textColor.xyz, 1.0);
+    outColor = vec4(diffuseLight * fragColor * textColor.xyz + specularLight * textColor.xyz * fragColor, 1.0);
 }

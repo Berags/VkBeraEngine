@@ -273,7 +273,7 @@ namespace Engine {
                     &framebufferInfo,
                     nullptr,
                     &swapChainFrameBuffers[i]) != VK_SUCCESS) {
-                throw std::runtime_error("failed to create framebuffer!");
+                throw Engine::Exceptions::FailedToCreateVkObject("Frame Buffer");
             }
         }
     }

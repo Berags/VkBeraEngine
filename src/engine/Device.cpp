@@ -10,6 +10,11 @@
 // includes
 #include "../../include/engine/Device.h"
 #include "../../include/engine/exceptions/vulkan/FailedToFindVulkanSupportedGPUException.h"
+#include "../../include/engine/exceptions/window/MissingRequiredGLFWExtension.h"
+#include "../../include/engine/exceptions/vulkan/FailedToFindVkObject.h"
+#include "../../include/engine/exceptions/vulkan/ValidationLayersNotAvailable.h"
+#include "../../include/engine/exceptions/vulkan/FailedToBindVkObject.h"
+#include "../../include/engine/exceptions/vulkan/UnsupportedVkException.h"
 
 namespace Engine {
     static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -73,7 +78,7 @@ namespace Engine {
 
     void Device::createInstance() {
         if (enableValidationLayers && !checkValidationLayerSupport()) {
-            throw std::runtime_error("validation layers requested, but not available!");
+            throw Engine::Exceptions::ValidationLayersNotAvailable();
         }
 
         VkApplicationInfo appInfo = {};
@@ -105,7 +110,7 @@ namespace Engine {
         }
 
         if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create instance!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Instance");
         }
 
         hasGflwRequiredInstanceExtensions();
@@ -182,7 +187,7 @@ namespace Engine {
         }
 
         if (vkCreateDevice(physicalDevice, &createInfo, nullptr, &device_) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create logical getVkDevice!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Logical VkDevice");
         }
 
         vkGetDeviceQueue(device_, indices.graphicsFamily, 0, &graphicsQueue_);
@@ -199,7 +204,7 @@ namespace Engine {
                 VK_COMMAND_POOL_CREATE_TRANSIENT_BIT | VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
 
         if (vkCreateCommandPool(device_, &poolInfo, nullptr, &commandPool) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create command pool!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Command Pool");
         }
     }
 
@@ -241,7 +246,7 @@ namespace Engine {
         VkDebugUtilsMessengerCreateInfoEXT createInfo;
         populateDebugMessengerCreateInfo(createInfo);
         if (CreateDebugUtilsMessengerEXT(instance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
-            throw std::runtime_error("failed to set up debug messenger!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Debug Messenger");
         }
     }
 
@@ -302,7 +307,7 @@ namespace Engine {
         for (const auto &required: requiredExtensions) {
             std::cout << "\t" << required << std::endl;
             if (available.find(required) == available.end()) {
-                throw std::runtime_error("Missing required glfw extension");
+                throw Engine::Exceptions::MissingRequiredGLFWExtension();
             }
         }
     }
@@ -397,7 +402,7 @@ namespace Engine {
                 return format;
             }
         }
-        throw std::runtime_error("failed to find supported format!");
+        throw Engine::Exceptions::FailedToFindVkObject("Supported Format");
     }
 
     uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
@@ -410,7 +415,7 @@ namespace Engine {
             }
         }
 
-        throw std::runtime_error("failed to find suitable memory type!");
+        throw Engine::Exceptions::FailedToFindVkObject("Suitable Memory Type");
     }
 
     void Device::createBuffer(
@@ -426,7 +431,7 @@ namespace Engine {
         bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
         if (vkCreateBuffer(device_, &bufferInfo, nullptr, &buffer) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create vertex buffer!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Vertex Buffer");
         }
 
         VkMemoryRequirements memRequirements;
@@ -438,7 +443,7 @@ namespace Engine {
         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
         if (vkAllocateMemory(device_, &allocInfo, nullptr, &bufferMemory) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate vertex buffer memory!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Vertex Buffer Memory");
         }
 
         vkBindBufferMemory(device_, buffer, bufferMemory, 0);
@@ -521,7 +526,7 @@ namespace Engine {
             VkImage &image,
             VkDeviceMemory &imageMemory) {
         if (vkCreateImage(device_, &imageInfo, nullptr, &image) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create image!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Image");
         }
 
         VkMemoryRequirements memRequirements;
@@ -533,11 +538,11 @@ namespace Engine {
         allocInfo.memoryTypeIndex = findMemoryType(memRequirements.memoryTypeBits, properties);
 
         if (vkAllocateMemory(device_, &allocInfo, nullptr, &imageMemory) != VK_SUCCESS) {
-            throw std::runtime_error("failed to allocate image memory!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Image Memory");
         }
 
         if (vkBindImageMemory(device_, image, imageMemory, 0) != VK_SUCCESS) {
-            throw std::runtime_error("failed to bind image memory!");
+            throw Engine::Exceptions::FailedToBindVkObject("Image Memory");
         }
     }
 
@@ -585,7 +590,7 @@ namespace Engine {
             sourceStage = VK_PIPELINE_STAGE_TRANSFER_BIT;
             destinationStage = VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT;
         } else {
-            throw std::invalid_argument("unsupported layout transition!");
+            throw Engine::Exceptions::UnsupportedVkException("Layout Transition");
         }
 
         vkCmdPipelineBarrier(
