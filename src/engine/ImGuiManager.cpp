@@ -520,6 +520,7 @@ namespace Engine {
         json model;
         if (!obj.pointLightComponent) {
             model["file_name"] = obj.model->getFilePath();
+            model["texture"] = obj.model->getTextureName();
         } else {
             model["file_name"] = nullptr;
             objJson["intensity"] = obj.pointLightComponent->lightIntensity;

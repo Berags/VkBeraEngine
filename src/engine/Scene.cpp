@@ -48,15 +48,15 @@ namespace Engine {
                 obj.transform.rotation = glm::vec3(it["transform"]["rotation"]["x"].get<float>(),
                                                    it["transform"]["rotation"]["y"].get<float>(),
                                                    it["transform"]["rotation"]["z"].get<float>());
-                obj.model->setTextureName("statue");
+                obj.model->setTextureName(it["model"]["texture"].get<std::string>());
                 gameObjects.emplace(obj.getId(), std::move(obj));
             }
         }
     }
 
     void Scene::loadTextures(TextureStorage &textureStorage) {
-        //textureStorage.loadTexture("../textures/texture.jpg", "statue");
-        textureStorage.loadTexture("../textures/viking_room.png", "statue");
-        //textureStorage.loadTexture("../textures/lost_empire.jpg", "statue");
+        textureStorage.loadTexture("../textures/texture.jpg", "statue");
+        textureStorage.loadTexture("../textures/viking_room.png", "viking_room");
+        textureStorage.loadTexture("../textures/high_resolution.jpg", "high_resolution");
     }
 }
