@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 13/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_RENDERER_H
-#define MINIMINIMOTORWAYS_RENDERER_H
+#ifndef VKBERAENGINE_RENDERER_H
+#define VKBERAENGINE_RENDERER_H
 
 #include <memory>
 #include <vector>
@@ -69,4 +69,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_RENDERER_H
+#endif //VKBERAENGINE_RENDERER_H

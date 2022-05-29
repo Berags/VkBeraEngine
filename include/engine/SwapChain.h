@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 07/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_SWAPCHAIN_H
-#define MINIMINIMOTORWAYS_SWAPCHAIN_H
+#ifndef VKBERAENGINE_SWAPCHAIN_H
+#define VKBERAENGINE_SWAPCHAIN_H
 
 #include "Device.h"
 #include <memory>
@@ -107,4 +107,4 @@ namespace Engine {
     };
 }
 
-#endif //MINIMINIMOTORWAYS_SWAPCHAIN_H
+#endif //VKBERAENGINE_SWAPCHAIN_H

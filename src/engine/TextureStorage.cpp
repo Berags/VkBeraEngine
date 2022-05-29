@@ -12,6 +12,7 @@
 
 #include "../../include/libs/stb_image.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
+#include "../../include/engine/exceptions/file/FailedToLoadFileException.h"
 
 namespace Engine {
     const std::string TextureStorage::DEFAULT_SAMPLER_NAME = "DefaultSampler";
@@ -135,9 +136,10 @@ namespace Engine {
         int texWidth, texHeight, texChannels;
         stbi_uc *pixels = stbi_load(texturePath.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
         VkDeviceSize imageSize = texWidth * texHeight * 4;
+        imageData.mipLevels = static_cast<uint32_t>(std::floor(std::log2(std::max(texWidth, texHeight)))) + 1;
 
         if (!pixels) {
-            throw std::runtime_error("failed to load image!");
+            throw Engine::Exceptions::FailedToLoadFileException(texturePath.c_str());
         }
 
         Engine::Buffer stagingBuffer{
@@ -158,7 +160,7 @@ namespace Engine {
         imageInfo.extent.width = texWidth;
         imageInfo.extent.height = texHeight;
         imageInfo.extent.depth = 1;
-        imageInfo.mipLevels = 1;
+        imageInfo.mipLevels = imageData.mipLevels;
         imageInfo.arrayLayers = 1;
         imageInfo.format = VK_FORMAT_R8G8B8A8_SRGB;
         imageInfo.tiling = VK_IMAGE_TILING_OPTIMAL;

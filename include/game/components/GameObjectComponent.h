@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 11/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_GAMEOBJECTCOMPONENT_H
-#define MINIMINIMOTORWAYS_GAMEOBJECTCOMPONENT_H
+#ifndef VKBERAENGINE_GAMEOBJECTCOMPONENT_H
+#define VKBERAENGINE_GAMEOBJECTCOMPONENT_H
 
 #include "../../engine/Window.h"
 #include "../../engine/GameObject.h"
@@ -39,4 +39,4 @@ namespace Game::Components {
 }
 
 
-#endif //MINIMINIMOTORWAYS_GAMEOBJECTCOMPONENT_H
+#endif //VKBERAENGINE_GAMEOBJECTCOMPONENT_H

@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 06/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_DEVICE_H
-#define MINIMINIMOTORWAYS_DEVICE_H
+#ifndef VKBERAENGINE_DEVICE_H
+#define VKBERAENGINE_DEVICE_H
 
 
 #include <vulkan/vulkan.h>
@@ -154,4 +154,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_DEVICE_H
+#endif //VKBERAENGINE_DEVICE_H

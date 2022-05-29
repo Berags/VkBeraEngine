@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 13/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_GAMEOBJECT_H
-#define MINIMINIMOTORWAYS_GAMEOBJECT_H
+#ifndef VKBERAENGINE_GAMEOBJECT_H
+#define VKBERAENGINE_GAMEOBJECT_H
 
 #include <memory>
 #include <unordered_map>
@@ -64,4 +64,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_GAMEOBJECT_H
+#endif //VKBERAENGINE_GAMEOBJECT_H

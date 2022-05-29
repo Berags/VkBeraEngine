@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 12/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_APPLICATION_H
-#define MINIMINIMOTORWAYS_APPLICATION_H
+#ifndef VKBERAENGINE_APPLICATION_H
+#define VKBERAENGINE_APPLICATION_H
 
 #include <memory>
 #include <vector>
@@ -39,4 +39,4 @@ private:
 };
 
 
-#endif //MINIMINIMOTORWAYS_APPLICATION_H
+#endif //VKBERAENGINE_APPLICATION_H

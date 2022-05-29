@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 16/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_BUFFER_H
-#define MINIMINIMOTORWAYS_BUFFER_H
+#ifndef VKBERAENGINE_BUFFER_H
+#define VKBERAENGINE_BUFFER_H
 
 #include "Device.h"
 
@@ -78,4 +78,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_BUFFER_H
+#endif //VKBERAENGINE_BUFFER_H

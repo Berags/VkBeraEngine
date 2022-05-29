@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 14/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_TESTUTILS_H
-#define MINIMINIMOTORWAYS_TESTUTILS_H
+#ifndef VKBERAENGINE_TESTUTILS_H
+#define VKBERAENGINE_TESTUTILS_H
 
 namespace Tests::Utils {
     template<typename T, typename ... Ts>
@@ -12,4 +12,4 @@ namespace Tests::Utils {
     }
 }
 
-#endif //MINIMINIMOTORWAYS_UTILS_H
+#endif //VKBERAENGINE_UTILS_H

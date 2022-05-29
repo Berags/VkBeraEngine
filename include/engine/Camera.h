@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 15/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_CAMERA_H
-#define MINIMINIMOTORWAYS_CAMERA_H
+#ifndef VKBERAENGINE_CAMERA_H
+#define VKBERAENGINE_CAMERA_H
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -49,4 +49,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_CAMERA_H
+#endif //VKBERAENGINE_CAMERA_H

@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_WINDOW_H
-#define MINIMINIMOTORWAYS_WINDOW_H
+#ifndef VKBERAENGINE_WINDOW_H
+#define VKBERAENGINE_WINDOW_H
 
 #include <GLFW/glfw3.h>
 #include <vulkan/vulkan_core.h>
@@ -73,4 +73,4 @@ namespace Engine {
     };
 }
 
-#endif //MINIMINIMOTORWAYS_WINDOW_H
+#endif //VKBERAENGINE_WINDOW_H

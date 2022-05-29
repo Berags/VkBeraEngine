@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 30/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_ICOMPONENT_H
-#define MINIMINIMOTORWAYS_ICOMPONENT_H
+#ifndef VKBERAENGINE_ICOMPONENT_H
+#define VKBERAENGINE_ICOMPONENT_H
 
 #include <cmath>
 #include "../FrameInfo.h"
@@ -27,4 +27,4 @@ namespace Engine::ECS {
 }
 
 
-#endif //MINIMINIMOTORWAYS_ICOMPONENT_H
+#endif //VKBERAENGINE_ICOMPONENT_H

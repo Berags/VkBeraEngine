@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 04/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_ENTITYMANAGER_H
-#define MINIMINIMOTORWAYS_ENTITYMANAGER_H
+#ifndef VKBERAENGINE_ENTITYMANAGER_H
+#define VKBERAENGINE_ENTITYMANAGER_H
 
 #include <unordered_map>
 #include "Entity.h"
@@ -54,4 +54,4 @@ namespace Engine::ECS {
     };
 }
 
-#endif //MINIMINIMOTORWAYS_ENTITYMANAGER_H
+#endif //VKBERAENGINE_ENTITYMANAGER_H

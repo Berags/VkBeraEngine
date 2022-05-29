@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 02/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_EXCEPTION_H
-#define MINIMINIMOTORWAYS_EXCEPTION_H
+#ifndef VKBERAENGINE_EXCEPTION_H
+#define VKBERAENGINE_EXCEPTION_H
 
 #include <exception>
 #include <cstdio>
@@ -23,4 +23,4 @@ namespace Engine::Exceptions {
 #include "window/UnableToInitGLFWException.h"
 #include "window/UnableToStartWindowException.h"
 
-#endif //MINIMINIMOTORWAYS_EXCEPTION_H
+#endif //VKBERAENGINE_EXCEPTION_H

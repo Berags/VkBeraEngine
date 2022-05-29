@@ -142,7 +142,6 @@ namespace Engine {
         attributeDescriptions.push_back({1, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, color)});
         attributeDescriptions.push_back({2, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, normal)});
         attributeDescriptions.push_back({3, 0, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex, uv)});
-        attributeDescriptions.push_back({4, 0, VK_FORMAT_R32G32_SFLOAT, offsetof(Vertex, textCoord)});
 
         return attributeDescriptions;
     }
@@ -187,10 +186,6 @@ namespace Engine {
                 }
                 if (index.texcoord_index >= 0) {
                     vertex.uv = {
-                            attrib.texcoords[3 * index.texcoord_index + 0],
-                            attrib.texcoords[3 * index.texcoord_index + 1],
-                    };
-                    vertex.textCoord = {
                             attrib.texcoords[2 * index.texcoord_index + 0],
                             1.0f - attrib.texcoords[2 * index.texcoord_index + 1]
                     };

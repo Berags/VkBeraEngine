@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 12/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_MODEL_H
-#define MINIMINIMOTORWAYS_MODEL_H
+#ifndef VKBERAENGINE_MODEL_H
+#define VKBERAENGINE_MODEL_H
 
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
@@ -122,4 +122,4 @@ namespace Engine {
     };
 }
 
-#endif //MINIMINIMOTORWAYS_MODEL_H
+#endif //VKBERAENGINE_MODEL_H

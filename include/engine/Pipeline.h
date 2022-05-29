@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 05/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_PIPELINE_H
-#define MINIMINIMOTORWAYS_PIPELINE_H
+#ifndef VKBERAENGINE_PIPELINE_H
+#define VKBERAENGINE_PIPELINE_H
 
 #include <string>
 #include <vector>
@@ -67,4 +67,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_PIPELINE_H
+#endif //VKBERAENGINE_PIPELINE_H

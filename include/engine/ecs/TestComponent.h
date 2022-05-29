@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 30/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_TESTCOMPONENT_H
-#define MINIMINIMOTORWAYS_TESTCOMPONENT_H
+#ifndef VKBERAENGINE_TESTCOMPONENT_H
+#define VKBERAENGINE_TESTCOMPONENT_H
 
 #include "IComponent.h"
 #include "../Window.h"
@@ -38,4 +38,4 @@ namespace Engine::ECS {
 }
 
 
-#endif //MINIMINIMOTORWAYS_TESTCOMPONENT_H
+#endif //VKBERAENGINE_TESTCOMPONENT_H

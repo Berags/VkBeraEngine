@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 16/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_UTILS_H
-#define MINIMINIMOTORWAYS_UTILS_H
+#ifndef VKBERAENGINE_UTILS_H
+#define VKBERAENGINE_UTILS_H
 
 #include <functional>
 #include <iostream>
@@ -31,4 +31,4 @@ namespace Engine::Utils {
 }
 
 
-#endif //MINIMINIMOTORWAYS_UTILS_H
+#endif //VKBERAENGINE_UTILS_H

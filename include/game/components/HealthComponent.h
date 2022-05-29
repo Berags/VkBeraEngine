@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 11/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
-#define MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
+#ifndef VKBERAENGINE_HEALTHCOMPONENT_H
+#define VKBERAENGINE_HEALTHCOMPONENT_H
 
 #include "../../engine/Window.h"
 #include "../../engine/GameObject.h"
@@ -28,4 +28,4 @@ namespace Game::Components {
     };
 } // Game::Components
 
-#endif //MINIMINIMOTORWAYS_HEALTHCOMPONENT_H
+#endif //VKBERAENGINE_HEALTHCOMPONENT_H

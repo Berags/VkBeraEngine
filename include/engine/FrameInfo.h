@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 16/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_FRAMEINFO_H
-#define MINIMINIMOTORWAYS_FRAMEINFO_H
+#ifndef VKBERAENGINE_FRAMEINFO_H
+#define VKBERAENGINE_FRAMEINFO_H
 
 #include <vulkan/vulkan_core.h>
 #include "Camera.h"
@@ -41,4 +41,4 @@ namespace Engine {
     };
 }
 
-#endif //MINIMINIMOTORWAYS_FRAMEINFO_H
+#endif //VKBERAENGINE_FRAMEINFO_H

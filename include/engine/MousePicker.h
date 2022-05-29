@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 18/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_MOUSEPICKER_H
-#define MINIMINIMOTORWAYS_MOUSEPICKER_H
+#ifndef VKBERAENGINE_MOUSEPICKER_H
+#define VKBERAENGINE_MOUSEPICKER_H
 
 #include <glm/glm.hpp>
 #include "Window.h"
@@ -40,4 +40,4 @@ namespace Engine::Editor {
 
 } // Editor
 
-#endif //MINIMINIMOTORWAYS_MOUSEPICKER_H
+#endif //VKBERAENGINE_MOUSEPICKER_H

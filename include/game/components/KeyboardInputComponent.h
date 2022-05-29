@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 11/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_KEYBOARDINPUTCOMPONENT_H
-#define MINIMINIMOTORWAYS_KEYBOARDINPUTCOMPONENT_H
+#ifndef VKBERAENGINE_KEYBOARDINPUTCOMPONENT_H
+#define VKBERAENGINE_KEYBOARDINPUTCOMPONENT_H
 
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
@@ -57,4 +57,4 @@ namespace Game::Components {
     };
 } // Game::Components
 
-#endif //MINIMINIMOTORWAYS_KEYBOARDINPUTCOMPONENT_H
+#endif //VKBERAENGINE_KEYBOARDINPUTCOMPONENT_H

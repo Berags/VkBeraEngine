@@ -37,11 +37,12 @@ namespace Game::Components {
         if (glfwGetKey(window.getGlfwWindow(), keys.moveLeft) == GLFW_PRESS) moveDir -= rightDir;
         if (glfwGetKey(window.getGlfwWindow(), keys.moveUp) == GLFW_PRESS) moveDir += upDir;
         if (glfwGetKey(window.getGlfwWindow(), keys.moveDown) == GLFW_PRESS) moveDir -= upDir;
-        if (glfwGetKey(window.getGlfwWindow(), keys.run) == GLFW_REL)
+        if (glfwGetKey(window.getGlfwWindow(), keys.run) == GLFW_PRESS) moveSpeed = 7.0f;
+        else if (glfwGetKey(window.getGlfwWindow(), keys.run) == GLFW_RELEASE) moveSpeed = 3.5f;
 
-            if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()) {
-                gameObject.transform.translation += moveSpeed * frameInfo.frameTime * glm::normalize(moveDir);
-            }
+        if (glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()) {
+            gameObject.transform.translation += moveSpeed * frameInfo.frameTime * glm::normalize(moveDir);
+        }
     }
 
     void KeyboardInputComponent::onDestroy() {

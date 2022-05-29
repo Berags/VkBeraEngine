@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_IMGUIMANAGER_H
-#define MINIMINIMOTORWAYS_IMGUIMANAGER_H
+#ifndef VKBERAENGINE_IMGUIMANAGER_H
+#define VKBERAENGINE_IMGUIMANAGER_H
 
 #include <vulkan/vulkan_core.h>
 #include <cstdio>
@@ -74,4 +74,4 @@ namespace Engine {
 };
 
 
-#endif //MINIMINIMOTORWAYS_IMGUIMANAGER_H
+#endif //VKBERAENGINE_IMGUIMANAGER_H

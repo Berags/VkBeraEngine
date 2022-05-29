@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 25/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_TEXTURESTORAGE_H
-#define MINIMINIMOTORWAYS_TEXTURESTORAGE_H
+#ifndef VKBERAENGINE_TEXTURESTORAGE_H
+#define VKBERAENGINE_TEXTURESTORAGE_H
 
 #include <string>
 #include <unordered_map>
@@ -20,6 +20,7 @@ namespace Engine {
             VkImage image;
             VkImageView imageView;
             VkDeviceMemory imageMemory;
+            uint32_t mipLevels;
         };
 
         explicit TextureStorage(Engine::Device &device);
@@ -65,4 +66,4 @@ namespace Engine {
     };
 } // Engine
 
-#endif //MINIMINIMOTORWAYS_TEXTURESTORAGE_H
+#endif //VKBERAENGINE_TEXTURESTORAGE_H

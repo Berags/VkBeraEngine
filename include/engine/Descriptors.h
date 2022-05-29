@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 26/04/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_DESCRIPTORS_H
-#define MINIMINIMOTORWAYS_DESCRIPTORS_H
+#ifndef VKBERAENGINE_DESCRIPTORS_H
+#define VKBERAENGINE_DESCRIPTORS_H
 
 #include <memory>
 #include <unordered_map>
@@ -116,4 +116,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_DESCRIPTORS_H
+#endif //VKBERAENGINE_DESCRIPTORS_H

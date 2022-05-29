@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 12/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_SCENE_H
-#define MINIMINIMOTORWAYS_SCENE_H
+#ifndef VKBERAENGINE_SCENE_H
+#define VKBERAENGINE_SCENE_H
 
 #include "GameObject.h"
 
@@ -17,4 +17,4 @@ namespace Engine {
 }
 
 
-#endif //MINIMINIMOTORWAYS_SCENE_H
+#endif //VKBERAENGINE_SCENE_H

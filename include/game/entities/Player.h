@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 10/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_PLAYER_H
-#define MINIMINIMOTORWAYS_PLAYER_H
+#ifndef VKBERAENGINE_PLAYER_H
+#define VKBERAENGINE_PLAYER_H
 
 #include "../../engine/ecs/Entity.h"
 
@@ -15,4 +15,4 @@ namespace Game::Entities {
 }
 
 
-#endif //MINIMINIMOTORWAYS_PLAYER_H
+#endif //VKBERAENGINE_PLAYER_H

@@ -8,9 +8,8 @@ int main() {
     // https://stackoverflow.com/a/30185095/12445398
     std::cout.setstate(std::ios_base::failbit);
 #endif
-    Application app{};
-
     try {
+        Application app{};
         app.run();
     } catch (const std::exception &e) {
         std::cerr << e.what() << '\n';

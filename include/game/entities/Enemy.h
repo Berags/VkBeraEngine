@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 12/05/22.
 //
 
-#ifndef MINIMINIMOTORWAYS_ENEMY_H
-#define MINIMINIMOTORWAYS_ENEMY_H
+#ifndef VKBERAENGINE_ENEMY_H
+#define VKBERAENGINE_ENEMY_H
 
 #include "../../engine/ecs/Entity.h"
 
@@ -14,4 +14,4 @@ namespace Game::Entities {
     };
 } // Game::Entities
 
-#endif //MINIMINIMOTORWAYS_ENEMY_H
+#endif //VKBERAENGINE_ENEMY_H
