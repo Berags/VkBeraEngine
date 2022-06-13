@@ -9,6 +9,8 @@
 
 // headers
 #include "../../include/engine/Renderer.h"
+#include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
+#include "../../include/engine/exceptions/vulkan/FailedToBindVkObject.h"
 
 namespace Engine {
     Renderer::Renderer(Engine::Window &window, Engine::Device &device)
@@ -73,7 +75,7 @@ namespace Engine {
         }
 
         if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
-            throw std::runtime_error("failed to acquire swap chain image!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Swap Chain Image");
         }
 
         isFrameStarted = true;
@@ -82,7 +84,7 @@ namespace Engine {
         VkCommandBufferBeginInfo beginInfo{};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
         if (vkBeginCommandBuffer(commandBuffer, &beginInfo) != VK_SUCCESS) {
-            throw std::runtime_error("failed to begin recording command buffer!");
+            throw Engine::Exceptions::FailedToCreateVkObject("Recording Command Buffer");
         }
         return commandBuffer;
     }
@@ -91,7 +93,7 @@ namespace Engine {
         assert(isFrameStarted && "Can't call endFrame while frame is not in progress");
         auto commandBuffer = getCurrentCommandBuffer();
         if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
-            throw std::runtime_error("failed to record command buffer!");
+            throw Engine::Exceptions::FailedToBindVkObject("Recording Command Buffer");
         }
 
         auto result = swapChain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
@@ -148,4 +150,4 @@ namespace Engine {
         vkCmdEndRenderPass(commandBuffer);
     }
 
-}  // namespace lve
+}  // Engine

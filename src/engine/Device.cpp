@@ -152,7 +152,7 @@ namespace Engine {
         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
-        std::set<unsigned int> uniqueQueueFamilies = {indices.graphicsFamily, indices.presentFamily};
+        std::set < uint32_t > uniqueQueueFamilies = {indices.graphicsFamily, indices.presentFamily};
 
         float queuePriority = 1.0f;
         for (uint32_t queueFamily: uniqueQueueFamilies) {

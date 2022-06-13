@@ -52,11 +52,35 @@ namespace Engine {
                 gameObjects.emplace(obj.getId(), std::move(obj));
             }
         }
+        i.close();
     }
 
     void Scene::loadTextures(TextureStorage &textureStorage) {
         textureStorage.loadTexture("../textures/texture.jpg", "statue");
         textureStorage.loadTexture("../textures/viking_room.png", "viking_room");
         textureStorage.loadTexture("../textures/high_resolution.jpg", "high_resolution");
+        textureStorage.loadTexture("../textures/Solid_white.png", "green");
+    }
+
+    void minecraftLikeWorld(Engine::GameObject::Map &gameObjects, Engine::Device &device) {
+        auto pointLight = Engine::GameObjectFactory::createPointLight(100.f);
+        pointLight.transform.translation.y = -4.f;
+        gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+        std::shared_ptr<Engine::Model> voxelModel = Engine::Model::createModelFromFile(device, "../models/cube.obj");
+        voxelModel->setTextureName("green");
+        float scale = .1f;
+        for (int i = 0; i < 16; ++i) {
+            for (int j = 0; j < 16; ++j) {
+                for (int z = 0; z < 1; ++z) {
+                    auto voxel = Engine::GameObjectFactory::createGameObject("voxel-");
+                    voxel.model = voxelModel;
+                    voxel.transform.translation.x = (i % 16) * 2 * scale;
+                    voxel.transform.translation.z = (j % 16) * 2 * scale;
+                    voxel.transform.translation.y = (z % 16) * 2 * scale;
+                    voxel.transform.scale = glm::vec3(scale);
+                    gameObjects.emplace(voxel.getId(), std::move(voxel));
+                }
+            }
+        }
     }
 }

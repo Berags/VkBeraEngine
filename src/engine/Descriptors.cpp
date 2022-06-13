@@ -12,7 +12,6 @@
 
 namespace Engine {
     // *************** Descriptor Set Layout Builder *********************
-
     DescriptorSetLayout::Builder &DescriptorSetLayout::Builder::addBinding(
             uint32_t binding,
             VkDescriptorType descriptorType,
@@ -32,8 +31,7 @@ namespace Engine {
         return std::make_unique<DescriptorSetLayout>(device, bindings);
     }
 
-// *************** Descriptor Set Layout *********************
-
+    // *************** Descriptor Set Layout *********************
     DescriptorSetLayout::DescriptorSetLayout(
             Engine::Device &device, const std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> &bindings)
             : device{device}, bindings{bindings} {
@@ -62,7 +60,6 @@ namespace Engine {
     }
 
     // *************** Descriptor Pool Builder *********************
-
     DescriptorPool::Builder &DescriptorPool::Builder::addPoolSize(
             VkDescriptorType descriptorType, uint32_t count) {
         poolSizes.push_back({descriptorType, count});
@@ -85,7 +82,6 @@ namespace Engine {
     }
 
     // *************** Descriptor Pool *********************
-
     DescriptorPool::DescriptorPool(
             Engine::Device &device,
             uint32_t maxSets,
@@ -137,8 +133,7 @@ namespace Engine {
         vkResetDescriptorPool(device.getVkDevice(), descriptorPool, 0);
     }
 
-// *************** Descriptor Writer *********************
-
+    // *************** Descriptor Writer *********************
     DescriptorWriter::DescriptorWriter(DescriptorSetLayout &setLayout, DescriptorPool &pool)
             : setLayout{setLayout}, pool{pool} {}
 

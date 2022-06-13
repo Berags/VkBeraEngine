@@ -63,7 +63,7 @@ namespace Engine {
     private:
         static VkDeviceSize getAlignment(VkDeviceSize instanceSize, VkDeviceSize minOffsetAlignment);
 
-        Engine::Device &lveDevice;
+        Engine::Device &device;
         void *mapped = nullptr;
         VkBuffer buffer = VK_NULL_HANDLE;
         VkDeviceMemory memory = VK_NULL_HANDLE;

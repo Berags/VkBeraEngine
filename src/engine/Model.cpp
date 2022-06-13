@@ -19,14 +19,13 @@ namespace std {
     struct hash<Engine::Model::Vertex> {
         size_t operator()(const Engine::Model::Vertex &vertex) const {
             size_t seed = 0;
-            Engine::Utils::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv, vertex.textCoord);
+            Engine::Utils::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
             return seed;
         }
     };
 }
 
 namespace Engine {
-
     Model::Model(Device &device, const Engine::Model::Data &data, std::string &filePath) : device(device),
                                                                                            file(filePath) {
         createVertexBuffers(data.vertices);

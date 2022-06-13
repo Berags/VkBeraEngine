@@ -2,8 +2,8 @@
 // Created by Jacopo Beragnoli on 13/04/22.
 //
 
-#ifndef VKBERAENGINE_RENDERSYSTEM_H
-#define VKBERAENGINE_RENDERSYSTEM_H
+#ifndef VKBERAENGINE_GUISYSTEM_H
+#define VKBERAENGINE_GUISYSTEM_H
 
 #include <memory>
 #include <vector>
@@ -13,22 +13,22 @@
 #include "../GameObjectFactory.h"
 
 namespace Engine {
-    class RenderSystem {
+    class GuiSystem {
     public:
-        RenderSystem(
+        GuiSystem(
                 Engine::Device &device,
                 Engine::TextureStorage &lveTextureStorage,
                 VkRenderPass renderPass,
                 Engine::DescriptorSetLayout &globalSetLayout
         );
 
-        ~RenderSystem();
+        ~GuiSystem();
 
-        RenderSystem(const RenderSystem &) = delete;
+        GuiSystem(const GuiSystem &) = delete;
 
-        RenderSystem &operator=(const RenderSystem &) = delete;
+        GuiSystem &operator=(const GuiSystem &) = delete;
 
-        void renderGameObjects(Engine::FrameInfo &frameInfo);
+        void render(Engine::FrameInfo &frameInfo);
 
         [[nodiscard]] const std::unique_ptr<Engine::Pipeline> &getPipeline() const;
 
@@ -40,10 +40,12 @@ namespace Engine {
         Engine::Device &device;
         Engine::TextureStorage &textureStorage;
 
+        Engine::GameObject crosshair;
+
         std::unique_ptr<Engine::Pipeline> pipeline;
         VkPipelineLayout pipelineLayout{};
     };
 }
 
 
-#endif //VKBERAENGINE_RENDERSYSTEM_H
+#endif //VKBERAENGINE_GUISYSTEM_H

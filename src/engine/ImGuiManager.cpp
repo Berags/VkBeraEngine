@@ -70,6 +70,7 @@ namespace Engine {
         init_info.MinImageCount = 2;
         init_info.ImageCount = imageCount;
         init_info.CheckVkResultFn = check_vk_result;
+        init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
         ImGui_ImplVulkan_Init(&init_info, renderPass);
 
         // upload fonts, this is done by recording and submitting a one time use command buffer

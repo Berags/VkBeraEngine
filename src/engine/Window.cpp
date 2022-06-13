@@ -94,6 +94,6 @@ namespace Engine {
     }
 
     void Window::setCursorPositionToCenter() {
-        glfwSetCursorPos(glfwWindow, width / 2, height / 2);
+        glfwSetCursorPos(glfwWindow, static_cast<float>(width) / 2, static_cast<float>(height) / 2);
     }
 }

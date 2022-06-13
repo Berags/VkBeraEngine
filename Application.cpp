@@ -12,6 +12,7 @@
 #include "include/game/entities/Player.h"
 #include "include/game/components/KeyboardInputComponent.h"
 #include "include/game/components/HealthComponent.h"
+#include "include/game/components/GameObjectComponent.h"
 #include "include/engine/Scene.h"
 #include "include/engine/GameObjectFactory.h"
 #include "include/engine/ImGuiManager.h"
@@ -25,7 +26,6 @@ Application::Application() {
             .setMaxSets(Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, Engine::SwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
-
     Engine::Scene::loadTextures(textureStorage);
     Engine::Scene::load(gameObjects, device);
 }

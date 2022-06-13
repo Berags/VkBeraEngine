@@ -51,12 +51,13 @@ void main() {
         vec3 halfAngle = normalize(directionToLight + viewDirection);
         float blinnTerm = dot(surfaceNormal, halfAngle);
         blinnTerm = clamp(blinnTerm, 0, 1);
-        blinnTerm = pow(blinnTerm, 512.0);// higher values -> sharper highlight
+        blinnTerm = pow(blinnTerm, 1024.0);// higher values -> sharper highlight
+
         specularLight += intensity * blinnTerm;
     }
 
     // Old version to calculate outColor without texture
     // outColor = vec4(diffuseLight * fragColor + specularLight * fragColor, 1.0);
     vec4 textColor = texture(texSampler, fragTexCoord);
-    outColor = vec4(diffuseLight * fragColor * textColor.xyz + specularLight * textColor.xyz * fragColor, 1.0);
+    outColor = vec4((diffuseLight * fragColor * textColor.xyz + specularLight * textColor.xyz * fragColor), 1.0);
 }

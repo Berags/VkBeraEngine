@@ -21,13 +21,13 @@ namespace Engine::ECS {
         // Checks if the same component is already stored
         template<typename T, typename ... Ts>
         void addComponent(Ts &... args) {
-            T *component = new T(args...);
             bool isAlreadyInComponents = false;
             std::for_each(components.begin(), components.end(), [&](const auto &item) {
                 if (Engine::Utils::instanceof<T>(item)) isAlreadyInComponents = true;
             });
             if (!isAlreadyInComponents) {
                 // component not in components, add it
+                T *component = new T(args...);
                 components.push_back(component);
                 component->onCreate();
             }

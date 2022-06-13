@@ -55,7 +55,7 @@ namespace Engine {
         // Private Constructor so that a GameObject can be created only by calling factory methods:
         // - createGameObject, to create an actual game object with an .obj model
         // - createPointLight, to create a billboard point light without a model
-        explicit GameObject(id_t objectId, const char *name) : id(objectId), name(name) {}
+        GameObject(id_t objectId, const char *name) : id(objectId), name(name) {}
 
     private:
         // Unique identifier

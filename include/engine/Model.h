@@ -39,15 +39,12 @@ namespace Engine {
             // https://en.wikipedia.org/wiki/UV_mapping
             glm::vec2 uv{};
 
-            glm::vec2 textCoord{};
-
             bool operator==(const Vertex &that) const {
                 return
                         position == that.position &&
                         color == that.color &&
                         normal == that.normal &&
-                        uv == that.uv &&
-                        textCoord == that.textCoord;
+                        uv == that.uv;
             }
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();

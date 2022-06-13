@@ -12,6 +12,7 @@
 
 #include "../../include/libs/stb_image.h"
 #include "../../include/engine/exceptions/vulkan/FailedToCreateVkObject.h"
+#include "../../include/engine/exceptions/vulkan/FailedToFindVkObject.h"
 #include "../../include/engine/exceptions/file/FailedToLoadFileException.h"
 
 namespace Engine {
@@ -21,7 +22,7 @@ namespace Engine {
             Engine::Device &device)
             : device{device} {
         texturePool = Engine::DescriptorPool::Builder(device)
-                .setMaxSets(5)
+                .setMaxSets(5) // Maximum number of texture buffer
                 .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 5)
                 .build();
 
@@ -42,8 +43,8 @@ namespace Engine {
         }
     }
 
-    const VkDescriptorSet
-    TextureStorage::getDescriptorSet(const std::string &textureName, const std::string &samplerName) {
+    const VkDescriptorSet TextureStorage::getDescriptorSet(
+            const std::string &textureName, const std::string &samplerName) {
         if (textureDescriptors.count(textureName + samplerName) != 0)
             return textureDescriptors[textureName + samplerName];
 
@@ -97,12 +98,13 @@ namespace Engine {
             return textureSamplers[samplerName];
         }
 
-        throw std::runtime_error("Not find sampler with name:" + samplerName);
+        throw Engine::Exceptions::FailedToFindVkObject("Texture Sampler");
     }
 
     TextureStorage::TextureData &TextureStorage::getTextureData(const std::string &textureName) {
         if (textureDatas.count(textureName) == 0) {
-            throw std::runtime_error("Not find texture with name:" + textureName);
+            std::string errorString = "Texture with name: " + textureName;
+            throw Engine::Exceptions::FailedToFindVkObject(errorString.c_str());
         } else {
             return textureDatas[textureName];
         }

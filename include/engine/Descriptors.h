@@ -1,5 +1,8 @@
 //
 // Created by Jacopo Beragnoli on 26/04/22.
+// To upload data to the GPU we use push constants but there are a lot of limitations.
+// For example you can’t upload an array, you can’t point to a buffer, and you can’t use textures with them.
+// To do that, you need to use descriptor sets, which is the main way of connecting CPU data to the GPU.
 //
 
 #ifndef VKBERAENGINE_DESCRIPTORS_H

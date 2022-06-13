@@ -17,7 +17,6 @@
 #include "../../../include/engine/exceptions/Exception.h"
 
 namespace Engine {
-
     struct PointLightPushConstants {
         glm::vec4 position{};
         glm::vec4 color{};
@@ -116,10 +115,14 @@ namespace Engine {
     }
 
     void PointLightSystem::update(FrameInfo &frameInfo, GlobalUbo &ubo) {
+        auto rotateLight = glm::rotate(glm::mat4(1.f), 0.5f * frameInfo.frameTime, {0.f, -1.f, 0.f});
         int lightIndex = 0;
         for (auto &kv: frameInfo.gameObjects) {
             auto &gameObj = kv.second;
             if (gameObj.pointLightComponent == nullptr) continue;
+
+            // update light position
+            gameObj.transform.translation = glm::vec3(rotateLight * glm::vec4(gameObj.transform.translation, 1.f));
 
             // Copy light to UBO
             ubo.pointLight[lightIndex].position = glm::vec4(gameObj.transform.translation, 1.f);
